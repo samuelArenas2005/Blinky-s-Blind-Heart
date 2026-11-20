@@ -1,0 +1,566 @@
+/* ==========================================================================
+   Blinky's Blind Heart — Sistema de Diseño Responsive, Tipografía y Accesibilidad
+   Proporciones fluidas adaptables a cualquier tamaño de pantalla (clamp + vh/vw)
+   ========================================================================== */
+
+:root {
+  --bg-deep: #0D131A;
+  --card-bg: rgba(13, 19, 26, 0.86);
+  --nameplate-bg: #1E2733;
+  --btn-bg: rgba(30, 39, 51, 0.74);
+  --btn-bg-hover: rgba(38, 50, 66, 0.96);
+  --text-primary: #F1F5F9;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --accent-amber: #FBBF24;
+  --accent-cyan: #22D3EE;
+  --narrative-scale: 1;
+}
+
+/* Tipografías */
+.font-narrative {
+  font-family: 'Merriweather', Georgia, serif;
+}
+
+.font-title {
+  font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+}
+
+.font-ui {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Fondo oscuro / gris sobrio cuando no existe imagen s(n).png */
+.scene-fallback-bg {
+  background: radial-gradient(circle at 50% 40%, #1d2531 0%, #131a24 48%, #0d131a 100%);
+}
+
+/* Transición rápida y limpia de imagen de fondo */
+.scene-bg-image {
+  transition: opacity 0.25s ease;
+  will-change: opacity;
+}
+
+.scene-bg-image.is-loading {
+  opacity: 0;
+}
+
+.scene-bg-image.is-loaded {
+  opacity: 1;
+}
+
+/* Animación sutil y rápida al cambiar de diálogo */
+@keyframes textFadeIn {
+  0% {
+    opacity: 0.25;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-115%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(225%) skewX(-18deg);
+  }
+}
+
+.text-reveal {
+  animation: textFadeIn 0.18s ease-out both;
+}
+
+/* ==========================================================================
+   Efectos Sutiles de Turbulencia y Tono Rojizo en Escenas Catárticas/Turbias
+   ========================================================================== */
+
+@keyframes impactTurbulence {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  14% { transform: translate3d(-4px, 2px, 0) scale(1.012); }
+  28% { transform: translate3d(4px, -2px, 0) scale(1.01); }
+  44% { transform: translate3d(-3px, -1px, 0) scale(1.008); }
+  62% { transform: translate3d(2.5px, 1.5px, 0) scale(1.004); }
+  80% { transform: translate3d(-1.5px, 0.5px, 0) scale(1.002); }
+}
+
+@keyframes gentleDriftTurbulence {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1.01);
+  }
+  33% {
+    transform: translate3d(-2px, 1.5px, 0) scale(1.016);
+  }
+  66% {
+    transform: translate3d(2px, -1.5px, 0) scale(1.013);
+  }
+}
+
+@keyframes softCrimsonVignette {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.scene-impact-shake {
+  animation: impactTurbulence 0.48s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.scene-uneasy-drift {
+  animation: gentleDriftTurbulence 5.5s ease-in-out infinite;
+}
+
+.tension-crimson-layer {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+  background: radial-gradient(
+    ellipse at 50% 48%,
+    transparent 42%,
+    rgba(127, 29, 29, 0.15) 78%,
+    rgba(153, 27, 27, 0.28) 100%
+  );
+  box-shadow: inset 0 0 95px rgba(185, 28, 28, 0.18);
+}
+
+.tension-crimson-layer.is-active {
+  opacity: 1;
+}
+
+.tension-crimson-layer.is-active .tension-crimson-pulse {
+  animation: softCrimsonVignette 3.8s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Transición Cinematográfica de Título de Acto (Tipografía + Pincelada)
+   ========================================================================== */
+
+@keyframes actEyebrowIn {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.42em;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 0.85;
+    letter-spacing: 0.3em;
+    transform: translateY(0);
+  }
+}
+
+@keyframes actLetterIn {
+  0% {
+    opacity: 0.72;
+    transform: translateY(-3px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes brushSweep {
+  0% {
+    stroke-dashoffset: 380;
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.92;
+  }
+}
+
+@keyframes brushGlowIn {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  100% {
+    opacity: 0.55;
+    transform: scaleX(1);
+  }
+}
+
+.act-intro-overlay {
+  transition: opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.15s ease;
+}
+
+.act-intro-overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.act-intro-eyebrow {
+  opacity: 0;
+  animation: actEyebrowIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
+}
+
+.act-intro-letter {
+  display: inline-block;
+  animation: actLetterIn 0.09s ease-out forwards;
+}
+
+.act-brush-path {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+}
+
+.act-brush-path.is-sweeping {
+  animation: brushSweep 1.25s cubic-bezier(0.25, 0.9, 0.3, 1) forwards;
+}
+
+.act-brush-accent {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+}
+
+.act-brush-accent.is-sweeping {
+  animation: brushSweep 1.15s cubic-bezier(0.25, 0.9, 0.3, 1) 0.16s forwards;
+}
+
+.act-brush-glow {
+  opacity: 0;
+  transform-origin: left center;
+}
+
+.act-brush-glow.is-sweeping {
+  animation: brushGlowIn 1.25s ease-out 0.12s forwards;
+}
+
+/* ==========================================================================
+   Dimensionamiento Responsive Proporcional (Independiente del tamaño de pantalla)
+   ========================================================================== */
+
+/* Barra HUD superior equilibrada */
+.vn-hud-header {
+  padding: clamp(0.85rem, 2.3vh, 1.6rem) clamp(1.1rem, 2.8vw, 2.5rem);
+}
+
+.vn-chapter-pill {
+  padding: clamp(0.44rem, 1.05vh, 0.65rem) clamp(0.95rem, 1.85vw, 1.3rem);
+  border-radius: 0.85rem;
+}
+
+.vn-chapter-title {
+  font-size: clamp(1.05rem, 2.2vh, 1.32rem);
+}
+
+.vn-quick-menu {
+  padding: clamp(0.28rem, 0.65vh, 0.44rem) clamp(0.6rem, 1.15vw, 0.9rem);
+  gap: clamp(0.22rem, 0.5vw, 0.45rem);
+}
+
+/* Botón hamburguesa compacto y menú vertical suave de íconos */
+.vn-menu-toggle {
+  width: clamp(2.4rem, 4.6vh, 2.8rem);
+  height: clamp(2.4rem, 4.6vh, 2.8rem);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.vn-menu-toggle:hover {
+  background-color: rgba(30, 39, 51, 0.92);
+  border-color: rgba(251, 191, 36, 0.38);
+  color: #FDE68A;
+}
+
+.vn-toggle-icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vn-toggle-icon--close {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.75);
+}
+
+.vn-menu-toggle[aria-expanded="true"] .vn-toggle-icon--bars {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.75);
+}
+
+.vn-menu-toggle[aria-expanded="true"] .vn-toggle-icon--close {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.vn-hud-dropdown {
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -8px) scale(0.95);
+  pointer-events: none;
+  visibility: hidden;
+  border: none;
+  transition:
+    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.24s ease;
+}
+
+.vn-hud-dropdown.is-open {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.vn-hud-icon-btn {
+  width: clamp(2.25rem, 4.4vh, 2.65rem);
+  height: clamp(2.25rem, 4.4vh, 2.65rem);
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.vn-hud-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FDE68A;
+  transform: scale(1.06);
+}
+
+/* Tipografía cursiva artesanal para la presentación de acto */
+.font-act-cursive {
+  font-family: 'Great Vibes', 'Cormorant Garamond', Georgia, cursive;
+  font-weight: 400;
+}
+
+.vn-hud-item {
+  padding: clamp(0.36rem, 0.85vh, 0.52rem) clamp(0.66rem, 1.2vw, 0.92rem);
+  font-size: clamp(0.78rem, 1.48vh, 0.9rem);
+}
+
+.vn-hud-icon {
+  width: clamp(1.02rem, 1.95vh, 1.2rem);
+  height: clamp(1.02rem, 1.95vh, 1.2rem);
+}
+
+/* Contenedor inferior del recuadro de diálogo (equilibrado y legible) */
+.vn-dialogue-section {
+  padding: 0 clamp(1rem, 3vw, 2.5rem) clamp(0.95rem, 2.8vh, 1.8rem);
+}
+
+.vn-dialogue-shell {
+  width: 100%;
+  max-width: min(54rem, 93vw);
+}
+
+.vn-nameplate {
+  bottom: calc(100% - 1px);
+  top: auto;
+  left: clamp(1.25rem, 2.6vw, 2.1rem);
+  padding: clamp(0.34rem, 0.72vh, 0.48rem) clamp(1.1rem, 2vw, 1.45rem);
+}
+
+.vn-nameplate-text {
+  font-size: clamp(0.68rem, 1.24vh, 0.78rem);
+  letter-spacing: 0.22em;
+}
+
+.vn-dialogue-card {
+  padding: clamp(1.2rem, 2.8vh, 1.85rem) clamp(1.4rem, 3vw, 2.25rem);
+  border-radius: clamp(1.2rem, 2.3vh, 1.6rem);
+}
+
+.vn-text-area {
+  min-height: clamp(3.9rem, 9.6vh, 5.8rem);
+}
+
+.vn-narrative-text {
+  font-size: calc(clamp(0.98rem, 2.05vh, 1.2rem) * var(--narrative-scale));
+  line-height: 1.72;
+}
+
+.vn-actions-area {
+  margin-top: clamp(0.9rem, 2.1vh, 1.35rem);
+  padding-top: clamp(0.85rem, 1.9vh, 1.15rem);
+  gap: clamp(0.68rem, 1.55vh, 1rem);
+}
+
+.vn-footer-bar {
+  padding-top: clamp(0.48rem, 1.05vh, 0.68rem);
+}
+
+/* ==========================================================================
+   Botones Unificados con Eventos Hover Suaves y Nítidos
+   ========================================================================== */
+
+.vn-btn {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(2.75rem, 6.2vh, 3.35rem);
+  padding: clamp(0.62rem, 1.4vh, 0.86rem) clamp(1.1rem, 2vw, 1.45rem);
+  font-size: calc(clamp(0.9rem, 1.76vh, 1.06rem) * var(--narrative-scale));
+  background-color: var(--btn-bg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #E7E5E4;
+  transition:
+    transform 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.18s ease;
+}
+
+/* Brillo sutil en hover */
+.vn-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.065) 50%,
+    transparent 100%
+  );
+  transform: translateX(-130%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.vn-btn:hover::before {
+  animation: shimmerSweep 0.6s ease-out forwards;
+}
+
+.vn-btn:hover {
+  transform: translateY(-1.5px);
+  background-color: var(--btn-bg-hover);
+  border-color: rgba(251, 191, 36, 0.38);
+  color: #FDE68A;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.vn-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* Foco accesible por teclado WCAG AAA */
+.vn-btn:focus-visible,
+.vn-hud-btn:focus-visible,
+.vn-back-btn:focus-visible {
+  outline: 2px solid #22D3EE;
+  outline-offset: 2px;
+}
+
+.vn-btn-chevron-wrap {
+  width: clamp(1.65rem, 3.2vh, 1.9rem);
+  height: clamp(1.65rem, 3.2vh, 1.9rem);
+  transition: transform 0.16s ease, background-color 0.16s ease;
+}
+
+.vn-btn:hover .vn-btn-chevron-wrap {
+  transform: translateX(3px);
+  background-color: rgba(251, 191, 36, 0.2);
+}
+
+/* Indicador nítido de tutorial de teclado (solo en las primeras interacciones) */
+.vn-tutorial-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.14rem 0.45rem;
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #E2E8F0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(0.62rem, 1.1vh, 0.72rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.vn-btn:hover .vn-tutorial-key {
+  border-color: rgba(251, 191, 36, 0.45);
+  color: #FDE68A;
+  background: rgba(251, 191, 36, 0.12);
+}
+
+/* Énfasis tipográfico sutil dentro del texto narrativo */
+.vn-onomatopoeia {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #F8FAFC;
+}
+
+.vn-sound-whisper {
+  font-style: italic;
+  color: #E2E8F0;
+}
+
+/* ==========================================================================
+   Modo de Alto Contraste (Accesibilidad WCAG AAA)
+   ========================================================================== */
+
+body.high-contrast {
+  background-color: #000000 !important;
+}
+
+body.high-contrast [data-purpose="dialogue-card"] {
+  background-color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+  backdrop-filter: none !important;
+}
+
+body.high-contrast [data-purpose="speaker-nameplate"] {
+  background-color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .vn-narrative-text {
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .vn-btn {
+  background-color: #090D12 !important;
+  border: 2px solid #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
+body.high-contrast .vn-btn:hover {
+  background-color: #1E293B !important;
+  border-color: #22D3EE !important;
+  color: #22D3EE !important;
+}
+
+body.high-contrast [data-purpose="chapter-indicator"],
+body.high-contrast [data-purpose="quick-menu"] {
+  background-color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+}
+
+/* Reducción de movimiento */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Scrollbar elegante para modales e historial */
+.vn-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.vn-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 9999px;
+}
+.vn-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.32);
+  border-radius: 9999px;
+}
+.vn-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(251, 191, 36, 0.5);
+}

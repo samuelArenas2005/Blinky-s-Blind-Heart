@@ -1,0 +1,171 @@
+<!DOCTYPE html><html class="h-full w-full overflow-hidden select-none" lang="es"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Blinky's Blind Heart - S01: Refugio en la Lluvia</title>
+<!-- Tailwind CSS v3 CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Cormorant Garamond & Merriweather for poetic narrative tone -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<!-- BEGIN: Custom Font & Visual Novel Keyframes -->
+<style data-purpose="typography">
+    .font-narrative {
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .font-title {
+      font-family: 'Cormorant Garamond', Garamond, Georgia, serif;
+    }
+    .font-ui {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+  </style>
+<style data-purpose="animations">
+    @keyframes subtleGlow {
+      0%, 100% {
+        opacity: 0.38;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.58;
+        transform: scale(1.04);
+      }
+    }
+
+    @keyframes rainBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(4px);
+      }
+    }
+
+    @keyframes pulseCaret {
+      0%, 100% {
+        opacity: 0.25;
+        transform: translateX(0);
+      }
+      50% {
+        opacity: 0.95;
+        transform: translateX(4px);
+      }
+    }
+
+    .ambient-lantern-glow {
+      animation: subtleGlow 6s ease-in-out infinite;
+    }
+
+    .bounce-indicator {
+      animation: rainBounce 2.2s ease-in-out infinite;
+    }
+
+    .prompt-caret {
+      animation: pulseCaret 1.5s ease-in-out infinite;
+    }
+  </style>
+<!-- END: Custom Font & Visual Novel Keyframes -->
+</head>
+<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-800 antialiased font-narrative relative" data-new-gr-c-s-check-loaded="14.1349.0" data-gr-ext-installed="" style="background-color: rgb(13, 19, 26);">
+<!-- BEGIN: Game Canvas Main Wrapper -->
+<main class="relative w-screen h-screen overflow-hidden flex flex-col justify-between" data-purpose="game-screen">
+<!-- BEGIN: Background Layer & Visual Atmosphere -->
+<!-- Background Storybook Illustration -->
+
+<!-- Ambient Honey-Gold Lantern Glow Layer focused over mother cat -->
+<div class="ambient-lantern-glow absolute right-[18%] bottom-[24%] w-[520px] h-[400px] rounded-full bg-amber-400/25 blur-3xl pointer-events-none mix-blend-screen z-[1]" data-purpose="warm-light-overlay">
+</div>
+<!-- Organic Vignette: Slate-Blue outer dampness focusing attention inwards -->
+<div class="absolute inset-0 pointer-events-none z-[2] bg-[radial-gradient(ellipse_at_58%_55%,transparent_42%,rgba(26,33,45,0.72)_88%,rgba(15,20,30,0.92)_100%)]" data-purpose="cinematic-vignette">
+</div>
+<!-- Soft Ambient Rain Particle Canvas -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none z-[3] opacity-60" data-purpose="rain-particles" height="1024" id="rain-canvas" width="1280">
+</canvas>
+<!-- END: Background Layer & Visual Atmosphere -->
+<!-- BEGIN: Top In-Game System HUD -->
+<header class="relative z-10 w-full px-6 py-5 md:px-10 md:py-7 flex items-center justify-between pointer-events-none" data-purpose="system-hud">
+<!-- Act & Chapter Indicator Ribbon/Seal -->
+<div class="pointer-events-auto flex items-center gap-2.5 px-4 py-2 rounded-xl bg-[#0D131A]/75 backdrop-blur-md border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition-all hover:bg-[#1E2733]/80" data-purpose="chapter-indicator"><span class="font-title text-base sm:text-lg font-semibold tracking-wide text-stone-200 leading-tight px-1 py-0.5">El Nido Roto</span></div>
+<!-- Quick Menu Pill HUD -->
+<nav aria-label="Menú del juego" class="pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#0D131A]/70 backdrop-blur-md border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.45)] text-stone-300" data-purpose="quick-menu"><button aria-label="Inicio / Menú Principal" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/10 hover:text-amber-200 transition-colors text-xs font-ui font-medium" title="Menú Principal" type="button"><svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="hidden md:inline">Inicio</span></button><span class="w-px h-3.5 bg-white/15"></span><button aria-label="Configuración de audio" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/10 hover:text-amber-200 transition-colors text-xs font-ui font-medium" title="Audio ambiental: Lluvia y Ronroneo" type="button"><svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="hidden md:inline">Audio</span></button><span class="w-px h-3.5 bg-white/15"></span><button aria-label="Accesibilidad y Contraste" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/10 hover:text-amber-200 transition-colors text-xs font-ui font-medium" title="Modo Lectura / Alto Contraste" type="button"><svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="hidden lg:inline">Accesibilidad</span></button><span class="w-px h-3.5 bg-white/15"></span><button aria-label="Historial de diálogos" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/10 hover:text-amber-200 transition-colors text-xs font-ui font-medium" title="Historial de Diálogos (Log)" type="button"><svg class="w-4 h-4 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="hidden md:inline">Historial</span></button></nav>
+</header>
+<!-- END: Top In-Game System HUD -->
+<!-- BEGIN: ADV Visual Novel Dialogue Area -->
+<section class="relative z-10 w-full px-4 sm:px-8 md:px-12 pb-6 sm:pb-8 flex flex-col items-center" data-purpose="dialogue-container">
+<div class="w-full max-w-4xl relative">
+<!-- Overlapping Speaker / Environment Nameplate Tab -->
+<div class="absolute -top-7 left-6 sm:left-10 z-20 bg-[#1E2733] text-stone-100 px-5 py-1.5 rounded-t-xl border-t border-x border-white/20 shadow-[0_-2px_12px_rgba(0,0,0,0.4)]" data-purpose="speaker-nameplate"><div class="flex items-center gap-2"><span class="font-ui text-[11px] font-semibold tracking-[0.24em] uppercase text-white">ENTORNO</span></div></div>
+<!-- Main Narrative Card Box -->
+<div class="relative bg-[#0D131A]/85 backdrop-blur-xl sm:rounded-3xl p-6 sm:p-8 md:p-9 border border-white/15 shadow-[0_12px_42px_rgba(0,0,0,0.7)] rounded-3xl" data-purpose="dialogue-card"><div class="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div><div class="min-h-[96px] sm:min-h-[105px] flex items-start"><p class="font-narrative text-base sm:text-lg md:text-[1.18rem] text-[#F1F5F9] leading-[1.8] sm:leading-[1.85] font-normal tracking-[0.01em]">La lluvia cae con fuerza y golpea el cartón que te cubre. El agua helada se filtra poco a poco por las esquinas y moja el suelo donde estás echado. Estás en un rincón oscuro de un callejón, bien pegado al cuerpo tibio de tu mamá.</p></div><div class="mt-6 pt-5 border-t border-white/10 flex flex-col gap-4"><div class="flex flex-col gap-2.5"><button class="group w-full flex items-center justify-between px-5 py-3 rounded-xl bg-[#1E2733]/70 hover:bg-[#1E2733] border border-white/15 hover:border-amber-400/25 text-stone-200 hover:text-amber-200 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.4)] text-left font-narrative text-sm sm:text-base font-medium active:scale-[0.98]" type="button"><span class="flex items-center gap-3"><span>Acurrucarte más fuerte contra el calor de mamá</span></span><span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors prompt-caret"><svg class="w-3.5 h-3.5 text-stone-300 group-hover:text-amber-200 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></span></button></div><div class="flex items-center justify-between pt-1 border-t border-white/10"><button aria-label="Volver a la escena anterior (no disponible)" class="cursor-not-allowed flex items-center gap-1.5 text-xs font-ui text-[#94A3B8]/60 px-2 py-1 select-none hover:text-[#94A3B8] transition-colors" disabled="" title="Inicio de la escena" type="button"><span class="font-ui">← Volver a la escena anterior</span></button></div></div></div>
+</div>
+</section>
+<!-- END: ADV Visual Novel Dialogue Area -->
+</main>
+<!-- END: Game Canvas Main Wrapper -->
+<!-- BEGIN: Rain Ambient Particle Simulation -->
+<script data-purpose="rain-canvas-engine">
+    (function () {
+      const canvas = document.getElementById('rain-canvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      // Raindrop system
+      const dropCount = Math.floor(Math.min(width, 1400) * 0.12);
+      const drops = [];
+
+      for (let i = 0; i < dropCount; i++) {
+        drops.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          length: Math.random() * 16 + 12,
+          speed: Math.random() * 9 + 11,
+          opacity: Math.random() * 0.28 + 0.12,
+          slant: -1.2
+        });
+      }
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+
+      function renderRain() {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.strokeStyle = 'rgba(215, 230, 245, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.lineCap = 'round';
+
+        for (let i = 0; i < drops.length; i++) {
+          const d = drops[i];
+          ctx.strokeStyle = `rgba(205, 222, 240, ${d.opacity})`;
+          ctx.beginPath();
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d.x + d.slant * 4, d.y + d.length);
+          ctx.stroke();
+
+          // Motion update
+          d.y += d.speed;
+          d.x += d.slant;
+
+          // Recycle drop when out of screen bounds
+          if (d.y > height + 20) {
+            d.y = -20;
+            d.x = Math.random() * (width + 100) - 50;
+          }
+        }
+
+        requestAnimationFrame(renderRain);
+      }
+
+      requestAnimationFrame(renderRain);
+    })();
+  </script>
+<!-- END: Rain Ambient Particle Simulation -->
+
+
+<span id="PING_CONTENT_PUSH_NOTIFICATION" style="display: none;"></span></body><grammarly-desktop-integration data-grammarly-shadow-root="true" style="visibility: visible !important;"></grammarly-desktop-integration></html>

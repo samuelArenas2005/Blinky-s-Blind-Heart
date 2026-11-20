@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Componente: Botones de Interacción — Blinky's Blind Heart</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/theme.css" />
+</head>
+<body class="min-h-screen bg-[#0D131A] text-stone-100 font-ui antialiased selection:bg-amber-400/30">
+  <!-- Plantilla declarativa de referencia del componente <blinky-action-button> -->
+  <template id="blinky-action-button-template">
+    <button type="button" class="vn-btn group w-full flex items-center justify-between gap-3 rounded-xl shadow-[0_3px_12px_rgba(0,0,0,0.38)] text-left font-narrative font-medium cursor-pointer">
+      <span class="leading-snug">{{LABEL}}</span>
+      <span class="vn-btn-chevron-wrap inline-flex items-center justify-center rounded-full bg-white/10">
+        <svg class="w-3.5 h-3.5 text-stone-200 group-hover:text-amber-200 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 6 15 12 9 18"></polyline>
+        </svg>
+      </span>
+    </button>
+  </template>
+
+  <header class="sticky top-0 z-30 bg-[#0D131A]/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-3xl mx-auto px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-amber-300/90 font-semibold">Biblioteca de Componentes UI</p>
+        <h1 class="font-title text-2xl font-semibold text-stone-100">Botones de Acción y Decisión</h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="dialogue-box.html" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-300/40 text-xs font-medium text-stone-200 transition-colors">
+          ← Ver Recuadros
+        </a>
+        <a href="../index.html" class="px-3.5 py-1.5 rounded-xl bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/35 text-xs font-semibold text-amber-200 transition-colors">
+          Abrir Novela Visual
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-5 py-8 space-y-6">
+    <section class="p-4 rounded-2xl bg-[#131C27]/80 border border-white/10 text-xs sm:text-sm text-slate-300 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        Estilo unificado, compacto y responsive con eventos <code>hover</code> suaves. Las pistas de teclado solo aparecen durante el tutorial inicial.
+      </div>
+      <div id="event-log" class="shrink-0 px-3 py-1 rounded-xl bg-black/30 border border-white/10 text-xs text-amber-200 font-mono">
+        Esperando interacción...
+      </div>
+    </section>
+
+    <div id="buttons-showcase" class="space-y-6"></div>
+  </main>
+
+  <script src="action-buttons.js"></script>
+  <script>
+    const GROUPS = [
+      {
+        title: '1. Acción Individual (con guía de tutorial inicial)',
+        subtitle: 'Muestra la pista nítida "Enter" únicamente en las primeras 2 pantallas del recorrido.',
+        showTutorialHints: true,
+        choices: [
+          { label: 'Acurrucarte más fuerte contra el pelaje de mamá' }
+        ]
+      },
+      {
+        title: '2. Decisión Ramificada (con guía de tutorial inicial)',
+        subtitle: 'Muestra "Tecla 1" y "Tecla 2" únicamente la primera vez que el jugador toma una decisión.',
+        showTutorialHints: true,
+        choices: [
+          { label: '¡Insistir en tu búsqueda! (Avanzar hacia la calle)' },
+          { label: '¡Huir a tu refugio! (Correr asustado de vuelta a la caja)' }
+        ]
+      },
+      {
+        title: '3. Decisión Estándar (sin pistas de tutorial)',
+        subtitle: 'Apariencia limpia y directa durante el resto de la novela visual.',
+        showTutorialHints: false,
+        choices: [
+          { label: 'Desenredar la cinta azul y modesta a atún' },
+          { label: 'Desenredar la cinta naranja y codiciosa a salmón' }
+        ]
+      },
+      {
+        title: '4. Botón de Reinicio (al finalizar la historia)',
+        subtitle: 'Ícono vectorial nítido de reinicio para volver a explorar otras rutas.',
+        showTutorialHints: false,
+        choices: [
+          { label: 'Volver a la portada de la novela visual', isRestart: true }
+        ]
+      }
+    ];
+
+    const container = document.getElementById('buttons-showcase');
+    const eventLog = document.getElementById('event-log');
+
+    GROUPS.forEach((grp) => {
+      const card = document.createElement('section');
+      card.className = 'p-5 rounded-2xl bg-[#0D131A]/90 border border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.5)] space-y-3.5';
+      card.innerHTML = `
+        <div>
+          <h2 class="font-title text-lg font-semibold text-stone-100">${grp.title}</h2>
+          <p class="text-xs text-slate-400 mt-0.5">${grp.subtitle}</p>
+        </div>
+        <blinky-button-group></blinky-button-group>
+      `;
+      container.appendChild(card);
+      card.querySelector('blinky-button-group').render({
+        choices: grp.choices,
+        showTutorialHints: grp.showTutorialHints
+      });
+    });
+
+    document.addEventListener('blinky:btn-hover', (e) => {
+      eventLog.textContent = `hover → "${e.detail.label.slice(0, 26)}..."`;
+    });
+    document.addEventListener('blinky:choose', (e) => {
+      eventLog.textContent = `click → "${e.detail.label.slice(0, 26)}..."`;
+    });
+  </script>
+</body>
+</html>

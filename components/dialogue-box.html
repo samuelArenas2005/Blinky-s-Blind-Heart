@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Componente: Recuadros de Diálogo — Blinky's Blind Heart</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/theme.css" />
+</head>
+<body class="min-h-screen bg-[#0D131A] text-stone-100 font-ui antialiased selection:bg-amber-400/30">
+  <!-- Plantilla declarativa de referencia del componente <blinky-dialogue-box> -->
+  <template id="blinky-dialogue-box-template">
+    <div class="vn-dialogue-shell relative">
+      <div class="vn-nameplate absolute z-20 bg-[#1E2733] text-white rounded-t-xl border-t border-x border-white/20 shadow-[0_-2px_10px_rgba(0,0,0,0.4)]" data-purpose="speaker-nameplate">
+        <span class="vn-nameplate-text font-ui font-semibold uppercase block leading-none">{{SPEAKER}}</span>
+      </div>
+      <div class="vn-dialogue-card relative bg-[#0D131A]/86 backdrop-blur-md border border-white/15 shadow-[0_12px_36px_rgba(0,0,0,0.68)]" data-purpose="dialogue-card">
+        <div class="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <div class="vn-text-area flex items-start">
+          <p class="font-narrative vn-narrative-text text-[#F1F5F9]">{{TEXT}}</p>
+        </div>
+        <div class="vn-actions-area border-t border-white/10 flex flex-col">
+          <slot name="choices"></slot>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <header class="sticky top-0 z-30 bg-[#0D131A]/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-4xl mx-auto px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-amber-300/90 font-semibold">Biblioteca de Componentes UI</p>
+        <h1 class="font-title text-2xl font-semibold text-stone-100">Recuadros de Diálogo por Personaje</h1>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="action-buttons.html" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-300/40 text-xs font-medium text-stone-200 transition-colors">
+          Ver Botones →
+        </a>
+        <a href="../index.html" class="px-3.5 py-1.5 rounded-xl bg-amber-400/15 hover:bg-amber-400/25 border border-amber-400/35 text-xs font-semibold text-amber-200 transition-colors">
+          Abrir Novela Visual
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-5 py-8 space-y-12">
+    <section class="p-4 rounded-2xl bg-[#131C27]/80 border border-white/10 text-xs sm:text-sm text-slate-300 leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <p>
+        El componente reutilizable <code class="px-1.5 py-0.5 rounded bg-white/10 text-amber-200 text-xs">&lt;blinky-dialogue-box&gt;</code>
+        mantiene una estética unificada, compacta y limpia para el espectador, identificando únicamente las voces reales de la historia.
+      </p>
+      <button id="toggle-hc" type="button" class="shrink-0 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-stone-200 transition-colors cursor-pointer">
+        Probar Alto Contraste
+      </button>
+    </section>
+
+    <div id="catalogue" class="space-y-14"></div>
+  </main>
+
+  <script src="action-buttons.js"></script>
+  <script src="dialogue-box.js"></script>
+  <script>
+    const EXAMPLES = [
+      {
+        speaker: 'NARRADOR',
+        speakerType: 'narrador',
+        showTutorialHints: true,
+        text: 'La lluvia cae con fuerza y golpea el cartón que te cubre. El agua helada se filtra poco a poco por las esquinas y moja el suelo donde estás echado. Estás en un rincón oscuro de un callejón, bien pegado al cuerpo tibio de tu mamá.',
+        choices: [{ label: 'Acurrucarte más fuerte contra el pelaje de mamá' }]
+      },
+      {
+        speaker: 'NARRADOR',
+        speakerType: 'narrador',
+        canGoBack: true,
+        showTutorialHints: true,
+        text: 'El fuerte ruido ocurrió justo donde iba el olor de mamá. Sabes que la calle es peligrosa para un gatito ciego, pero tu corazón te pide no dejarla sola. ¿Qué camino vas a tomar?',
+        choices: [
+          { label: '¡Insistir en tu búsqueda! (Avanzar hacia la calle)' },
+          { label: '¡Huir a tu refugio! (Correr asustado de vuelta a la caja)' }
+        ]
+      },
+      {
+        speaker: 'BLINKY',
+        speakerType: 'blinky',
+        canGoBack: true,
+        html: '<em class="vn-sound-whisper font-semibold">Grrr...</em> Tu pequeña barriga suena muy fuerte. Tienes mucha hambre y tus patitas tiemblan de frío.',
+        choices: [{ label: 'Escuchar qué hace mamá' }]
+      },
+      {
+        speaker: 'MAMÁ GATO',
+        speakerType: 'mama_gato',
+        canGoBack: true,
+        html: 'Mamá te da una suave caricia con su lengua en la frente para limpiarte el agua.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Prrrr... Miau</em> —te ronronea muy bajito, como diciéndote: «Quédate aquí quieto, pequeño. Voy a buscar algo para comer».</span>',
+        choices: [{ label: 'Quedarte en el nido esperando su regreso' }]
+      },
+      {
+        speaker: 'GATO GUÍA',
+        speakerType: 'gato_guia',
+        canGoBack: true,
+        html: 'De pronto, un lomo ágil se frota contra ti con suavidad. Huele a tejados y a comida callejera.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Prrrr... Prrrr... Miau</em> —ronronea con un ritmo parejo y calmado.</span>',
+        choices: [{ label: 'Prestar atención a su ronroneo' }]
+      },
+      {
+        speaker: 'PERRO SALVADOR',
+        speakerType: 'perro_salvador',
+        canGoBack: true,
+        html: '<span class="vn-onomatopoeia block mb-1">¡¡GUAU!!</span>El ladrido es hondo y hace retumbar tu pechito, pero no suena enojado; suena como una llamada de atención de un adulto protector.',
+        choices: [{ label: 'Seguir el sonido pesado de sus pasos' }]
+      },
+      {
+        speaker: 'LA NIÑA',
+        speakerType: 'nina',
+        canGoBack: true,
+        html: 'La niña te abraza fuerte contra su abrigo mientras caminan rumbo a tu nuevo hogar y te susurra al oído:<br><span class="block mt-1.5 font-semibold text-amber-100">«No ves, pero tus ojos parpadean buscando la luz a cada instante... De ahora en adelante nunca más estarás solo. Te llamarás Blinky».</span>',
+        choices: [{ label: 'Ronronear feliz sabiendo que encontraste una familia' }]
+      },
+      {
+        speaker: 'MAMÁ DE LA NIÑA',
+        speakerType: 'mama_nina',
+        canGoBack: true,
+        html: 'La madre te levanta suavemente a la altura de su rostro.<br><span class="block mt-1.5">— «Hija... mira esto. Toca su carita con cuidado... Este gatito es igual a ti: tampoco puede ver».</span>',
+        choices: [{ label: 'Sentir las manitas de la niña tocando tus párpados' }]
+      }
+    ];
+
+    const container = document.getElementById('catalogue');
+    const profiles = window.BlinkyDialogueBox.SPEAKER_PROFILES;
+
+    EXAMPLES.forEach((item) => {
+      const profile = profiles[item.speakerType];
+      const wrapper = document.createElement('section');
+      wrapper.className = 'space-y-3';
+      wrapper.innerHTML = `
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="font-title text-lg font-semibold text-stone-100">${profile.label}</h2>
+          <span class="text-xs text-slate-400">${profile.role}</span>
+        </div>
+        <div class="pt-7 flex justify-center">
+          <blinky-dialogue-box class="w-full flex justify-center"></blinky-dialogue-box>
+        </div>
+      `;
+      container.appendChild(wrapper);
+      wrapper.querySelector('blinky-dialogue-box').render(item);
+    });
+
+    document.getElementById('toggle-hc').addEventListener('click', () => {
+      document.body.classList.toggle('high-contrast');
+    });
+  </script>
+</body>
+</html>

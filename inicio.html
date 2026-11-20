@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html class="h-full w-full overflow-hidden select-none" lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blinky's Blind Heart</title>
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Fonts: Cormorant Garamond, Merriweather & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/theme.css" />
+  <style>
+    /* Movimiento cinematográfico lento en el fondo ilustrado */
+    @keyframes coverBreathe {
+      0%, 100% {
+        transform: scale(1) translate3d(0, 0, 0);
+      }
+      50% {
+        transform: scale(1.045) translate3d(0, -0.8%, 0);
+      }
+    }
+
+    @keyframes auraPulse {
+      0%, 100% {
+        opacity: 0.24;
+        transform: scale(0.96);
+      }
+      50% {
+        opacity: 0.44;
+        transform: scale(1.07);
+      }
+    }
+
+    @keyframes moteFloat {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(0.6);
+      }
+      22% {
+        opacity: 0.78;
+      }
+      78% {
+        opacity: 0.55;
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--drift-x, 16px), -95px, 0) scale(1.1);
+      }
+    }
+
+    @keyframes puddleRipple {
+      0% {
+        opacity: 0;
+        transform: scale(0.25);
+      }
+      18% {
+        opacity: 0.42;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.45);
+      }
+    }
+
+    .cover-ken-burns {
+      animation: coverBreathe 24s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .cover-aura {
+      animation: auraPulse 7.5s ease-in-out infinite;
+    }
+
+    .memory-mote {
+      position: absolute;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(253, 230, 138, 0.95) 0%, rgba(251, 191, 36, 0.2) 60%, transparent 100%);
+      pointer-events: none;
+      opacity: 0;
+      animation: moteFloat var(--dur, 9s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .puddle-ring {
+      position: absolute;
+      border-radius: 9999px;
+      border: 1px solid rgba(186, 230, 253, 0.35);
+      pointer-events: none;
+      opacity: 0;
+      animation: puddleRipple var(--dur, 5.5s) ease-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .title-hero {
+      font-size: clamp(2.5rem, 6.2vw, 4.9rem);
+      line-height: 1.06;
+      letter-spacing: 0.03em;
+      text-shadow: 0 8px 34px rgba(0, 0, 0, 0.88), 0 2px 12px rgba(251, 191, 36, 0.16);
+    }
+
+    /* Botón Play ultra minimalista: solo texto, sin bordes ni fondo de caja */
+    .play-text-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 1.4rem;
+      font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+      letter-spacing: 0.24em;
+      text-indent: 0.24em;
+      color: #F5F5F4;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+      transition:
+        color 0.25s ease,
+        letter-spacing 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        text-shadow 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .play-text-link::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0.1rem;
+      width: 0;
+      height: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, rgba(253, 230, 138, 0.9), transparent);
+      transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .play-text-link:hover {
+      color: #FDE68A;
+      letter-spacing: 0.34em;
+      text-indent: 0.34em;
+      transform: translateY(-1px);
+      text-shadow: 0 0 24px rgba(251, 191, 36, 0.5), 0 4px 18px rgba(0, 0, 0, 0.9);
+    }
+
+    .play-text-link:hover::after {
+      width: 78%;
+    }
+
+    .play-text-link:focus-visible {
+      outline: 2px solid #22D3EE;
+      outline-offset: 6px;
+      border-radius: 0.5rem;
+    }
+
+    /* Ícono minimalista de configuraciones en esquina inferior izquierda */
+    .corner-settings-btn {
+      transition: color 0.22s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+    }
+
+    .corner-settings-btn:hover {
+      color: #FDE68A;
+      transform: rotate(35deg) scale(1.08);
+    }
+
+    .corner-settings-btn:focus-visible {
+      outline: 2px solid #22D3EE;
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-100 antialiased relative scene-fallback-bg" style="background-color: #0D131A;">
+
+  <!-- ==================== PORTADA PRINCIPAL ==================== -->
+  <main class="relative w-screen h-screen overflow-hidden flex flex-col items-center justify-center px-6">
+
+    <!-- Capa 1: Fondo ilustrado (queda completamente quieto durante el zoom en eje Z al título) -->
+    <div class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden" aria-hidden="true">
+      <img
+        id="cover-bg"
+        src="images/portada.png"
+        alt=""
+        class="cover-ken-burns w-full h-full object-cover opacity-0 transition-opacity duration-700"
+      />
+    </div>
+
+    <!-- Capa 2: Animaciones ambientales suaves (aura dorada, motas de luz y ondas en los charcos) -->
+    <div class="absolute inset-0 z-[1] pointer-events-none overflow-hidden" aria-hidden="true">
+      <div class="cover-aura absolute inset-x-0 bottom-[16%] mx-auto w-[46vw] max-w-[580px] h-[36vh] rounded-full bg-amber-400/25 blur-3xl mix-blend-screen"></div>
+
+      <span class="memory-mote w-1.5 h-1.5" style="left: 34%; bottom: 28%; --dur: 8.5s; --delay: 0s; --drift-x: 18px;"></span>
+      <span class="memory-mote w-2 h-2" style="left: 42%; bottom: 24%; --dur: 10.2s; --delay: 1.6s; --drift-x: -14px;"></span>
+      <span class="memory-mote w-1 h-1" style="left: 51%; bottom: 30%; --dur: 7.8s; --delay: 0.8s; --drift-x: 12px;"></span>
+      <span class="memory-mote w-1.5 h-1.5" style="left: 58%; bottom: 26%; --dur: 9.4s; --delay: 2.9s; --drift-x: 22px;"></span>
+      <span class="memory-mote w-2 h-2" style="left: 65%; bottom: 34%; --dur: 11s; --delay: 4.1s; --drift-x: -18px;"></span>
+      <span class="memory-mote w-1 h-1" style="left: 28%; bottom: 32%; --dur: 9.8s; --delay: 3.4s; --drift-x: 15px;"></span>
+      <span class="memory-mote w-1.5 h-1.5" style="left: 47%; bottom: 36%; --dur: 8.9s; --delay: 5.2s; --drift-x: -10px;"></span>
+      <span class="memory-mote w-1 h-1" style="left: 62%; bottom: 22%; --dur: 10.6s; --delay: 6.3s; --drift-x: 14px;"></span>
+
+      <span class="puddle-ring w-20 h-6" style="left: 31%; bottom: 8%; --dur: 5.4s; --delay: 0.4s;"></span>
+      <span class="puddle-ring w-24 h-7" style="left: 58%; bottom: 9%; --dur: 6.2s; --delay: 2.1s;"></span>
+      <span class="puddle-ring w-16 h-5" style="left: 44%; bottom: 5%; --dur: 4.9s; --delay: 3.6s;"></span>
+      <span class="puddle-ring w-14 h-4" style="left: 22%; bottom: 11%; --dur: 5.8s; --delay: 1.5s;"></span>
+      <span class="puddle-ring w-16 h-5" style="left: 72%; bottom: 10%; --dur: 6.5s; --delay: 4.4s;"></span>
+    </div>
+
+    <!-- Capa 3: Viñeta suave para legibilidad -->
+    <div
+      class="absolute inset-0 pointer-events-none z-[2] bg-[radial-gradient(ellipse_at_50%_46%,rgba(13,19,26,0.22)_18%,rgba(13,19,26,0.68)_78%,rgba(8,12,18,0.9)_100%)]"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Capa 4: Escenario 3D en eje Z para el título + Botón Play -->
+    <div id="title-z-stage" class="relative z-10 w-full flex flex-col items-center justify-center text-center -translate-y-[clamp(2.5rem,10vh,6rem)] gap-[clamp(1.2rem,3vh,2.2rem)]">
+      <div id="hero-title-wrap">
+        <h1 class="title-hero font-title font-semibold text-stone-100">
+          Blinky's Blind Heart
+        </h1>
+      </div>
+
+      <a
+        id="btn-play"
+        href="index.html?play=1"
+        class="play-text-link font-title font-medium uppercase cursor-pointer"
+      >
+        Play
+      </a>
+    </div>
+
+    <!-- Esquina inferior izquierda: únicamente el ícono de configuraciones rápidas -->
+    <button
+      id="btn-quick-settings"
+      type="button"
+      aria-label="Configuraciones rápidas"
+      title="Configuraciones rápidas"
+      class="corner-settings-btn fixed bottom-[clamp(1rem,3vh,1.75rem)] left-[clamp(1rem,2.5vw,1.75rem)] z-20 p-2 rounded-full text-stone-300/80 cursor-pointer"
+    >
+      <svg class="w-[clamp(1.3rem,2.5vh,1.65rem)] h-[clamp(1.3rem,2.5vh,1.65rem)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path>
+      </svg>
+    </button>
+
+    <!-- Cortina de transición suave hacia la oscuridad -->
+    <div
+      id="exit-curtain"
+      class="fixed inset-0 z-50 bg-[#070B10] opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out"
+      aria-hidden="true"
+    ></div>
+
+  </main>
+
+  <!-- ==================== MODAL DE CONFIGURACIONES RÁPIDAS ==================== -->
+  <div id="modal-settings" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-settings-title">
+    <div class="w-full max-w-md rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+        <h2 id="modal-settings-title" class="font-title text-2xl font-semibold text-stone-100">Configuraciones rápidas</h2>
+        <button id="close-settings" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar configuraciones">✕</button>
+      </div>
+
+      <div class="p-6 space-y-5 text-sm">
+        <!-- Audio -->
+        <div class="space-y-3 pb-4 border-b border-white/10">
+          <label class="flex items-center justify-between gap-4 cursor-pointer">
+            <div>
+              <p class="font-medium text-stone-100">Música y audio ambiental</p>
+              <p class="text-xs text-slate-400">Piano en portada, lluvia y efectos de escena.</p>
+            </div>
+            <input id="cfg-audio" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-amber-400 focus:ring-amber-400 h-5 w-5 cursor-pointer" />
+          </label>
+
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs text-slate-300">
+              <label for="cfg-volume">Volumen</label>
+              <span id="cfg-volume-label">60%</span>
+            </div>
+            <input id="cfg-volume" type="range" min="0" max="100" value="60" class="w-full accent-amber-400 cursor-pointer" />
+          </div>
+        </div>
+
+        <!-- Accesibilidad -->
+        <div class="space-y-3.5">
+          <label class="flex items-center justify-between gap-4 cursor-pointer">
+            <div>
+              <p class="font-medium text-stone-100">Alto Contraste</p>
+              <p class="text-xs text-slate-400">Máximo contraste en cuadros de texto y botones.</p>
+            </div>
+            <input id="cfg-contrast" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-5 w-5 cursor-pointer" />
+          </label>
+
+          <label class="flex items-center justify-between gap-4 cursor-pointer">
+            <div>
+              <p class="font-medium text-stone-100">Subtítulos de sonido</p>
+              <p class="text-xs text-slate-400">Describe los sonidos ambientales dentro del diálogo.</p>
+            </div>
+            <input id="cfg-subtitles" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-5 w-5 cursor-pointer" />
+          </label>
+
+          <label class="flex items-center justify-between gap-4 cursor-pointer">
+            <div>
+              <p class="font-medium text-stone-100">Reducir animaciones</p>
+              <p class="text-xs text-slate-400">Pausa el movimiento suave del fondo.</p>
+            </div>
+            <input id="cfg-motion" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-5 w-5 cursor-pointer" />
+          </label>
+
+          <div class="space-y-2 pt-1">
+            <p class="font-medium text-stone-100">Tamaño de letra</p>
+            <div class="grid grid-cols-3 gap-2">
+              <button data-font-scale="1" type="button" class="cfg-scale-btn py-2 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Normal</button>
+              <button data-font-scale="1.12" type="button" class="cfg-scale-btn py-2 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Grande</button>
+              <button data-font-scale="1.24" type="button" class="cfg-scale-btn py-2 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Extra</button>
+            </div>
+          </div>
+        </div>
+
+        <button id="save-close-settings" type="button" class="vn-btn w-full rounded-xl font-ui text-sm font-semibold justify-center flex cursor-pointer">
+          Listo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Carga inteligente de portada.png con respaldo s1.png
+      const coverBg = document.getElementById('cover-bg');
+      coverBg.addEventListener('load', () => {
+        coverBg.classList.remove('opacity-0');
+        coverBg.classList.add('opacity-100');
+      });
+      coverBg.addEventListener('error', () => {
+        if (!coverBg.dataset.triedFallback) {
+          coverBg.dataset.triedFallback = '1';
+          coverBg.src = 'images/s1.png';
+        }
+      });
+      if (coverBg.complete && coverBg.naturalWidth > 0) {
+        coverBg.classList.remove('opacity-0');
+        coverBg.classList.add('opacity-100');
+      }
+
+      // Preferencias compartidas con index.html
+      const prefs = {
+        highContrast: false,
+        subtitles: false,
+        reduceMotion: false,
+        fontScale: 1
+      };
+      const audioPrefs = {
+        enabled: true,
+        volume: 0.6
+      };
+
+      try {
+        const savedPrefs = JSON.parse(localStorage.getItem('blinky_prefs') || 'null');
+        if (savedPrefs) Object.assign(prefs, savedPrefs);
+        const savedAudio = JSON.parse(localStorage.getItem('blinky_audio') || 'null');
+        if (savedAudio) Object.assign(audioPrefs, savedAudio);
+      } catch (e) {}
+
+      // Canción larga de piano en bucle continuo (audio/portada_piano.wav)
+      const pianoAudio = new Audio('audio/portada_piano.wav');
+      pianoAudio.loop = true;
+      let pianoUnlocked = false;
+
+      function syncPiano() {
+        pianoAudio.volume = Math.max(0, Math.min(1, audioPrefs.volume * 0.72));
+        if (audioPrefs.enabled) {
+          pianoAudio.play().then(() => {
+            pianoUnlocked = true;
+          }).catch(() => {
+            pianoUnlocked = false;
+          });
+        } else {
+          pianoAudio.pause();
+        }
+      }
+
+      // Intenta iniciar de inmediato; si el navegador requiere una interacción previa, arranca al primer toque/clic/tecla
+      syncPiano();
+      function unlockPianoOnGesture() {
+        if (pianoUnlocked || !audioPrefs.enabled) return;
+        syncPiano();
+      }
+      window.addEventListener('pointerdown', unlockPianoOnGesture, { passive: true });
+      window.addEventListener('keydown', unlockPianoOnGesture, { passive: true });
+
+      const modal = document.getElementById('modal-settings');
+      const cfgAudio = document.getElementById('cfg-audio');
+      const cfgVolume = document.getElementById('cfg-volume');
+      const cfgVolumeLabel = document.getElementById('cfg-volume-label');
+      const cfgContrast = document.getElementById('cfg-contrast');
+      const cfgSubtitles = document.getElementById('cfg-subtitles');
+      const cfgMotion = document.getElementById('cfg-motion');
+
+      function syncUI() {
+        document.body.classList.toggle('high-contrast', prefs.highContrast);
+        document.body.classList.toggle('reduce-motion', prefs.reduceMotion);
+        cfgAudio.checked = audioPrefs.enabled;
+        const pct = Math.round(audioPrefs.volume * 100);
+        cfgVolume.value = String(pct);
+        cfgVolumeLabel.textContent = `${pct}%`;
+        cfgContrast.checked = prefs.highContrast;
+        cfgSubtitles.checked = prefs.subtitles;
+        cfgMotion.checked = prefs.reduceMotion;
+
+        document.querySelectorAll('.cfg-scale-btn').forEach((btn) => {
+          const active = Number(btn.dataset.fontScale) === prefs.fontScale;
+          btn.classList.toggle('bg-amber-400/20', active);
+          btn.classList.toggle('border-amber-400/60', active);
+          btn.classList.toggle('text-amber-200', active);
+        });
+      }
+
+      function persist() {
+        try {
+          localStorage.setItem('blinky_prefs', JSON.stringify(prefs));
+          localStorage.setItem('blinky_audio', JSON.stringify(audioPrefs));
+        } catch (e) {}
+      }
+
+      function openModal() {
+        syncUI();
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      document.getElementById('btn-quick-settings').addEventListener('click', openModal);
+      document.getElementById('close-settings').addEventListener('click', closeModal);
+      document.getElementById('save-close-settings').addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      cfgAudio.addEventListener('change', () => {
+        audioPrefs.enabled = cfgAudio.checked;
+        persist();
+        syncPiano();
+      });
+      cfgVolume.addEventListener('input', () => {
+        audioPrefs.volume = Number(cfgVolume.value) / 100;
+        cfgVolumeLabel.textContent = `${cfgVolume.value}%`;
+        persist();
+        syncPiano();
+      });
+      cfgContrast.addEventListener('change', () => {
+        prefs.highContrast = cfgContrast.checked;
+        persist();
+        syncUI();
+      });
+      cfgSubtitles.addEventListener('change', () => {
+        prefs.subtitles = cfgSubtitles.checked;
+        persist();
+      });
+      cfgMotion.addEventListener('change', () => {
+        prefs.reduceMotion = cfgMotion.checked;
+        persist();
+        syncUI();
+      });
+      document.querySelectorAll('.cfg-scale-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          prefs.fontScale = Number(btn.dataset.fontScale);
+          persist();
+          syncUI();
+        });
+      });
+
+      let isTransitioning = false;
+      const exitCurtain = document.getElementById('exit-curtain');
+
+      document.getElementById('btn-play').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (isTransitioning) return;
+        isTransitioning = true;
+        persist();
+
+        const targetUrl = e.currentTarget.getAttribute('href') || 'index.html?play=1';
+
+        // Fundido suave del piano y de la portada hacia la oscuridad antes de entrar al Acto I
+        if (prefs.reduceMotion) {
+          pianoAudio.pause();
+          window.location.href = targetUrl;
+          return;
+        }
+
+        // Fundido limpio a oscuridad y atenuación suave del piano
+        exitCurtain.classList.remove('pointer-events-none', 'opacity-0');
+        exitCurtain.classList.add('opacity-100');
+
+        const startVol = pianoAudio.volume;
+        const fadeSteps = 14;
+        let step = 0;
+        const fadeTimer = setInterval(() => {
+          step += 1;
+          pianoAudio.volume = Math.max(0, startVol * (1 - step / fadeSteps));
+          if (step >= fadeSteps) {
+            clearInterval(fadeTimer);
+            pianoAudio.pause();
+          }
+        }, 45);
+
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 720);
+      });
+
+      syncUI();
+    })();
+  </script>
+</body>
+</html>

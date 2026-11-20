@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html class="h-full w-full overflow-hidden select-none" lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blinky's Blind Heart — Novela Visual Sensorial</title>
+  <!-- Tailwind CSS v3 CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Google Fonts: Cormorant Garamond, Great Vibes (cursiva de actos), Merriweather & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600&family=Great+Vibes&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Estilos compartidos responsive -->
+  <link rel="stylesheet" href="styles/theme.css" />
+</head>
+<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-100 antialiased font-narrative relative scene-fallback-bg" style="background-color: #0D131A;">
+
+  <!-- ==================== LIENZO PRINCIPAL DEL JUEGO ==================== -->
+  <main id="game-screen" class="relative w-screen h-screen overflow-hidden flex flex-col justify-between" data-purpose="game-screen">
+
+    <!-- ==================== CAPA 1: FONDO E ILUSTRACIÓN s(n).png ==================== -->
+    <div id="scene-bg-wrapper" class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden" aria-hidden="true">
+      <!-- Imagen automática images/s1.png ... images/s52.png (oculta limpiamente si aún no existe) -->
+      <img
+        id="scene-bg"
+        src=""
+        alt=""
+        class="scene-bg-image absolute inset-0 w-full h-full object-cover is-loading hidden"
+      />
+    </div>
+
+    <!-- Resplandor ambiental suave -->
+    <div
+      id="warm-light-overlay"
+      class="absolute right-[18%] bottom-[26%] w-[42vw] max-w-[520px] h-[36vh] max-h-[380px] rounded-full bg-amber-400/20 blur-3xl pointer-events-none mix-blend-screen z-[1] transition-opacity duration-500"
+      data-purpose="warm-light-overlay"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Capa leve rojiza animada para escenas de impacto o tensión catártica -->
+    <div
+      id="tension-overlay"
+      class="tension-crimson-layer absolute inset-0 pointer-events-none z-[2]"
+      aria-hidden="true"
+    >
+      <div class="tension-crimson-pulse absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,transparent_38%,rgba(185,28,28,0.18)_100%)]"></div>
+    </div>
+
+    <!-- Viñeta cinematográfica -->
+    <div
+      class="absolute inset-0 pointer-events-none z-[2] bg-[radial-gradient(ellipse_at_55%_50%,transparent_44%,rgba(20,27,38,0.68)_88%,rgba(11,16,24,0.9)_100%)]"
+      data-purpose="cinematic-vignette"
+      aria-hidden="true"
+    ></div>
+
+    <!-- ==================== CAPA 2: BARRA SUPERIOR HUD (COMPACTA Y RESPONSIVE) ==================== -->
+    <header class="vn-hud-header relative z-10 w-full flex items-center justify-between gap-2 pointer-events-none" data-purpose="system-hud">
+      <!-- Indicador de Capítulo / Acto -->
+      <div
+        id="chapter-indicator"
+        class="vn-chapter-pill pointer-events-auto flex items-center bg-[#0D131A]/75 backdrop-blur-md border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.4)] max-w-[48vw] sm:max-w-none"
+        data-purpose="chapter-indicator"
+      >
+        <span id="chapter-title" class="vn-chapter-title font-title font-semibold tracking-wide text-stone-200 leading-tight whitespace-nowrap truncate">
+          El Nido Roto
+        </span>
+      </div>
+
+      <!-- Menú Hamburguesa Compacto con Despliegue Vertical Centrado de Íconos -->
+      <div id="hud-menu-wrapper" class="relative pointer-events-auto" data-purpose="quick-menu">
+        <button
+          id="btn-hud-toggle"
+          type="button"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="hud-dropdown"
+          title="Menú"
+          class="vn-hud-btn vn-menu-toggle relative flex items-center justify-center rounded-xl bg-[#0D131A]/80 backdrop-blur-md border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.45)] text-stone-200 cursor-pointer"
+        >
+          <!-- Ícono hamburguesa perfectamente centrado -->
+          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
+          <!-- Ícono X perfectamente centrado -->
+          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
+        </button>
+
+        <nav
+          id="hud-dropdown"
+          aria-label="Menú del juego"
+          class="vn-hud-dropdown absolute top-full mt-2 flex flex-col items-center gap-1 p-1.5 rounded-2xl bg-[#0D131A]/88 backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.62)] text-stone-300"
+        >
+          <button
+            id="btn-home"
+            type="button"
+            aria-label="Inicio / Menú Principal"
+            title="Inicio"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
+          >
+            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            </svg>
+          </button>
+
+          <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
+
+          <button
+            id="btn-audio"
+            type="button"
+            aria-label="Configuración de audio"
+            title="Audio"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
+          >
+            <svg id="audio-icon-on" class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            </svg>
+            <svg id="audio-icon-off" class="vn-hud-icon opacity-70 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l4-4m0 4l-4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            </svg>
+          </button>
+
+          <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
+
+          <button
+            id="btn-accessibility"
+            type="button"
+            aria-label="Accesibilidad y Contraste"
+            title="Accesibilidad"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
+          >
+            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            </svg>
+          </button>
+
+          <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
+
+          <button
+            id="btn-history"
+            type="button"
+            aria-label="Historial de diálogos"
+            title="Historial"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
+          >
+            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ==================== CAPA 3: ÁREA DE DIÁLOGO ADV ==================== -->
+    <section class="vn-dialogue-section relative z-10 w-full flex flex-col items-center" data-purpose="dialogue-container">
+      <blinky-dialogue-box id="dialogue-box" class="w-full flex justify-center"></blinky-dialogue-box>
+    </section>
+
+    <!-- ==================== TRANSICIÓN DE TÍTULO DE ACTO (TIPOGRAFÍA + PINCELADA) ==================== -->
+    <div
+      id="act-intro-overlay"
+      class="act-intro-overlay is-hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#070B10] px-6 text-center cursor-pointer"
+      role="status"
+      aria-live="polite"
+    >
+      <script>
+        if (window.location.search.indexOf('play=1') !== -1) {
+          document.getElementById('act-intro-overlay').classList.remove('is-hidden');
+        }
+      </script>
+      <div class="relative flex flex-col items-center max-w-2xl">
+        <p id="act-intro-eyebrow" class="act-intro-eyebrow font-ui text-[clamp(0.7rem,1.4vh,0.85rem)] uppercase text-amber-200/80 mb-3">
+          Acto I
+        </p>
+
+        <h1
+          id="act-intro-title"
+          class="font-act-cursive text-stone-100 text-[clamp(3.1rem,8vw,5.6rem)] leading-[1.12] tracking-[0.02em] px-2"
+          style="text-shadow: 0 6px 28px rgba(0, 0, 0, 0.82);"
+        ></h1>
+
+        <!-- Pincelada orgánica estilo acuarela/tinta dorada al final de la tipografía -->
+        <div class="relative mt-2 w-[clamp(13rem,30vw,22rem)] h-8 flex items-center justify-center" aria-hidden="true">
+          <div class="act-brush-glow absolute inset-x-4 top-1/2 -translate-y-1/2 h-3 rounded-full bg-amber-400/25 blur-md"></div>
+          <svg class="w-full h-full overflow-visible" viewBox="0 0 340 34" fill="none">
+            <defs>
+              <linearGradient id="actBrushGrad" x1="0" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.1" />
+                <stop offset="22%" stop-color="#FBBF24" stop-opacity="0.92" />
+                <stop offset="76%" stop-color="#FDE68A" stop-opacity="0.95" />
+                <stop offset="100%" stop-color="#FDE68A" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="actBrushSubGrad" x1="0" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#94A3B8" stop-opacity="0" />
+                <stop offset="35%" stop-color="#FDE68A" stop-opacity="0.55" />
+                <stop offset="88%" stop-color="#F59E0B" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#F59E0B" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <!-- Trazo principal de pincelada con ligera curvatura orgánica -->
+            <path
+              class="act-brush-path"
+              d="M 14 20 C 78 12, 162 11, 245 15 C 282 17, 310 15, 328 11"
+              stroke="url(#actBrushGrad)"
+              stroke-width="3.6"
+              stroke-linecap="round"
+            />
+            <!-- Segunda cerda fina de pincel para efecto artístico artesanal -->
+            <path
+              class="act-brush-accent"
+              d="M 32 23 C 102 18, 188 18, 266 20 C 292 21, 308 19, 320 16"
+              stroke="url(#actBrushSubGrad)"
+              stroke-width="1.35"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== MODALES DE SISTEMA (HUD) ==================== -->
+
+  <!-- 1. Modal de Inicio / Menú Principal -->
+  <div id="modal-home" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-home-title">
+    <div class="w-full max-w-md rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+      <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between gap-4">
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-amber-300/90 font-semibold">Novela Visual Sensorial</p>
+          <h2 id="modal-home-title" class="font-title text-2xl font-semibold text-stone-100">Blinky's Blind Heart</h2>
+        </div>
+        <button data-close-modal="modal-home" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar menú">✕</button>
+      </div>
+
+      <div class="p-5 space-y-3">
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Guía a Blinky a través de la ciudad escuchando, olfateando y sintiendo el entorno. Tus decisiones definirán su destino.
+        </p>
+
+        <div class="flex flex-col gap-2.5 pt-1">
+          <button id="home-continue" type="button" class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
+            <span>Continuar lectura</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <button id="home-restart" type="button" class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
+            <span>Reiniciar la historia desde el inicio</span>
+            <span aria-hidden="true">↺</span>
+          </button>
+          <a href="inicio.html" class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
+            <span>Volver a la pantalla de inicio</span>
+            <span aria-hidden="true">⌂</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Modal de Audio -->
+  <div id="modal-audio" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-audio-title">
+    <div class="w-full max-w-sm rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+      <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <h2 id="modal-audio-title" class="font-title text-xl font-semibold text-stone-100">Audio y Ambiente</h2>
+        <button data-close-modal="modal-audio" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar audio">✕</button>
+      </div>
+      <div class="p-5 space-y-4 text-sm">
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <p class="font-medium text-stone-100 text-xs sm:text-sm">Sonido ambiental e interfaz</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Activa lluvia suave, efectos y música.</p>
+          </div>
+          <button id="audio-toggle-btn" type="button" class="px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-white/5 border-white/15 text-slate-200 hover:border-amber-300/50">
+            Desactivado
+          </button>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="flex justify-between text-xs text-slate-300">
+            <label for="audio-volume">Volumen general</label>
+            <span id="audio-volume-label">45%</span>
+          </div>
+          <input id="audio-volume" type="range" min="0" max="100" value="45" class="w-full accent-amber-400 cursor-pointer" />
+        </div>
+
+        <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-slate-300 space-y-0.5">
+          <p class="text-slate-400 uppercase tracking-wider text-[10px] font-semibold">Sonido de la escena</p>
+          <p id="audio-current-cue" class="text-stone-200">—</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Modal de Accesibilidad -->
+  <div id="modal-accessibility" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-a11y-title">
+    <div class="w-full max-w-sm rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+      <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <h2 id="modal-a11y-title" class="font-title text-xl font-semibold text-stone-100">Accesibilidad y Lectura</h2>
+        <button data-close-modal="modal-accessibility" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar accesibilidad">✕</button>
+      </div>
+      <div class="p-5 space-y-4 text-sm">
+        <label class="flex items-center justify-between gap-4 cursor-pointer">
+          <div>
+            <p class="font-medium text-stone-100 text-xs sm:text-sm">Alto Contraste</p>
+            <p class="text-[11px] text-slate-400">Fondo negro puro y bordes de máximo contraste.</p>
+          </div>
+          <input id="a11y-contrast" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
+        </label>
+
+        <label class="flex items-center justify-between gap-4 cursor-pointer">
+          <div>
+            <p class="font-medium text-stone-100 text-xs sm:text-sm">Subtítulos de sonido</p>
+            <p class="text-[11px] text-slate-400">Muestra descripciones sonoras en el diálogo.</p>
+          </div>
+          <input id="a11y-subtitles" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
+        </label>
+
+        <label class="flex items-center justify-between gap-4 cursor-pointer">
+          <div>
+            <p class="font-medium text-stone-100 text-xs sm:text-sm">Reducir movimiento</p>
+            <p class="text-[11px] text-slate-400">Desactiva animaciones y transiciones.</p>
+          </div>
+          <input id="a11y-motion" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
+        </label>
+
+        <div class="space-y-2 pt-2 border-t border-white/10">
+          <p class="font-medium text-stone-100 text-xs sm:text-sm">Tamaño de letra</p>
+          <div class="grid grid-cols-3 gap-2">
+            <button data-font-scale="1" type="button" class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Normal</button>
+            <button data-font-scale="1.12" type="button" class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Grande</button>
+            <button data-font-scale="1.24" type="button" class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Extra</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Modal de Historial de Diálogos -->
+  <div id="modal-history" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-history-title">
+    <div class="w-full max-w-xl max-h-[82vh] flex flex-col rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
+      <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <div>
+          <h2 id="modal-history-title" class="font-title text-xl font-semibold text-stone-100">Historial de Diálogos</h2>
+          <p class="font-ui text-[11px] text-slate-400">Relee los momentos y decisiones de tu recorrido.</p>
+        </div>
+        <button data-close-modal="modal-history" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar historial">✕</button>
+      </div>
+      <div id="history-list" class="p-5 overflow-y-auto vn-scroll space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- 5. Modal de Encuesta de Experiencia (opcional desde el cierre de la historia) -->
+  <div id="modal-survey" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-survey-title">
+    <div class="w-full max-w-md max-h-[88vh] flex flex-col rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+      <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <h2 id="modal-survey-title" class="font-title text-xl font-semibold text-stone-100">Comparte tus impresiones</h2>
+        <button data-close-modal="modal-survey" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar encuesta">✕</button>
+      </div>
+
+      <div id="survey-body" class="p-5 overflow-y-auto vn-scroll space-y-4 text-xs sm:text-sm">
+        <p class="text-slate-300 leading-relaxed">
+          Has llegado al final del recorrido. Cuéntanos cómo te sentiste durante la lectura y cómo crees que se sintió Blinky.
+        </p>
+
+        <div id="survey-error" class="hidden p-3 rounded-xl bg-white/5 border border-amber-300/50 text-amber-200 text-xs font-medium" role="alert">
+          Por favor, selecciona a qué final llegaste e ingresa tu alias o nombre para poder enviar tus respuestas.
+        </div>
+
+        <form id="survey-form" class="space-y-3.5" novalidate>
+          <div>
+            <label for="survey-alias" class="block text-xs font-medium text-slate-200 mb-1">Tu nombre o alias</label>
+            <input id="survey-alias" type="text" placeholder="Ej. Sofía" class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300" />
+          </div>
+
+          <fieldset class="space-y-1.5">
+            <legend class="text-xs font-medium text-slate-200 mb-1">¿A qué final llegaste?</legend>
+            <label class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+              <input type="radio" name="survey-ending" value="F01" class="text-amber-400 bg-[#161F2B] border-white/25" />
+              <span class="text-xs text-stone-200">Un nuevo hogar (Adopción con la niña)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+              <input type="radio" name="survey-ending" value="F02" class="text-amber-400 bg-[#161F2B] border-white/25" />
+              <span class="text-xs text-stone-200">El falso calor (El calefactor metálico)</span>
+            </label>
+          </fieldset>
+
+          <div>
+            <label for="survey-reflection" class="block text-xs font-medium text-slate-200 mb-1">¿Cómo crees que se sintió Blinky a lo largo del viaje? (Opcional)</label>
+            <textarea id="survey-reflection" rows="3" placeholder="Escribe tus impresiones..." class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300"></textarea>
+          </div>
+
+          <button type="submit" class="vn-btn w-full rounded-xl font-ui font-semibold text-center justify-center flex cursor-pointer">
+            Enviar mis impresiones
+          </button>
+        </form>
+
+        <div id="survey-confirm" class="hidden space-y-3 p-4 rounded-xl bg-white/[0.04] border border-white/15">
+          <p class="text-stone-100 text-xs sm:text-sm leading-relaxed">
+            ¿Deseas enviar tus impresiones sobre la experiencia de Blinky con estos datos?
+          </p>
+          <div class="flex gap-2">
+            <button id="survey-confirm-yes" type="button" class="vn-btn flex-1 rounded-xl font-ui text-xs font-semibold justify-center flex cursor-pointer">
+              Confirmar y enviar
+            </button>
+            <button id="survey-confirm-no" type="button" class="flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-slate-200 cursor-pointer">
+              Volver y corregir
+            </button>
+          </div>
+        </div>
+
+        <div id="survey-success" class="hidden space-y-3 text-center py-3">
+          <p class="font-title text-2xl font-semibold text-amber-200">¡Muchas gracias por tus respuestas!</p>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Tus reflexiones nos ayudan a mejorar la experiencia sensorial e inclusiva de Blinky.
+          </p>
+          <button id="survey-restart-btn" type="button" class="vn-btn w-full rounded-xl font-ui text-xs sm:text-sm font-semibold justify-center flex cursor-pointer">
+            Volver a la portada principal
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPTS: DATOS + COMPONENTES + ORQUESTADOR ==================== -->
+  <script src="data/story-data.js"></script>
+  <script src="components/action-buttons.js"></script>
+  <script src="components/dialogue-box.js"></script>
+
+  <script>
+    (function () {
+      const STORY = window.BLINKY_STORY;
+
+      // -------------------- Estado Global de la Novela --------------------
+      const appState = {
+        currentId: STORY.START_ID,
+        history: [],
+        memory: {
+          reaccion: null,
+          guia: null,
+          rastro_alimento: null,
+          destino: null
+        },
+        // Control de tutorial: muestra las pistas de teclado solo las primeras veces
+        tutorial: {
+          actionStepsShown: 0,    // Muestra "Enter" en las 2 primeras pantallas lineales
+          decisionShownId: null,  // Muestra "Tecla 1 / Tecla 2" solo en la primera decisión que ve el usuario
+          decisionCompleted: false
+        },
+        prefs: {
+          highContrast: false,
+          subtitles: false,
+          reduceMotion: false,
+          fontScale: 1
+        },
+        audioEnabled: false,
+        volume: 0.45
+      };
+
+      // -------------------- Referencias DOM --------------------
+      const sceneBgWrapperEl = document.getElementById('scene-bg-wrapper');
+      const sceneBgEl = document.getElementById('scene-bg');
+      const warmLightEl = document.getElementById('warm-light-overlay');
+      const tensionOverlayEl = document.getElementById('tension-overlay');
+      const chapterTitleEl = document.getElementById('chapter-title');
+      const dialogueBoxEl = document.getElementById('dialogue-box');
+
+      function applyTensionAtmosphere(screen) {
+        const mode = screen.tension || null;
+        sceneBgWrapperEl.classList.remove('scene-impact-shake', 'scene-uneasy-drift');
+
+        if (mode && !appState.prefs.reduceMotion) {
+          tensionOverlayEl.classList.add('is-active');
+          warmLightEl.style.opacity = '0.35';
+          void sceneBgWrapperEl.offsetWidth;
+          if (mode === 'impact') {
+            sceneBgWrapperEl.classList.add('scene-impact-shake');
+            // Tras la sacudida breve inicial, deja una micro-turbulencia sutil flotando
+            setTimeout(() => {
+              if (appState.currentId === screen.id && !appState.prefs.reduceMotion) {
+                sceneBgWrapperEl.classList.remove('scene-impact-shake');
+                sceneBgWrapperEl.classList.add('scene-uneasy-drift');
+              }
+            }, 500);
+          } else {
+            sceneBgWrapperEl.classList.add('scene-uneasy-drift');
+          }
+        } else if (mode) {
+          // Con Reducir movimiento activo: solo tono rojizo estático muy leve
+          tensionOverlayEl.classList.add('is-active');
+          warmLightEl.style.opacity = '0.35';
+        } else {
+          tensionOverlayEl.classList.remove('is-active');
+          warmLightEl.style.opacity = '1';
+        }
+      }
+
+      // -------------------- Motor de Audio (WAV/MP3 reales + Web Audio) --------------------
+      const audioEngine = (function () {
+        let ctx = null;
+        let rainAudio = null;
+        let sceneAudio = null;
+        let musicAudio = null;
+        let currentTrackKey = null;
+        let pendingUnlock = false;
+
+        function ensureContext() {
+          if (!ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return null;
+            ctx = new AudioCtx();
+          }
+          if (ctx.state === 'suspended') {
+            ctx.resume().catch(() => {});
+          }
+          return ctx;
+        }
+
+        function persistAudioPrefs() {
+          try {
+            localStorage.setItem('blinky_audio', JSON.stringify({
+              enabled: appState.audioEnabled,
+              volume: appState.volume
+            }));
+          } catch (e) {}
+        }
+
+        function startAmbientRain() {
+          if (!appState.audioEnabled) return;
+          if (!rainAudio) {
+            rainAudio = new Audio('audio/lluvia.wav');
+            rainAudio.loop = true;
+          }
+          rainAudio.volume = appState.volume * 0.48;
+          rainAudio.play().catch(() => {
+            pendingUnlock = true;
+          });
+        }
+
+        function stopAmbientRain() {
+          if (rainAudio) {
+            rainAudio.pause();
+          }
+        }
+
+        function playSceneSound(screen) {
+          if (sceneAudio) {
+            sceneAudio.pause();
+            sceneAudio = null;
+          }
+          if (!appState.audioEnabled || !screen) return;
+
+          const base = `audio/s${screen.number}`;
+          const audio = new Audio(`${base}.wav`);
+          audio.volume = appState.volume * 0.68;
+          // Escenas atmosféricas de bucle suave (S01, S03, S04, S07)
+          audio.loop = [1, 3, 4, 7].includes(screen.number);
+          audio.addEventListener('error', () => {
+            if (!audio.dataset.triedMp3) {
+              audio.dataset.triedMp3 = '1';
+              audio.src = `${base}.mp3`;
+              audio.play().catch(() => {});
+            }
+          });
+          audio.play().catch(() => {
+            pendingUnlock = true;
+          });
+          sceneAudio = audio;
+        }
+
+        // Buffer reutilizable para golpe orgánico de máquina de escribir antigua
+        let typewriterBuffer = null;
+
+        function getTypewriterBuffer(ac) {
+          if (typewriterBuffer) return typewriterBuffer;
+          const len = Math.floor(ac.sampleRate * 0.032);
+          const buf = ac.createBuffer(1, len, ac.sampleRate);
+          const data = buf.getChannelData(0);
+          for (let i = 0; i < len; i++) {
+            const t = i / ac.sampleRate;
+            // Golpe mecánico seco + resonancia metálica corta de tecla antigua
+            const click = (Math.random() * 2 - 1) * Math.exp(-t * 280);
+            const body = Math.sin(2 * Math.PI * 1250 * t) * Math.exp(-t * 210) * 0.45;
+            const thud = Math.sin(2 * Math.PI * 240 * t) * Math.exp(-t * 160) * 0.35;
+            data[i] = (click * 0.72 + body + thud) * 0.85;
+          }
+          typewriterBuffer = buf;
+          return buf;
+        }
+
+        function playTypewriterKey(strong = false) {
+          if (!appState.audioEnabled) return;
+          const ac = ensureContext();
+          if (!ac) return;
+          const src = ac.createBufferSource();
+          src.buffer = getTypewriterBuffer(ac);
+          // Ligera variación orgánica de tono; más grave y contundente en el título del acto
+          src.playbackRate.value = strong
+            ? (0.78 + Math.random() * 0.16)
+            : (0.88 + Math.random() * 0.26);
+
+          const filter = ac.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.value = strong
+            ? (1450 + Math.random() * 350)
+            : (1850 + Math.random() * 550);
+          filter.Q.value = strong ? 0.85 : 1.1;
+
+          const gain = ac.createGain();
+          gain.gain.value = strong
+            ? (0.34 + Math.random() * 0.08) * appState.volume
+            : (0.09 + Math.random() * 0.05) * appState.volume;
+
+          src.connect(filter);
+          filter.connect(gain);
+          gain.connect(ac.destination);
+          src.start();
+
+          // En el título del acto añadimos un golpe mecánico grave adicional más marcado
+          if (strong) {
+            const osc = ac.createOscillator();
+            const thudGain = ac.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(195 + Math.random() * 35, ac.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(62, ac.currentTime + 0.045);
+            thudGain.gain.setValueAtTime(0.16 * appState.volume, ac.currentTime);
+            thudGain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.055);
+            osc.connect(thudGain);
+            thudGain.connect(ac.destination);
+            osc.start();
+            osc.stop(ac.currentTime + 0.06);
+          }
+        }
+
+        function playHoverTick() {
+          if (!appState.audioEnabled) return;
+          const ac = ensureContext();
+          if (!ac) return;
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, ac.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(660, ac.currentTime + 0.04);
+          gain.gain.setValueAtTime(0.022 * appState.volume, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.05);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start();
+          osc.stop(ac.currentTime + 0.055);
+        }
+
+        function playClickChime() {
+          if (!appState.audioEnabled) return;
+          const ac = ensureContext();
+          if (!ac) return;
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(340, ac.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(460, ac.currentTime + 0.08);
+          gain.gain.setValueAtTime(0.04 * appState.volume, ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.095);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start();
+          osc.stop(ac.currentTime + 0.1);
+        }
+
+        function tryPlayTrack(trackKey) {
+          if (!appState.audioEnabled || !trackKey) {
+            if (musicAudio) {
+              musicAudio.pause();
+              musicAudio = null;
+              currentTrackKey = null;
+            }
+            return;
+          }
+          if (currentTrackKey === trackKey && musicAudio) {
+            musicAudio.volume = appState.volume * 0.65;
+            return;
+          }
+          if (musicAudio) {
+            musicAudio.pause();
+            musicAudio = null;
+          }
+          const audio = new Audio(`audio/${trackKey}.mp3`);
+          audio.loop = true;
+          audio.volume = appState.volume * 0.65;
+          audio.play().catch(() => {});
+          musicAudio = audio;
+          currentTrackKey = trackKey;
+        }
+
+        // Si el navegador bloquea el autoplay inicial, reanuda en el primer clic/tecla
+        function unlockOnGesture() {
+          if (!pendingUnlock || !appState.audioEnabled) return;
+          pendingUnlock = false;
+          const screen = STORY.SCREENS[appState.currentId];
+          startAmbientRain();
+          if (sceneAudio) sceneAudio.play().catch(() => {});
+          else if (screen) playSceneSound(screen);
+        }
+        window.addEventListener('pointerdown', unlockOnGesture, { passive: true });
+        window.addEventListener('keydown', unlockOnGesture, { passive: true });
+
+        return {
+          setEnabled(enabled) {
+            appState.audioEnabled = enabled;
+            persistAudioPrefs();
+            const screen = STORY.SCREENS[appState.currentId];
+            if (enabled) {
+              startAmbientRain();
+              playSceneSound(screen);
+              if (screen && screen.musicTrack) tryPlayTrack(screen.musicTrack);
+            } else {
+              stopAmbientRain();
+              if (sceneAudio) {
+                sceneAudio.pause();
+                sceneAudio = null;
+              }
+              tryPlayTrack(null);
+            }
+            updateAudioUI();
+          },
+          setVolume(vol) {
+            appState.volume = vol;
+            persistAudioPrefs();
+            if (rainAudio) rainAudio.volume = vol * 0.48;
+            if (sceneAudio) sceneAudio.volume = vol * 0.68;
+            if (musicAudio) musicAudio.volume = vol * 0.65;
+          },
+          onScreenChange(screen) {
+            if (!appState.audioEnabled) return;
+            if (screen.isEnding === 'F01') {
+              stopAmbientRain();
+            } else {
+              startAmbientRain();
+            }
+            playSceneSound(screen);
+            if (screen.musicTrack) {
+              tryPlayTrack(screen.musicTrack);
+            } else if (currentTrackKey) {
+              tryPlayTrack(null);
+            }
+          },
+          playTypewriterKey,
+          playHoverTick,
+          playClickChime
+        };
+      })();
+
+      // -------------------- Carga Rápida de Imágenes s(n).png --------------------
+      let activeImageToken = 0;
+
+      function loadSceneBackground(imagePath) {
+        const token = ++activeImageToken;
+        const probe = new Image();
+        probe.onload = function () {
+          if (token !== activeImageToken) return;
+          sceneBgEl.src = imagePath;
+          sceneBgEl.classList.remove('hidden', 'is-loading');
+          sceneBgEl.classList.add('is-loaded');
+        };
+        probe.onerror = function () {
+          if (token !== activeImageToken) return;
+          sceneBgEl.classList.add('hidden', 'is-loading');
+          sceneBgEl.classList.remove('is-loaded');
+          sceneBgEl.removeAttribute('src');
+        };
+        probe.src = imagePath;
+      }
+
+      // -------------------- Lógica de Tutorial (solo primeras veces) --------------------
+      function shouldShowTutorialHints(screen) {
+        if (screen.choices.length > 1) {
+          if (appState.tutorial.decisionCompleted) return false;
+          if (!appState.tutorial.decisionShownId) {
+            appState.tutorial.decisionShownId = screen.id;
+          }
+          return appState.tutorial.decisionShownId === screen.id;
+        }
+        return appState.tutorial.actionStepsShown < 2;
+      }
+
+      // -------------------- Renderizador Principal de Pantalla --------------------
+      function renderScreen(screenId, options = {}) {
+        const screen = STORY.SCREENS[screenId];
+        if (!screen) return;
+
+        appState.currentId = screen.id;
+
+        const act = STORY.ACTS[screen.act];
+        chapterTitleEl.textContent = act ? act.shortTitle : 'El Nido Roto';
+        document.title = `Blinky's Blind Heart — ${screen.title}`;
+
+        loadSceneBackground(screen.image);
+        applyTensionAtmosphere(screen);
+        audioEngine.onScreenChange(screen);
+
+        const useTypewriter =
+          !options.skipTypewriter &&
+          !appState.prefs.reduceMotion &&
+          screen.act === 'acto-1';
+
+        dialogueBoxEl.render({
+          speaker: screen.speaker,
+          speakerType: screen.speakerType,
+          text: screen.text,
+          html: screen.html || '',
+          audioCue: screen.audioCue || '',
+          showSubtitles: appState.prefs.subtitles,
+          choices: screen.choices,
+          showTutorialHints: shouldShowTutorialHints(screen),
+          canGoBack: appState.history.length > 0,
+          showSurveyAction: Boolean(screen.isEnding),
+          typewriter: useTypewriter
+        });
+
+        document.getElementById('audio-current-cue').textContent = screen.audioCue || 'Ambiente silencioso';
+      }
+
+      function restartStory() {
+        appState.history = [];
+        appState.memory = { reaccion: null, guia: null, rastro_alimento: null, destino: null };
+        renderScreen(STORY.START_ID);
+      }
+
+      // -------------------- Eventos del Componente de Diálogo y Botones --------------------
+      dialogueBoxEl.addEventListener('blinky:type-tick', () => {
+        audioEngine.playTypewriterKey();
+      });
+
+      dialogueBoxEl.addEventListener('blinky:btn-hover', () => {
+        audioEngine.playHoverTick();
+      });
+
+      dialogueBoxEl.addEventListener('blinky:choose', (e) => {
+        const choice = e.detail;
+        const currentScreen = STORY.SCREENS[appState.currentId];
+        audioEngine.playClickChime();
+
+        if (choice.isRestart) {
+          if (currentScreen && currentScreen.isEnding === 'F01') {
+            window.location.href = 'inicio.html';
+            return;
+          }
+          restartStory();
+          return;
+        }
+
+        // Registrar progreso de tutorial
+        if (currentScreen && currentScreen.choices.length > 1) {
+          appState.tutorial.decisionCompleted = true;
+        } else if (appState.tutorial.actionStepsShown < 2) {
+          appState.tutorial.actionStepsShown += 1;
+        }
+
+        appState.history.push({
+          id: appState.currentId,
+          chosenLabel: choice.label,
+          memorySnapshot: { ...appState.memory }
+        });
+
+        if (choice.state) {
+          Object.assign(appState.memory, choice.state);
+        }
+
+        if (choice.next && STORY.SCREENS[choice.next]) {
+          renderScreen(choice.next);
+        }
+      });
+
+      dialogueBoxEl.addEventListener('blinky:back', () => {
+        if (appState.history.length === 0) return;
+        audioEngine.playClickChime();
+        const previous = appState.history.pop();
+        if (previous.memorySnapshot) {
+          appState.memory = { ...previous.memorySnapshot };
+        }
+        renderScreen(previous.id);
+      });
+
+      dialogueBoxEl.addEventListener('blinky:survey', () => {
+        openSurveyModal();
+      });
+
+      // -------------------- Gestión de Modales HUD --------------------
+      const MODAL_IDS = ['modal-home', 'modal-audio', 'modal-accessibility', 'modal-history', 'modal-survey'];
+
+      function openModal(id) {
+        MODAL_IDS.forEach((mid) => {
+          const el = document.getElementById(mid);
+          if (!el) return;
+          if (mid === id) {
+            el.classList.remove('hidden');
+            el.classList.add('flex');
+          } else {
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+          }
+        });
+      }
+
+      function closeAllModals() {
+        MODAL_IDS.forEach((mid) => {
+          const el = document.getElementById(mid);
+          if (!el) return;
+          el.classList.add('hidden');
+          el.classList.remove('flex');
+        });
+      }
+
+      function isAnyModalOpen() {
+        return MODAL_IDS.some((mid) => !document.getElementById(mid).classList.contains('hidden'));
+      }
+
+      document.querySelectorAll('[data-close-modal]').forEach((btn) => {
+        btn.addEventListener('click', closeAllModals);
+      });
+
+      MODAL_IDS.forEach((mid) => {
+        const backdrop = document.getElementById(mid);
+        backdrop.addEventListener('click', (e) => {
+          if (e.target === backdrop) closeAllModals();
+        });
+      });
+
+      // -------------------- Menú Hamburguesa Vertical --------------------
+      const hudMenuWrapper = document.getElementById('hud-menu-wrapper');
+      const hudToggleBtn = document.getElementById('btn-hud-toggle');
+      const hudDropdown = document.getElementById('hud-dropdown');
+
+      function setHudMenuOpen(open) {
+        hudDropdown.classList.toggle('is-open', open);
+        hudToggleBtn.setAttribute('aria-expanded', String(open));
+      }
+
+      hudToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = hudDropdown.classList.contains('is-open');
+        setHudMenuOpen(!isOpen);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!hudMenuWrapper.contains(e.target)) {
+          setHudMenuOpen(false);
+        }
+      });
+
+      document.getElementById('btn-home').addEventListener('click', () => {
+        setHudMenuOpen(false);
+        openModal('modal-home');
+      });
+      document.getElementById('home-continue').addEventListener('click', closeAllModals);
+      document.getElementById('home-restart').addEventListener('click', () => {
+        restartStory();
+        closeAllModals();
+      });
+
+      document.getElementById('btn-audio').addEventListener('click', () => {
+        setHudMenuOpen(false);
+        updateAudioUI();
+        openModal('modal-audio');
+      });
+
+      document.getElementById('btn-accessibility').addEventListener('click', () => {
+        setHudMenuOpen(false);
+        openModal('modal-accessibility');
+      });
+
+      document.getElementById('btn-history').addEventListener('click', () => {
+        setHudMenuOpen(false);
+        renderHistoryModal();
+        openModal('modal-history');
+      });
+
+      // -------------------- Historial de Diálogos (sin códigos internos) --------------------
+      function renderHistoryModal() {
+        const list = document.getElementById('history-list');
+        list.innerHTML = '';
+
+        const entries = [
+          ...appState.history.map((h, idx) => ({
+            screen: STORY.SCREENS[h.id],
+            chosenLabel: h.chosenLabel,
+            historyIndex: idx
+          })),
+          {
+            screen: STORY.SCREENS[appState.currentId],
+            chosenLabel: null,
+            isCurrent: true
+          }
+        ];
+
+        entries.forEach((entry) => {
+          if (!entry.screen) return;
+          const card = document.createElement('article');
+          card.className = `p-3.5 rounded-xl border ${
+            entry.isCurrent ? 'bg-white/[0.06] border-amber-300/35' : 'bg-white/[0.02] border-white/10'
+          } space-y-1.5`;
+
+          card.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-ui text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-200">
+                ${entry.screen.speaker}
+              </span>
+              ${
+                entry.isCurrent
+                  ? '<span class="font-ui text-[10px] uppercase tracking-wider text-amber-200 font-medium">Actual</span>'
+                  : `<button type="button" class="font-ui text-[11px] text-slate-300 hover:text-amber-200 underline underline-offset-2 cursor-pointer" data-jump-idx="${entry.historyIndex}">Volver aquí</button>`
+              }
+            </div>
+            <p class="font-narrative text-xs sm:text-sm text-stone-200 leading-relaxed">${entry.screen.text.replace(/\n/g, '<br>')}</p>
+            ${
+              entry.chosenLabel
+                ? `<p class="font-ui text-[11px] text-slate-400 pt-1 border-t border-white/10">→ ${entry.chosenLabel}</p>`
+                : ''
+            }
+          `;
+
+          const jumpBtn = card.querySelector('[data-jump-idx]');
+          if (jumpBtn) {
+            jumpBtn.addEventListener('click', () => {
+              const targetIdx = Number(jumpBtn.getAttribute('data-jump-idx'));
+              const target = appState.history[targetIdx];
+              appState.history = appState.history.slice(0, targetIdx);
+              if (target.memorySnapshot) appState.memory = { ...target.memorySnapshot };
+              renderScreen(target.id);
+              closeAllModals();
+            });
+          }
+
+          list.appendChild(card);
+        });
+
+        list.scrollTop = list.scrollHeight;
+      }
+
+      // -------------------- Controles de Audio --------------------
+      function updateAudioUI() {
+        const toggleBtn = document.getElementById('audio-toggle-btn');
+        const iconOn = document.getElementById('audio-icon-on');
+        const iconOff = document.getElementById('audio-icon-off');
+        const hudAudioBtn = document.getElementById('btn-audio');
+
+        if (appState.audioEnabled) {
+          toggleBtn.textContent = 'Activado';
+          toggleBtn.className = 'px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-amber-400/20 border-amber-400/50 text-amber-200';
+          iconOn.classList.remove('hidden');
+          iconOff.classList.add('hidden');
+          hudAudioBtn.classList.add('text-amber-200');
+        } else {
+          toggleBtn.textContent = 'Desactivado';
+          toggleBtn.className = 'px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-white/5 border-white/15 text-slate-200 hover:border-amber-300/50';
+          iconOn.classList.add('hidden');
+          iconOff.classList.remove('hidden');
+          hudAudioBtn.classList.remove('text-amber-200');
+        }
+      }
+
+      document.getElementById('audio-toggle-btn').addEventListener('click', () => {
+        audioEngine.setEnabled(!appState.audioEnabled);
+      });
+
+      const volInput = document.getElementById('audio-volume');
+      volInput.addEventListener('input', () => {
+        const val = Number(volInput.value);
+        document.getElementById('audio-volume-label').textContent = `${val}%`;
+        audioEngine.setVolume(val / 100);
+      });
+
+      // -------------------- Controles de Accesibilidad --------------------
+      function applyAccessibilityPrefs(renderOptions = {}) {
+        document.body.classList.toggle('high-contrast', appState.prefs.highContrast);
+        document.body.classList.toggle('reduce-motion', appState.prefs.reduceMotion);
+        document.documentElement.style.setProperty('--narrative-scale', String(appState.prefs.fontScale));
+
+        document.getElementById('a11y-contrast').checked = appState.prefs.highContrast;
+        document.getElementById('a11y-subtitles').checked = appState.prefs.subtitles;
+        document.getElementById('a11y-motion').checked = appState.prefs.reduceMotion;
+
+        document.querySelectorAll('.a11y-scale-btn').forEach((btn) => {
+          const active = Number(btn.dataset.fontScale) === appState.prefs.fontScale;
+          btn.classList.toggle('bg-amber-400/20', active);
+          btn.classList.toggle('border-amber-400/60', active);
+          btn.classList.toggle('text-amber-200', active);
+        });
+
+        try {
+          localStorage.setItem('blinky_prefs', JSON.stringify(appState.prefs));
+        } catch (e) {}
+
+        if (!renderOptions.skipRender) {
+          renderScreen(appState.currentId, renderOptions);
+        }
+      }
+
+      document.getElementById('a11y-contrast').addEventListener('change', (e) => {
+        appState.prefs.highContrast = e.target.checked;
+        applyAccessibilityPrefs();
+      });
+
+      document.getElementById('a11y-subtitles').addEventListener('change', (e) => {
+        appState.prefs.subtitles = e.target.checked;
+        applyAccessibilityPrefs();
+      });
+
+      document.getElementById('a11y-motion').addEventListener('change', (e) => {
+        appState.prefs.reduceMotion = e.target.checked;
+        applyAccessibilityPrefs();
+      });
+
+      document.querySelectorAll('.a11y-scale-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          appState.prefs.fontScale = Number(btn.dataset.fontScale);
+          applyAccessibilityPrefs();
+        });
+      });
+
+      // -------------------- Encuesta de Experiencia --------------------
+      function openSurveyModal() {
+        const screen = STORY.SCREENS[appState.currentId];
+        document.getElementById('survey-error').classList.add('hidden');
+        document.getElementById('survey-form').classList.remove('hidden');
+        document.getElementById('survey-confirm').classList.add('hidden');
+        document.getElementById('survey-success').classList.add('hidden');
+
+        if (screen && screen.isEnding) {
+          const radio = document.querySelector(`input[name="survey-ending"][value="${screen.isEnding}"]`);
+          if (radio) radio.checked = true;
+        }
+        openModal('modal-survey');
+      }
+
+      document.getElementById('survey-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const aliasInput = document.getElementById('survey-alias');
+        const endingRadio = document.querySelector('input[name="survey-ending"]:checked');
+        const errorBox = document.getElementById('survey-error');
+
+        const aliasVal = aliasInput.value.trim();
+        if (!aliasVal || !endingRadio) {
+          errorBox.classList.remove('hidden');
+          if (!aliasVal) {
+            aliasInput.focus();
+          } else {
+            const firstRadio = document.querySelector('input[name="survey-ending"]');
+            if (firstRadio) firstRadio.focus();
+          }
+          return;
+        }
+
+        errorBox.classList.add('hidden');
+        document.getElementById('survey-form').classList.add('hidden');
+        document.getElementById('survey-confirm').classList.remove('hidden');
+      });
+
+      document.getElementById('survey-confirm-no').addEventListener('click', () => {
+        document.getElementById('survey-confirm').classList.add('hidden');
+        document.getElementById('survey-form').classList.remove('hidden');
+      });
+
+      document.getElementById('survey-confirm-yes').addEventListener('click', () => {
+        document.getElementById('survey-confirm').classList.add('hidden');
+        document.getElementById('survey-success').classList.remove('hidden');
+      });
+
+      document.getElementById('survey-restart-btn').addEventListener('click', () => {
+        document.getElementById('survey-form').reset();
+        closeAllModals();
+        restartStory();
+      });
+
+      // -------------------- Atajos de Teclado Accesibles --------------------
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (hudDropdown.classList.contains('is-open')) {
+            setHudMenuOpen(false);
+            return;
+          }
+          if (isAnyModalOpen()) {
+            closeAllModals();
+            return;
+          }
+        }
+        if (isAnyModalOpen()) return;
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+        const screen = STORY.SCREENS[appState.currentId];
+        if (!screen) return;
+
+        if ((e.key === 'Enter' || e.key === ' ') && screen.choices.length === 1) {
+          if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
+            e.preventDefault();
+            dialogueBoxEl.stopTypewriter(true);
+            return;
+          }
+          if (document.activeElement.tagName !== 'BUTTON') {
+            e.preventDefault();
+            const btn = dialogueBoxEl.querySelector('blinky-action-button button');
+            if (btn) btn.click();
+          }
+        } else if (e.key === '1' && screen.choices[0]) {
+          const btns = dialogueBoxEl.querySelectorAll('blinky-action-button button');
+          if (btns[0]) btns[0].click();
+        } else if (e.key === '2' && screen.choices[1]) {
+          const btns = dialogueBoxEl.querySelectorAll('blinky-action-button button');
+          if (btns[1]) btns[1].click();
+        } else if (e.key === 'Backspace' && appState.history.length > 0) {
+          e.preventDefault();
+          const backBtn = dialogueBoxEl.querySelector('[data-action="go-back"]');
+          if (backBtn) backBtn.click();
+        } else if (e.key.toLowerCase() === 'h') {
+          renderHistoryModal();
+          openModal('modal-history');
+        }
+      });
+
+      // -------------------- Inicialización --------------------
+      try {
+        const saved = JSON.parse(localStorage.getItem('blinky_prefs') || 'null');
+        if (saved && typeof saved === 'object') {
+          Object.assign(appState.prefs, saved);
+        }
+        const savedAudio = JSON.parse(localStorage.getItem('blinky_audio') || 'null');
+        if (savedAudio && typeof savedAudio === 'object') {
+          if (typeof savedAudio.volume === 'number') {
+            appState.volume = savedAudio.volume;
+            volInput.value = String(Math.round(savedAudio.volume * 100));
+            document.getElementById('audio-volume-label').textContent = `${volInput.value}%`;
+          }
+          if (typeof savedAudio.enabled === 'boolean') {
+            appState.audioEnabled = savedAudio.enabled;
+          }
+        }
+      } catch (e) {}
+
+      // -------------------- Transición Cinematográfica del Acto I --------------------
+      const actIntroOverlay = document.getElementById('act-intro-overlay');
+      const actIntroEyebrow = document.getElementById('act-intro-eyebrow');
+      const actIntroTitle = document.getElementById('act-intro-title');
+      let actIntroTimers = [];
+
+      function clearActIntroTimers() {
+        actIntroTimers.forEach((id) => clearTimeout(id));
+        actIntroTimers = [];
+      }
+
+      function hideActIntro() {
+        const wasVisible = !actIntroOverlay.classList.contains('is-hidden');
+        clearActIntroTimers();
+        actIntroOverlay.classList.add('is-hidden');
+        // Al levantarse la cortina del Acto I, inicia el ambiente de lluvia y el diálogo de S01 limpiamente
+        if (wasVisible && appState.currentId === 'S01') {
+          if (appState.audioEnabled) {
+            audioEngine.setEnabled(true);
+          }
+          renderScreen('S01');
+        }
+      }
+
+      function playActIntro(eyebrowText, titleText) {
+        if (appState.prefs.reduceMotion) {
+          hideActIntro();
+          return;
+        }
+
+        clearActIntroTimers();
+        actIntroEyebrow.textContent = eyebrowText;
+        actIntroTitle.innerHTML = '';
+
+        // Preparar la pincelada en estado inicial (se dispara justo al terminar de escribir)
+        const brushEls = actIntroOverlay.querySelectorAll('.act-brush-path, .act-brush-accent, .act-brush-glow');
+        brushEls.forEach((el) => el.classList.remove('is-sweeping'));
+
+        actIntroOverlay.classList.remove('is-hidden');
+
+        // 1 letra visible = exactamente 1 golpe mecánico de máquina de escribir, sincronizado al instante
+        const chars = Array.from(titleText);
+        let tCursor = 820;
+
+        chars.forEach((ch) => {
+          const isSpace = ch === ' ';
+          const timerId = setTimeout(() => {
+            const span = document.createElement('span');
+            span.className = 'act-intro-letter';
+            span.innerHTML = isSpace ? '&nbsp;' : ch;
+            actIntroTitle.appendChild(span);
+            if (!isSpace) {
+              audioEngine.playTypewriterKey(true);
+            }
+          }, tCursor);
+          actIntroTimers.push(timerId);
+          // Pausa ligeramente mayor en los espacios entre palabras ("El · Nido · Roto")
+          tCursor += isSpace ? 210 : 175;
+        });
+
+        // Justo al terminar la última letra: trazado lento de pincelada + sonido de transición
+        const brushStart = tCursor + 200;
+        actIntroTimers.push(
+          setTimeout(() => {
+            brushEls.forEach((el) => el.classList.add('is-sweeping'));
+            if (appState.audioEnabled) {
+              const transAudio = new Audio('audio/transicion_acto.wav');
+              transAudio.volume = Math.max(0.14, Math.min(1, appState.volume * 0.82));
+              transAudio.play().catch(() => {});
+            }
+          }, brushStart)
+        );
+
+        // Pausa contemplativa antes de disolver suavemente hacia S01
+        actIntroTimers.push(
+          setTimeout(() => {
+            hideActIntro();
+          }, brushStart + 2450)
+        );
+      }
+
+      actIntroOverlay.addEventListener('click', hideActIntro);
+
+      // Si viene desde inicio.html (?play=1), reproduce primero el título del Acto I en silencio limpio (sin lluvia ni tipeo de S01 detrás)
+      const params = new URLSearchParams(window.location.search);
+      const fromStartScreen = params.get('play') === '1';
+
+      updateAudioUI();
+
+      if (fromStartScreen && !appState.prefs.reduceMotion) {
+        applyAccessibilityPrefs({ skipRender: true });
+        // Precargamos la imagen de S01 en segundo plano sin iniciar su diálogo ni su lluvia aún
+        loadSceneBackground(STORY.SCREENS['S01'].image);
+        playActIntro('Acto I', 'El Nido Roto');
+      } else {
+        if (fromStartScreen && appState.audioEnabled) {
+          audioEngine.setEnabled(true);
+        }
+        applyAccessibilityPrefs();
+      }
+    })();
+  </script>
+</body>
+</html>
