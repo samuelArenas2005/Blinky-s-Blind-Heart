@@ -1,8 +1,8 @@
 /* ==========================================================================
    Blinky's Blind Heart — Arquitectura Narrativa Completa (S01 a S52)
-   Emisores exclusivamente diegéticos / personajes de la historia:
-   NARRADOR, BLINKY, MAMÁ GATO, GATO GUÍA, PERRO SALVADOR, LA NIÑA, MAMÁ DE LA NIÑA.
-   Imágenes genéricas: images/s1.png ... images/s52.png
+   Versión 4.0: Continuidad literaria causa-efecto en todos los actos.
+   Protagonista: Blinky (gatito macho invidente).
+   Imágenes genéricas: images/s1.png ... images/s52.png (+ frames one-shot).
    ========================================================================== */
 
 window.BLINKY_STORY = (function () {
@@ -59,104 +59,117 @@ window.BLINKY_STORY = (function () {
     {
       number: 1,
       id: 'S01',
-      title: 'Refugio en la Lluvia',
+      title: 'El Mundo a Oscuras',
       act: 'acto-1',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Lluvia constante golpeando cartón húmedo',
-      text: 'La lluvia cae con fuerza y golpea el cartón que te cubre. El agua helada se filtra poco a poco por las esquinas y moja el suelo donde estás echado. Estás en un rincón oscuro de un callejón, bien pegado al cuerpo tibio de tu mamá.',
+      text: 'Nunca has visto la ciudad ni sabes qué forma tiene la noche. Para un gatito ciego como tú, el mundo entero cabe en tres cosas: el golpeteo de la lluvia sobre el cartón húmedo, el frío que se cuela por las rendijas y el calor tibio del cuerpo de tu mamá a tu lado.',
       choices: [
-        { label: 'Acurrucarte más fuerte contra el pelaje de mamá', next: 'S02' }
+        { label: 'Acurrucarte más fuerte contra el calor de mamá', next: 'S02' }
       ]
     },
     {
       number: 2,
       id: 'S02',
-      title: 'La Barriga Vacía',
+      title: 'Un Latido Inquieto',
       act: 'acto-1',
       speaker: 'BLINKY',
       speakerType: 'blinky',
-      audioCue: 'Rugido suave de estómago y lluvia lejana',
-      text: 'Grrr... Tu pequeña barriga suena muy fuerte. Tienes mucha hambre y tus patitas tiemblan de frío. Intentas buscar comida con la nariz entre el pelaje de mamá, pero notas que ella está sentada, muy alerta y mirando hacia la lluvia.',
-      html: '<em class="vn-sound-whisper font-semibold">Grrr...</em> Tu pequeña barriga suena muy fuerte. Tienes mucha hambre y tus patitas tiemblan de frío. Intentas buscar comida con la nariz entre el pelaje de mamá, pero notas que ella está sentada, muy alerta y mirando hacia la lluvia.',
+      audioCue: 'Rugido suave de estómago y lluvia en la entrada',
+      frames: [
+        { src: 'images/s1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s2.png', delay: 650, transition: 'fade' }
+      ],
+      text: 'Hundes la nariz en su pelaje buscando abrigo… pero su cuerpo ya no está recostado. Sientes sus músculos tensos junto a la entrada del cartón: mamá está sentada, muy alerta hacia la lluvia. En ese instante, tu barriguita suelta un Grrr... vacío que te hace encoger las patitas.',
+      html: 'Hundes la nariz en su pelaje buscando abrigo… pero su cuerpo ya no está recostado. Sientes sus músculos tensos junto a la entrada del cartón: mamá está sentada, muy alerta hacia la lluvia. En ese instante, tu barriguita suelta un <em class="vn-sound-whisper font-semibold">Grrr...</em> vacío que te hace encoger las patitas.',
       choices: [
-        { label: 'Escuchar qué hace mamá', next: 'S03' }
+        { label: 'Pegar la oreja a su pecho para escucharla', next: 'S03' }
       ]
     },
     {
       number: 3,
       id: 'S03',
-      title: 'La Despedida de Mamá',
+      title: 'La Promesa en un Ronroneo',
       act: 'acto-1',
       speaker: 'MAMÁ GATO',
       speakerType: 'mama_gato',
-      audioCue: 'Ronroneo cálido y reconfortante de mamá',
-      text: 'Mamá te da una suave caricia con su lengua en la frente para limpiarte el agua.\n— Prrrr... Miau —te ronronea muy bajito, como diciéndote: «Quédate aquí quieto, pequeño. Voy a buscar algo para comer».',
-      html: 'Mamá te da una suave caricia con su lengua en la frente para limpiarte el agua.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Prrrr... Miau</em> —te ronronea muy bajito, como diciéndote: «Quédate aquí quieto, pequeño. Voy a buscar algo para comer».</span>',
+      audioCue: 'Ronroneo cálido y maullido suave de mamá',
+      text: 'Al sentirte temblar contra su costado, inclina la cabeza y pasa su lengua áspera por tu frente para secarte el agua.\n— Prrrr... Miau —su ronroneo vibra despacio contra tus costillas, como una promesa clara: «Quédate aquí quieto, pequeño. Voy a buscar algo para comer y vuelvo enseguida».',
+      html: 'Al sentirte temblar contra su costado, inclina la cabeza y pasa su lengua áspera por tu frente para secarte el agua.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Prrrr... Miau</em> —su ronroneo vibra despacio contra tus costillas, como una promesa clara: «Quédate aquí quieto, pequeño. Voy a buscar algo para comer y vuelvo enseguida».</span>',
       choices: [
-        { label: 'Quedarte en el nido esperando su regreso', next: 'S04' }
+        { label: 'Obedecer y quedarte quieto en el cartón', next: 'S04' }
       ]
     },
     {
       number: 4,
       id: 'S04',
-      title: 'El Frío que se Queda',
+      title: 'El Frío que Regresa',
       act: 'acto-1',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
-      audioCue: 'Silencio helado y goteo más denso',
-      text: 'Pasa un largo rato. El calor que mamá dejó en la caja de cartón desaparece por completo. El aire del callejón se siente cada vez más helado y silencioso. Tu mamá nunca se había demorado tanto tiempo.',
+      audioCue: 'Pasos alejándose, brisa fría y goteo solitario',
+      frames: [
+        { src: 'images/s4_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s4.png', delay: 1350, transition: 'fade' }
+      ],
+      text: 'Sus pasos suaves se pierden bajo la tormenta. Te quedas quieto tal como te pidió, contando gotas contra el cartón. Pasan los minutos… y el tibio hueco que dejó a tu lado se enfría por completo. Mamá nunca se había tardado tanto.',
       choices: [
-        { label: 'Sacar la nariz fuera de la caja para buscar su olor', next: 'S05' }
+        { label: 'Asomar el hocico fuera de la caja para buscar su olor', next: 'S05' }
       ]
     },
     {
       number: 5,
       id: 'S05',
-      title: 'Siguiendo el Rastro',
+      title: 'El Hilo de Leche y Lluvia',
       act: 'acto-1',
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Roce metálico ligero de bigotes contra latas vacías',
-      text: 'Entre el olor a basura mojada y charcos de barro, logras captar un aroma suave y conocido: es el olor a leche y pelaje limpio de mamá. Caminas con torpeza hacia la salida del callejón, chocando los bigotes contra latas vacías.',
+      text: 'El viento helado te golpea la nariz, pero entre el olor a barro y basura mojada distingues su rastro intacto: leche tibia y pelaje limpio. Avanzas despacio siguiendo esa estela invisible hacia la salida del callejón, rozando latas vacías con tus bigotes.',
       choices: [
-        { label: 'Seguir caminando despacio hacia donde va el rastro', next: 'S06' }
+        { label: 'Seguir su rastro hasta la esquina de la avenida', next: 'S06' }
       ]
     },
     {
       number: 6,
       id: 'S06',
-      title: 'El Golpe en la Avenida',
+      title: 'El Estruendo en la Esquina',
       act: 'acto-1',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       tension: 'impact',
-      audioCue: '¡¡SKRRRRRCH!! ¡¡PUM!! Frenazo brusco e impacto seco',
-      text: '¡¡SKRRRRRCH!! ¡¡PUM!! Un frenazo desgarrador de llantas rechina contra el asfalto mojado, seguido de un golpe durísimo justo en la esquina. El suelo tiembla. De golpe, un olor quemado a llantas y humo invade el aire, y todo queda en un silencio aterrador.',
-      html: '<span class="vn-onomatopoeia block mb-1">¡¡SKRRRRRCH!! ¡¡PUM!!</span>Un frenazo desgarrador de llantas rechina contra el asfalto mojado, seguido de un golpe durísimo justo en la esquina. El suelo tiembla. De golpe, un olor quemado a llantas y humo invade el aire, y todo queda en un silencio aterrador.',
+      audioCue: 'Frenazo brusco de llantas sobre asfalto mojado y un golpe seco',
+      frames: [
+        { src: 'images/s6_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s6.png', delay: 1480, transition: 'cut', shake: true },
+        { src: 'images/s6_3.png', delay: 2550, transition: 'fade' }
+      ],
+      text: 'Justo cuando el asfalto áspero anuncia el final del callejón, un motor ruge demasiado cerca. ¡¡SKRRRRRCH!! ¡¡PUM!! Un frenazo desesperado de llantas rasga el pavimento mojado, seguido de un golpe seco. El humo a goma quemada borra el olor de mamá… y todo queda en silencio.',
+      html: 'Justo cuando el asfalto áspero anuncia el final del callejón, un motor ruge demasiado cerca. <span class="vn-onomatopoeia">¡¡SKRRRRRCH!! ¡¡PUM!!</span> Un frenazo desesperado de llantas rasga el pavimento mojado, seguido de un golpe seco. El humo a goma quemada borra el olor de mamá… y todo queda en silencio.',
       choices: [
-        { label: 'Parar en seco con todo el pelaje erizado', next: 'S07' }
+        { label: 'Quedarte helado, escuchando el silencio', next: 'S07' }
       ]
     },
     {
       number: 7,
       id: 'S07',
-      title: '¿Huir o Buscar?',
+      title: 'Dos Caminos en la Oscuridad',
       act: 'acto-1',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       decisionCode: 'D01',
       tension: 'uneasy',
       audioCue: 'Silencio tenso y latido acelerado',
-      text: 'El fuerte ruido ocurrió justo donde iba el olor de mamá. Sabes que la calle es peligrosa para un gatito ciego, pero tu corazón te pide no dejarla sola. ¿Qué camino vas a tomar?',
+      text: 'Tus bigotes tiemblan y el silencio de la esquina pesa más que la lluvia. Hacia la avenida aún flota un último hilo del olor de mamá mezclado con humo; a tu espalda sigue intacto el refugio de cartón. ¿Qué haces?',
       choices: [
         {
-          label: '¡Insistir en tu búsqueda! (Avanzar hacia la calle)',
+          label: 'Avanzar hacia la avenida siguiendo su último olor',
           next: 'S08',
           state: { reaccion: 'buscar' }
         },
         {
-          label: '¡Huir a tu refugio! (Correr asustado de vuelta a la caja)',
+          label: 'Retroceder corriendo hacia la seguridad de la caja',
           next: 'S17',
           state: { reaccion: 'huir' }
         }
@@ -172,9 +185,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Goteo sobre el asfalto áspero y silencio tenso',
-      text: 'El miedo te hace temblar las patas, pero sigues adelante. Sales del callejón y sientes el cambio en el suelo: de las piedras mojadas pasas al asfalto áspero de la calle. El olor de mamá es fuertísimo aquí mismo.',
+      text: 'A pesar del temblor en tus patitas, te decides a salir del callejón siguiendo ese último hilo. El suelo cambia bajo tus almohadillas: de las piedras mojadas pasas al asfalto áspero de la avenida, donde el olor de mamá se vuelve intensísimo justo frente a ti.',
       choices: [
-        { label: 'Caminar con cuidado hacia donde está el olor', next: 'S09' }
+        { label: 'Acercarte despacio hacia donde brota su olor', next: 'S09' }
       ]
     },
     {
@@ -185,9 +198,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Silencio absoluto; ausencia de respiración y ronroneo',
-      text: 'Tus patitas chocan con algo peludo en el piso. Te acercas emocionado frotando tu cabeza, buscando su calor protector... pero este cuerpo no se mueve. No respira y está completamente frío. Mamá siempre era tibia y cariñosa; esto no es mamá.',
+      text: 'A pocos pasos, tus patitas chocan con un bulto peludo tendido en el asfalto. Te acercas emocionado frotando tu cabeza para buscar su calor protector… pero ese cuerpo no se mueve. No respira y está completamente frío. Mamá siempre era tibia y cariñosa; esto ya no es mamá.',
       choices: [
-        { label: 'Alejarte despacio con mucha tristeza', next: 'S10' }
+        { label: 'Apartarte despacio, sintiendo un vacío helado', next: 'S10' }
       ]
     },
     {
@@ -197,10 +210,10 @@ window.BLINKY_STORY = (function () {
       act: 'acto-2a',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
-      audioCue: 'Voces lejanas lamentándose y puertas de autos cerrándose',
-      text: 'Escuchas a lo lejos la voz de una persona lamentándose y puertas de autos cerrándose. Por suerte, los carros están detenidos. Das pasos torpes hasta subir el andén de enfrente, sintiéndote completamente solo en el mundo.',
+      audioCue: 'Voces humanas lamentándose y puertas de autos cerrándose',
+      text: 'Mientras te alejas desorientado de la escena, escuchas voces humanas lamentándose y puertas de autos cerrándose. Por suerte, los carros siguen detenidos. Cruzas con pasos torpes hasta chocar con el bordillo del andén de enfrente, sintiéndote completamente solo en el mundo.',
       choices: [
-        { label: 'Subir el andén y sacudirte el agua de la cara', next: 'S11' }
+        { label: 'Trepar al andén y sacudirte el agua de los bigotes', next: 'S11' }
       ]
     },
     {
@@ -211,10 +224,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'GATO GUÍA',
       speakerType: 'gato_guia',
       audioCue: 'Ronroneo rítmico y parejo de otro felino',
-      text: 'De pronto, un lomo ágil se frota contra ti con suavidad. Huele a tejados y a comida callejera.\n— Prrrr... Prrrr... Miau —ronronea con un ritmo parejo y calmado, como si quisiera que escuches exactamente por dónde camina.',
-      html: 'De pronto, un lomo ágil se frota contra ti con suavidad. Huele a tejados y a comida callejera.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Prrrr... Prrrr... Miau</em> —ronronea con un ritmo parejo y calmado, como si quisiera que escuches exactamente por dónde camina.</span>',
+      text: 'Apenas trepas a la acera y sacudes tu pelaje empapado, un lomo ágil se frota contra tu costado con suavidad. Huele a tejados altos y a comida callejera.\n— Prrrr... Prrrr... Miau —ronronea con un ritmo parejo y calmado, marcándote con su voz dónde está parado.',
+      html: 'Apenas trepas a la acera y sacudes tu pelaje empapado, un lomo ágil se frota contra tu costado con suavidad. Huele a tejados altos y a comida callejera.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Prrrr... Prrrr... Miau</em> —ronronea con un ritmo parejo y calmado, marcándote con su voz dónde está parado.</span>',
       choices: [
-        { label: 'Prestar atención a su ronroneo', next: 'S12' }
+        { label: 'Inclinar las orejas y atender a su ronroneo', next: 'S12' }
       ]
     },
     {
@@ -226,15 +239,15 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       decisionCode: 'D02',
       audioCue: 'Ronroneo constante frente al viento frío de la calle',
-      text: 'El gato adulto da unos pasos hacia un pasaje estrecho y se detiene a esperarte, ronroneando para que lo sigas. No sabes a dónde te llevará. ¿Prefieres confiar en este extraño o seguir tu camino solo?',
+      text: 'Al notar que prestas atención a su llamada, el gato adulto da unos pasos hacia un pasaje estrecho y se detiene a esperarte, repitiendo su ronroneo para guiarte. No sabes a dónde te llevará. ¿Confías en este extraño o prefieres seguir solo?',
       choices: [
         {
-          label: 'Recibir la ayuda de este repentino guía felino',
+          label: 'Confiar en él y seguir el ritmo de su ronroneo',
           next: 'S13',
           state: { guia: 'gato' }
         },
         {
-          label: 'Escoger un camino solitario (Rechazar su ayuda)',
+          label: 'Rechazar su ayuda y buscar tu camino solo',
           next: 'S27',
           state: { guia: 'ninguno' }
         }
@@ -250,9 +263,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Pasos ligeros y ronroneo continuo lejos del tráfico',
-      text: 'Decides confiar en él. El gato camina despacio a tu lado y no deja de ronronear para que no pierdas su rastro. Te guía con destreza por atajos estrechos, lejos del ruido ensordecedor de los carros y de los charcos más hondos.',
+      text: 'Decides confiar en él y te pegas a su costado, ajustando tus pequeños pasos a los suyos. El gato camina despacio sin dejar de ronronear ni un segundo para que no pierdas su rastro, guiándote por atajos estrechos lejos del estruendo de los carros y los charcos más hondos.',
       choices: [
-        { label: 'Mantenerte pegado a su ritmo de caminata', next: 'S14' }
+        { label: 'Mantenerte pegado a su paso hasta que se detenga', next: 'S14' }
       ]
     },
     {
@@ -263,10 +276,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'GATO GUÍA',
       speakerType: 'gato_guia',
       audioCue: 'Maullido dulce y eco metálico sobre la reja alta',
-      text: 'Al llegar a la entrada de un callejón techado, el gato se frena. Te da un suave cabezazo de despedida en el cuello.\n— Miau —dice con dulzura antes de trepar por una reja alta y desaparecer en la noche. Te ha dejado en un lugar protegido.',
-      html: 'Al llegar a la entrada de un callejón techado, el gato se frena. Te da un suave cabezazo de despedida en el cuello.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Miau</em> —dice con dulzura antes de trepar por una reja alta y desaparecer en la noche. Te ha dejado en un lugar protegido.</span>',
+      text: 'Sin soltar su compás, notas que la lluvia deja de golpearte el lomo: acaban de entrar a un callejón techado. El gato se frena y apoya su cabeza con suavidad contra tu cuello en señal de despedida.\n— Miau —dice con dulzura antes de trepar por una reja alta y perderse en la noche.',
+      html: 'Sin soltar su compás, notas que la lluvia deja de golpearte el lomo: acaban de entrar a un callejón techado. El gato se frena y apoya su cabeza con suavidad contra tu cuello en señal de despedida.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Miau</em> —dice con dulzura antes de trepar por una reja alta y perderse en la noche.</span>',
       choices: [
-        { label: 'Olfatear el aire de este nuevo callejón', next: 'S15' }
+        { label: 'Quedarte bajo el techo y olfatear el aire del callejón', next: 'S15' }
       ]
     },
     {
@@ -277,9 +290,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Silencio protegido; lluvia amortiguada sobre el techo',
-      text: 'Aquí adentro la lluvia no te moja. Al respirar profundo, sientes un olor conocido y delicioso: atún en lata. Es modesto, sencillo y huele exactamente a lo que mamá solía traerte cuando lograba conseguir comida.',
+      text: 'Al respirar hondo en este rincón seco y protegido, un aroma conocido te llena el pecho: atún en lata. Es un olor modesto y sencillo, exactamente igual a la comida que mamá lograba traerte en las noches buenas.',
       choices: [
-        { label: 'Explorar el interior del pasaje', next: 'S16' }
+        { label: 'Dar unos pasos hacia el fondo del pasaje', next: 'S16' }
       ]
     },
     {
@@ -291,15 +304,15 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       decisionCode: 'D04',
       audioCue: 'Calma del pasaje techado frente a risas lejanas en la esquina',
-      text: 'El olor a atún viene del fondo, pero el lugar está muy callado. Más allá en la esquina se escuchan risas y olores a comida más abundante. ¿Te quedas a buscar en este callejón seguro o desconfías y sales a investigar la otra calle?',
+      text: 'Avanzas unos metros siguiendo el rastro a atún, pero el pasaje está tan callado que te inquieta. Más allá, en la esquina abierta, el viento trae risas y olores a comida mucho más intensa y abundante. ¿Te quedas en este callejón seguro o sales a investigar la otra calle?',
       choices: [
         {
-          label: 'Te quedas en el callejón (Seguir el olor a atún)',
+          label: 'Quedarte en el callejón y seguir el olor sencillo a atún',
           next: 'S35',
           state: { rastro_alimento: 'atun', destino: 'F01' }
         },
         {
-          label: 'Desconfías y te vas (Salir a buscar otra comida)',
+          label: 'Desconfiar del silencio y salir hacia los olores más fuertes',
           next: 'S47',
           state: { rastro_alimento: 'salmon', destino: 'F02' }
         }
@@ -316,9 +329,9 @@ window.BLINKY_STORY = (function () {
       speakerType: 'blinky',
       tension: 'uneasy',
       audioCue: 'Respiración agitada y crujido de cartón empapado',
-      text: 'El ruido del choque te asusta tanto que das media vuelta y sales corriendo como puedes. Chocas contra cajas y bolsas hasta meterte bien al fondo de tu nido de cartón. Te haces una bolita temblorosa con las orejas gachas.',
+      text: 'El pánico te vence: das media vuelta y corres a ciegas de regreso al callejón. Chocas contra cajas y bolsas mojadas hasta colarte bien al fondo de tu nido de cartón, donde te encoges hecho un ovillo tembloroso con las orejas gachas.',
       choices: [
-        { label: 'Esperar en silencio a que pase el peligro', next: 'S18' }
+        { label: 'Quedarte quieto en silencio esperando que pase el peligro', next: 'S18' }
       ]
     },
     {
@@ -329,9 +342,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Silencio opresivo y goteo monótono fuera de la caja',
-      text: 'Pasan las horas y el ruido de la calle se calma, pero nadie regresa por ti. Tienes el estómago adolorido por el hambre y las patitas entumecidas por la humedad. Si te quedas ahí encerrado, no vas a resistir el frío.',
+      text: 'Esperas encogido durante horas hasta que el ruido de la avenida se calma, pero nadie regresa por ti. El estómago te duele de hambre y tienes las patitas entumecidas por la humedad. Si sigues ahí encerrado, no vas a resistir el frío.',
       choices: [
-        { label: 'Salir a tientas por el otro lado del callejón', next: 'S19' }
+        { label: 'Salir a tientas por el lado opuesto del callejón', next: 'S19' }
       ]
     },
     {
@@ -343,9 +356,9 @@ window.BLINKY_STORY = (function () {
       speakerType: 'blinky',
       tension: 'uneasy',
       audioCue: 'Rugido cercano de motores veloces y brisa cortante',
-      text: 'Caminas rozando la pared con tus bigotes para guiarte. De pronto, la pared se termina. Das un paso hacia adelante sin saber que el andén se acabó y que estás a punto de caer directo al paso de los vehículos veloces.',
+      text: 'Te obligas a abandonar el refugio y caminas rozando la pared húmeda con tus bigotes para guiarte. De pronto, el muro se acaba bajo tu mejilla. Das un paso al frente sin saber que el andén terminó… y que estás a un centímetro de caer al paso de vehículos veloces.',
       choices: [
-        { label: 'Intentar frenar las patitas en el borde', next: 'S20' }
+        { label: 'Clavar las uñitas e intentar frenar en el borde', next: 'S20' }
       ]
     },
     {
@@ -357,10 +370,10 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       tension: 'impact',
       audioCue: '¡¡FROOOOSH!! Paso veloz de camión y sujeción protectora',
-      text: '¡¡FROOOOSH!! Un camión pasa volando a milímetros de tu nariz, levantando una brisa helada que casi te voltea. Pero antes de que caigas al pavimento, unos dientes grandes y firmes te agarran con cuidado por el pellejo del cuello y te levantan en el aire.',
-      html: '<span class="vn-onomatopoeia block mb-1">¡¡FROOOOSH!!</span>Un camión pasa volando a milímetros de tu nariz, levantando una brisa helada que casi te voltea. Pero antes de que caigas al pavimento, unos dientes grandes y firmes te agarran con cuidado por el pellejo del cuello y te levantan en el aire.',
+      text: 'Intentas frenarte en seco, pero tus patitas resbalan sobre la piedra mojada. ¡¡FROOOOSH!! Un camión pasa volando a milímetros de tu nariz y su ráfaga casi te voltea hacia la calle. Justo antes de caer, unos dientes grandes y firmes te sujetan con cuidado por el pellejo del cuello y te levantan en el aire.',
+      html: 'Intentas frenarte en seco, pero tus patitas resbalan sobre la piedra mojada. <span class="vn-onomatopoeia">¡¡FROOOOSH!!</span> Un camión pasa volando a milímetros de tu nariz y su ráfaga casi te voltea hacia la calle. Justo antes de caer, unos dientes grandes y firmes te sujetan con cuidado por el pellejo del cuello y te levantan en el aire.',
       choices: [
-        { label: 'Quedarte quieto sintiendo que te apartan del peligro', next: 'S21' }
+        { label: 'Quedarte quieto mientras te apartan del peligro', next: 'S21' }
       ]
     },
     {
@@ -371,9 +384,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Respiración honda y cálida de un animal grande',
-      text: 'Los dientes te sueltan con delicadeza sobre el piso seco. No te duele nada. Alzas el hocico para entender quién es: no huele a gato, huele a pelo grueso mojado por la lluvia, a tierra y a cuero. Es un animal muy grande.',
+      text: 'Sin forcejear, sientes cómo te depositan con delicadeza sobre un piso seco y seguro. No te dolió nada. Alzas el hocico para descubrir quién te rescató: no huele a gato, sino a pelo grueso empapado, tierra húmeda y cuero. Es un animal enorme.',
       choices: [
-        { label: 'Frotar tu cabeza tímidamente contra su pata delantera', next: 'S22' }
+        { label: 'Frotar tu cabecita tímidamente contra su pata delantera', next: 'S22' }
       ]
     },
     {
@@ -384,10 +397,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'PERRO SALVADOR',
       speakerType: 'perro_salvador',
       audioCue: '¡¡GUAU!! Ladrido grave y protector',
-      text: '¡¡GUAU!! El ladrido es hondo y hace retumbar tu pechito, pero no suena enojado; suena como una llamada de atención de un adulto protector diciéndote: «¡Cuidado, pequeñajo! Casi no la cuentas». El perro da la vuelta y empieza a caminar despacio.',
-      html: '<span class="vn-onomatopoeia block mb-1">¡¡GUAU!!</span>El ladrido es hondo y hace retumbar tu pechito, pero no suena enojado; suena como una llamada de atención de un adulto protector diciéndote: «¡Cuidado, pequeñajo! Casi no la cuentas». El perro da la vuelta y empieza a caminar despacio.',
+      text: 'Al sentir tu roce agradecido contra su pata, el gigante suelta un ladrido hondo que hace retumbar tu pecho. ¡¡GUAU!! No suena enojado; suena como la advertencia cariñosa de un adulto protector: «¡Cuidado, pequeñajo! Casi no la cuentas». Luego da media vuelta y empieza a caminar despacio.',
+      html: 'Al sentir tu roce agradecido contra su pata, el gigante suelta un ladrido hondo que hace retumbar tu pecho. <span class="vn-onomatopoeia">¡¡GUAU!!</span> No suena enojado; suena como la advertencia cariñosa de un adulto protector: «¡Cuidado, pequeñajo! Casi no la cuentas». Luego da media vuelta y empieza a caminar despacio.',
       choices: [
-        { label: 'Seguir el sonido pesado de sus pasos', next: 'S23' }
+        { label: 'Escuchar el eco pesado de sus pasos al alejarse', next: 'S23' }
       ]
     },
     {
@@ -399,15 +412,15 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       decisionCode: 'D03',
       audioCue: 'Pasos pausados del perro frente al silbido del viento en una reja',
-      text: 'Ese perro gigante acaba de salvarte la vida. Camina a paso lento esperando ver si vas detrás de él. ¿Confías en su tamaño para que te cuide, o te da miedo y prefieres meterte por un hueco tú solo?',
+      text: 'Sus pisadas se detienen a pocos pasos, esperando ver si decides ir detrás de él. Ese perro gigante acaba de salvarte la vida, pero su tamaño impone respeto; a tu derecha, el viento silba por el hueco estrecho de una reja. ¿Confías en él o escapas solo?',
       choices: [
         {
-          label: 'Sigues al canino (Aceptar la compañía del perro)',
+          label: 'Confiar en su tamaño y caminar junto al perro',
           next: 'S24',
           state: { guia: 'perro' }
         },
         {
-          label: 'Ignoras a tu salvador (Escapar asustado por tu cuenta)',
+          label: 'Asustarte de él y escapar solo por la reja',
           next: 'S31',
           state: { guia: 'ninguno' }
         }
@@ -423,10 +436,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Sonido rítmico de garras sobre piedra: tac... tac... tac...',
-      text: 'Caminas muy pegado a la pata del perro. Su cuerpo ancho te tapa el viento helado como si fuera una pared tibia. Sus garras hacen un sonido rítmico: tac... tac... tac... contra el suelo de piedra, guiándote sin que te pierdas.',
-      html: 'Caminas muy pegado a la pata del perro. Su cuerpo ancho te tapa el viento helado como si fuera una pared tibia. Sus garras hacen un sonido rítmico: <em class="vn-sound-whisper font-semibold">tac... tac... tac...</em> contra el suelo de piedra, guiándote sin que te pierdas.',
+      text: 'Decides confiar y corres hasta pegarte a su pata delantera. Su cuerpo ancho te cubre del viento helado como una pared tibia, y sus garras marcan un compás firme sobre las piedras: tac... tac... tac... guiándote sin que te pierdas.',
+      html: 'Decides confiar y corres hasta pegarte a su pata delantera. Su cuerpo ancho te cubre del viento helado como una pared tibia, y sus garras marcan un compás firme sobre las piedras: <em class="vn-sound-whisper font-semibold">tac... tac... tac...</em> guiándote sin que te pierdas.',
       choices: [
-        { label: 'Avanzar al ritmo de sus pisadas firmes', next: 'S25' }
+        { label: 'Avanzar al ritmo seguro de sus pisadas', next: 'S25' }
       ]
     },
     {
@@ -437,9 +450,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'PERRO SALVADOR',
       speakerType: 'perro_salvador',
       audioCue: 'Bufido cálido y pasos caninos alejándose bajo la lluvia',
-      text: 'El perro se detiene bajo un arco techado de piedra donde no cae ni una gota. Te da un pequeño empujón con su hocico húmedo para meterte al centro y suelta un bufido caliente: «Hasta aquí llego yo, enano. Ahora te toca a ti». Da la vuelta y se marcha.',
+      text: 'Siguiendo su paso firme, llegas bajo un arco techado de piedra donde no cae ni una gota. El perro se frena, te da un empujón suave con su hocico húmedo hacia el centro y suelta un bufido tibio: «Hasta aquí llego yo, enano. Ahora te toca a ti». Da la vuelta y se marcha bajo la lluvia.',
       choices: [
-        { label: 'Adentrarte en el cruce protegido', next: 'S26' }
+        { label: 'Adentrarte solo en el cruce protegido', next: 'S26' }
       ]
     },
     {
@@ -450,9 +463,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Silbido suave de corrientes cruzadas y rugido de estómago',
-      text: 'Estás sano y salvo gracias al perro. Te encuentras en un cruce donde chocan varias corrientes de aire. Tu estómago vuelve a rugir desesperado: necesitas encontrar alimento pronto.',
+      text: 'A salvo bajo el arco gracias al perro, das unos pasos hacia un cruce donde chocan varias corrientes de aire. Apenas te detienes, tu estómago vuelve a rugir desesperado: necesitas encontrar alimento pronto.',
       choices: [
-        { label: 'Alzar el hocico para analizar los olores en el aire', next: 'S27' }
+        { label: 'Alzar el hocico y concentrarte en los olores del aire', next: 'S27' }
       ]
     },
 
@@ -465,9 +478,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Silencio concentrado; respiración profunda',
-      text: 'Como tus ojos no pueden ver la calle, cierras tus otros sentidos para concentrarte solo en la nariz. En tu cabecita, los olores que trae el viento empiezan a dibujarse como cintas de humo de colores flotando en el aire.',
+      text: 'Estás solo en un cruce batido por corrientes de aire. Como tus ojos no pueden ver la calle, cierras tus otros sentidos y enfocas toda tu atención en tu nariz. Poco a poco, los olores del viento empiezan a dibujarse en tu mente como cintas de humo flotando en la oscuridad.',
       choices: [
-        { label: 'Concentrarte en descifrar los dos caminos de olor', next: 'S28' }
+        { label: 'Distinguir cada una de las dos corrientes de olor', next: 'S28' }
       ]
     },
     {
@@ -478,10 +491,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Dos corrientes olfativas flotan en el aire nocturno',
-      text: 'Hacia un lado flota una cinta naranja brillante: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante.\nHacia el otro lado flota una cinta azul delgada y modesta: huele suavemente a lata humilde y a atún, justo como la comida sencilla que mamá siempre compartía contigo.',
-      html: 'Hacia un lado flota una <strong>cinta naranja brillante</strong>: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante.<br><span class="block mt-1.5">Hacia el otro lado flota una <strong>cinta azul delgada y modesta</strong>: huele suavemente a lata humilde y a atún, justo como la comida sencilla que mamá siempre compartía contigo.</span>',
+      text: 'Al concentrarte, separas dos rastros claros. Hacia un lado flota una cinta naranja brillante: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante.\nHacia el otro lado serpentea una cinta azul delgada y modesta: huele suavemente a atún en lata, justo como la comida sencilla que mamá siempre compartía contigo.',
+      html: 'Al concentrarte, separas dos rastros claros. Hacia un lado flota una <strong>cinta naranja brillante</strong>: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante.<br><span class="block mt-1.5">Hacia el otro lado serpentea una <strong>cinta azul delgada y modesta</strong>: huele suavemente a atún en lata, justo como la comida sencilla que mamá siempre compartía contigo.</span>',
       choices: [
-        { label: 'Notar cómo el viento empieza a soplar más rápido', next: 'S29' }
+        { label: 'Inspirar de nuevo antes de que cambie el viento', next: 'S29' }
       ]
     },
     {
@@ -492,9 +505,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Ráfaga fría sacudiendo el callejón',
-      text: 'Una corriente de aire frío sacude el callejón y empieza a desarmar las cintas de olor. Tienes que elegir rápido qué camino vas a seguir antes de que el viento se lleve los aromas y te quedes a oscuras sin guía.',
+      text: 'Al inhalar otra vez, una ráfaga de aire frío sacude el cruce y empieza a deshacer ambas cintas de olor. Tienes que elegir rápido qué camino vas a seguir antes de que el viento se lleve los aromas y te deje a oscuras sin guía.',
       choices: [
-        { label: 'Decidir qué rastro vas a seguir con tu nariz', next: 'S30' }
+        { label: 'Elegir qué rastro guiará tus pasos', next: 'S30' }
       ]
     },
     {
@@ -506,15 +519,15 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       decisionCode: 'D05',
       audioCue: 'Silencio expectante entre dos rastros de olor',
-      text: '¿Qué rastro vas a seguir? ¿La modesta cinta azul que te recuerda al cuidado sencillo de mamá, o la brillante cinta naranja que promete un banquete gigante?',
+      text: '¿A cuál de los dos aromas le confías tu destino? ¿A la modesta cinta azul que te recuerda al cuidado sencillo de mamá, o a la brillante cinta naranja que promete un banquete gigante?',
       choices: [
         {
-          label: 'Desenredar la cinta azul y modesta a atún',
+          label: 'Desenredar la cinta azul y modesta con olor a atún',
           next: 'S35',
           state: { rastro_alimento: 'atun', destino: 'F01' }
         },
         {
-          label: 'Desenredar la cinta naranja y codiciosa a salmón',
+          label: 'Desenredar la cinta naranja y codiciosa con olor a salmón',
           next: 'S47',
           state: { rastro_alimento: 'salmon', destino: 'F02' }
         }
@@ -530,9 +543,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Bufido felino y quejido triste del perro tras la reja',
-      text: 'El tamaño del perro te asusta demasiado. Pegas un brinco hacia atrás bufando con desconfianza y te metes a la fuerza por los barrotes de una reja oxidada. Escuchas al perro quejarse como si sintiera pena por ti, pero se queda atrás.',
+      text: 'El tamaño del perro te asusta demasiado. Pegas un brinco hacia atrás bufando con desconfianza y te metes a la fuerza entre los barrotes de una reja oxidada. Detrás de ti escuchas al perro quejarse con pena, pero se queda atrás.',
       choices: [
-        { label: 'Arrastrarte por el lodo en completa soledad', next: 'S32' }
+        { label: 'Arrastrarte por el lodo adentrándote en la oscuridad', next: 'S32' }
       ]
     },
     {
@@ -543,10 +556,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Roce metálico de alambres viejos y goteo helado',
-      text: 'Caminas rozando las paredes llenas de moho y alambres viejos. Roce... roce... Te lastimas la punta de las orejas y el agua gotea directo sobre tu cabeza. No hay ningún ruido amigable; estás completamente desorientado.',
-      html: 'Caminas rozando las paredes llenas de moho y alambres viejos. <em class="vn-sound-whisper font-semibold">Roce... roce...</em> Te lastimas la punta de las orejas y el agua gotea directo sobre tu cabeza. No hay ningún ruido amigable; estás completamente desorientado.',
+      text: 'Al avanzar empapado por el barro estrecho, tus costados rozan muros llenos de moho y alambres viejos. Roce... roce... Te lastimas la punta de las orejas mientras el agua gotea directo sobre tu cabeza. No queda ningún sonido amigable; estás completamente desorientado.',
+      html: 'Al avanzar empapado por el barro estrecho, tus costados rozan muros llenos de moho y alambres viejos. <em class="vn-sound-whisper font-semibold">Roce... roce...</em> Te lastimas la punta de las orejas mientras el agua gotea directo sobre tu cabeza. No queda ningún sonido amigable; estás completamente desorientado.',
       choices: [
-        { label: 'Continuar avanzando a pesar del cansancio', next: 'S33' }
+        { label: 'Continuar avanzando a tientas a pesar del cansancio', next: 'S33' }
       ]
     },
     {
@@ -557,9 +570,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Respiración entrecortada en callejón sin salida',
-      text: 'Ya casi no puedes tenerte en pie. De pronto, un golpe de olor fuerte y pesado a restos de pescado crudo te pega en la nariz. Sale de unas bolsas tiradas en un rincón oscuro detrás de un callejón sin salida.',
+      text: 'Sigues caminando apenas sosteniéndote en pie cuando un golpe de olor fuerte y pesado a restos de pescado crudo te pega de lleno en la nariz. Sale de unas bolsas tiradas en un rincón oscuro detrás de un callejón sin salida.',
       choices: [
-        { label: 'Dejarte llevar por el hambre desesperada', next: 'S34' }
+        { label: 'Dejarte llevar por el hambre hacia ese olor', next: 'S34' }
       ]
     },
     {
@@ -570,9 +583,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Crujido de bolsas plásticas rasgadas sobre el suelo húmedo',
-      text: 'Sin fijarte por dónde pisas ni pensar en nada más que en llenar tu barriga, corres a tientas hacia las bolsas de basura de un restaurante de sushi. Te lanzas directo sobre los desperdicios.',
+      text: 'Vencido por el hambre y sin fijarte por dónde pisas, corres a tientas siguiendo ese aroma pesado hasta la parte trasera de un restaurante de sushi, donde se amontonan bolsas rasgadas en el suelo.',
       choices: [
-        { label: 'Tragar las sobras frías del suelo', next: 'S47' }
+        { label: 'Lanzarte directo sobre las bolsas de basura', next: 'S47' }
       ]
     },
 
@@ -585,9 +598,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Silencio apacible bajo techo; lluvia muy lejana',
-      text: 'Sigues el olor modesto y tranquilo a atún. Caminas por un pasaje seco hasta tropezar con una latita apoyada en el suelo. Tiene comida fresca y sus bordes están doblados con mucho cuidado para que ningún animalito se corte la lengua.',
+      text: 'Sigues con calma el aroma sencillo a atún por un pasaje seco hasta que tu hocico tropieza con una latita apoyada en el suelo. Tiene comida fresca y alguien dobló con mucho cuidado sus bordes metálicos para que ningún animalito se corte la lengua.',
       choices: [
-        { label: 'Comer todo el atún con calma hasta dejar limpia la lata', next: 'S36' }
+        { label: 'Comer despacio todo el atún hasta dejar limpia la lata', next: 'S36' }
       ]
     },
     {
@@ -598,7 +611,7 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Respiración humana suave, pausada y cercana',
-      text: 'Con la barriguita llena y reconfortada, das un par de pasos hacia un lado para buscar dónde descansar. De pronto, tu frente choca suavemente contra algo al lado de la lata. Es suave, huele a ropa limpia y no se mueve con violencia.',
+      text: 'Tras lamer hasta el último bocado, sientes la barriguita llena y reconfortada. Das un par de pasos buscando un rincón para descansar y tu frente choca suavemente contra algo justo al lado de la lata. Es blando, huele a ropa limpia y no se mueve con violencia.',
       choices: [
         { label: 'Frotar tu hocico contra esa superficie tibia', next: 'S37' }
       ]
@@ -611,8 +624,8 @@ window.BLINKY_STORY = (function () {
       speaker: 'LA NIÑA',
       speakerType: 'nina',
       audioCue: 'Vocecita infantil suave y temblorosa',
-      text: 'Escuchas una vocecita temblorosa muy cerca de tus orejas.\n— ¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé? —dice una niña sentada en el suelo, que está perdida y esperando que su familia la encuentre.',
-      html: 'Escuchas una vocecita temblorosa muy cerca de tus orejas.<br><span class="block mt-1.5">— «¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé?» —dice una niña sentada en el suelo, que está perdida y esperando que su familia la encuentre.</span>',
+      text: 'Tu roce provoca un pequeño sobresalto seguido de una vocecita temblorosa muy cerca de tus orejas.\n— ¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé? —pregunta una niña sentada en el suelo, perdida y esperando a que su familia la encuentre.',
+      html: 'Tu roce provoca un pequeño sobresalto seguido de una vocecita temblorosa muy cerca de tus orejas.<br><span class="block mt-1.5">— «¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé?» —pregunta una niña sentada en el suelo, perdida y esperando a que su familia la encuentre.</span>',
       choices: [
         { label: 'Trepar despacio hacia su regazo buscando calor', next: 'S38' }
       ]
@@ -625,9 +638,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Respiración tranquila y latido sereno',
-      text: 'No entiendes lo que dice, pero sientes su calor humano en medio de este frío que casi te congela. Subes tus patitas a su regazo de lana, das dos vueltas sobre ti mismo y te quedas profundamente dormido después de tantas horas de miedo.',
+      text: 'No entiendes lo que dice, pero su calor humano es el refugio más seguro que has sentido en toda la noche. Trepas con cuidado hasta su regazo de lana, das dos vueltas sobre ti mismo y te quedas profundamente dormido tras tantas horas de miedo.',
       choices: [
-        { label: 'Quedarte dormido mientras afuera suenan voces', next: 'S39' }
+        { label: 'Descansar profundamente mientras afuera arrecia la noche', next: 'S39' }
       ]
     },
     {
@@ -638,9 +651,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Chapoteos apresurados de botas en charcos cercanos',
-      text: 'Entre tu sueño profundo, sientes que el agua de los charcos afuera salpica por pasos de botas que corren a toda prisa hacia el callejón. Una sombra agitada se detiene justo frente a ustedes.',
+      text: 'En medio de tu sueño tranquilo, el sonido de unas botas chapoteando a toda prisa en los charcos resuena hacia el callejón. Una presencia agitada se detiene de golpe justo frente a ustedes.',
       choices: [
-        { label: 'Entreabrir las orejas adormiladas', next: 'S40' }
+        { label: 'Entreabrir las orejas adormiladas hacia la llegada', next: 'S40' }
       ]
     },
     {
@@ -651,10 +664,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'MAMÁ DE LA NIÑA',
       speakerType: 'mama_nina',
       audioCue: 'Sollozos de alivio y abrazo materno',
-      text: 'Una mujer se arrodilla de golpe en el suelo y abraza con fuerza a la pequeña, llorando de pura alegría.\n— ¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada?',
-      html: 'Una mujer se arrodilla de golpe en el suelo y abraza con fuerza a la pequeña, llorando de pura alegría.<br><span class="block mt-1.5">— «¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada?»</span>',
+      text: 'Apenas alzas las orejas, oyes a una mujer arrodillarse sobre el pavimento y abrazar con fuerza a la pequeña, llorando de pura alegría.\n— ¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada?',
+      html: 'Apenas alzas las orejas, oyes a una mujer arrodillarse sobre el pavimento y abrazar con fuerza a la pequeña, llorando de pura alegría.<br><span class="block mt-1.5">— «¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada?»</span>',
       choices: [
-        { label: 'Sentir el abrazo cálido que las une', next: 'S41' }
+        { label: 'Sentir el abrazo cálido que los rodea a los tres', next: 'S41' }
       ]
     },
     {
@@ -665,10 +678,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'LA NIÑA',
       speakerType: 'nina',
       audioCue: 'Voz infantil dulce y suplicante',
-      text: 'La niña abraza a su mamá sin soltarte de su pecho. Con su manita acaricia tu pelaje y le pide con mucha ilusión:\n— ¡Mamá, estoy bien! Mira... este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras!',
-      html: 'La niña abraza a su mamá sin soltarte de su pecho. Con su manita acaricia tu pelaje y le pide con mucha ilusión:<br><span class="block mt-1.5">— «¡Mamá, estoy bien! Mira... este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras!»</span>',
+      text: 'Envuelto en ese abrazo, notas que la niña no te suelta de su pecho. Con su manita acaricia tu lomo húmedo y le pide con mucha ilusión:\n— ¡Mamá, estoy bien! Mira… este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras!',
+      html: 'Envuelto en ese abrazo, notas que la niña no te suelta de su pecho. Con su manita acaricia tu lomo húmedo y le pide con mucha ilusión:<br><span class="block mt-1.5">— «¡Mamá, estoy bien! Mira… este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras!»</span>',
       choices: [
-        { label: 'Escuchar la respuesta de la madre', next: 'S42' }
+        { label: 'Aguardar en silencio la respuesta de la madre', next: 'S42' }
       ]
     },
     {
@@ -679,8 +692,8 @@ window.BLINKY_STORY = (function () {
       speaker: 'MAMÁ DE LA NIÑA',
       speakerType: 'mama_nina',
       audioCue: 'Suspiro suave y voz compasiva',
-      text: 'La mujer acaricia la cabeza de su hija, algo indecisa mientras mira al animalito mojado.\n— Cariño... ya sabes que un gatito de la calle necesita muchos cuidados. Pero... a ver, déjame verlo de cerca... pobrecito, ven acá.',
-      html: 'La mujer acaricia la cabeza de su hija, algo indecisa mientras mira al animalito mojado.<br><span class="block mt-1.5">— «Cariño... ya sabes que un gatito de la calle necesita muchos cuidados. Pero... a ver, déjame verlo de cerca... pobrecito, ven acá».</span>',
+      text: 'Tras un breve silencio, la mujer acaricia la cabeza de su hija, algo indecisa mientras te mira empapado.\n— Cariño… ya sabes que un gatito de la calle necesita muchos cuidados. Pero… a ver, déjame verlo de cerca… pobrecito, ven acá.',
+      html: 'Tras un breve silencio, la mujer acaricia la cabeza de su hija, algo indecisa mientras te mira empapado.<br><span class="block mt-1.5">— «Cariño… ya sabes que un gatito de la calle necesita muchos cuidados. Pero… a ver, déjame verlo de cerca… pobrecito, ven acá».</span>',
       choices: [
         { label: 'Dejar que la señora te tome con ternura entre sus manos', next: 'S43' }
       ]
@@ -693,10 +706,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'MAMÁ DE LA NIÑA',
       speakerType: 'mama_nina',
       audioCue: 'Voz llena de ternura y asombro',
-      text: 'La madre te levanta suavemente a la altura de su rostro. Al mirarte fijamente, su voz se llena de ternura y sorpresa.\n— Hija... mira esto. Toca su carita con cuidado... Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz.',
-      html: 'La madre te levanta suavemente a la altura de su rostro. Al mirarte fijamente, su voz se llena de ternura y sorpresa.<br><span class="block mt-1.5">— «Hija... mira esto. Toca su carita con cuidado... Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz».</span>',
+      text: 'Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa.\n— Hija… mira esto. Toca su carita con cuidado… Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz.',
+      html: 'Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa.<br><span class="block mt-1.5">— «Hija… mira esto. Toca su carita con cuidado… Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz».</span>',
       choices: [
-        { label: 'Sentir las manitas de la niña tocando tus párpados', next: 'S44' }
+        { label: 'Sentir las manitas de la niña rozando tus párpados', next: 'S44' }
       ]
     },
     {
@@ -722,8 +735,8 @@ window.BLINKY_STORY = (function () {
       speakerType: 'nina',
       musicTrack: 'final_bueno',
       audioCue: '♫ «Hijo del corazón, deja ya de llorar» (melodía suave de cuna)',
-      text: 'La niña te abraza fuerte contra su abrigo mientras caminan rumbo a tu nuevo hogar y te susurra al oído:\n«No ves, pero tus ojos parpadean buscando la luz a cada instante... De ahora en adelante nunca más estarás solo. Te llamarás Blinky».',
-      html: 'La niña te abraza fuerte contra su abrigo mientras caminan rumbo a tu nuevo hogar y te susurra al oído:<br><span class="block mt-1.5 font-semibold text-amber-100">«No ves, pero tus ojos parpadean buscando la luz a cada instante... De ahora en adelante nunca más estarás solo. Te llamarás Blinky».</span>',
+      text: 'Te acurrucas envuelto en una manta tibia y sientes el balanceo tranquilo de sus pasos rumbo a tu nuevo hogar mientras la niña te susurra al oído:\n«No ves, pero tus ojos parpadean buscando la luz a cada instante… De ahora en adelante nunca más estarás solo. Te llamarás Blinky».',
+      html: 'Te acurrucas envuelto en una manta tibia y sientes el balanceo tranquilo de sus pasos rumbo a tu nuevo hogar mientras la niña te susurra al oído:<br><span class="block mt-1.5 font-semibold text-amber-100">«No ves, pero tus ojos parpadean buscando la luz a cada instante… De ahora en adelante nunca más estarás solo. Te llamarás Blinky».</span>',
       choices: [
         { label: 'Ronronear feliz sabiendo que encontraste una familia', next: 'S46' }
       ]
@@ -738,7 +751,7 @@ window.BLINKY_STORY = (function () {
       isEnding: 'F01',
       musicTrack: 'final_bueno',
       audioCue: '♫ Compases finales de «Hijo del corazón, deja ya de llorar»',
-      text: 'Supiste confiar en los que te ayudaron y tuviste paciencia para no dejarte tentar por comidas engañosas. Ahora Blinky duerme en una cama caliente y con amor de verdad.',
+      text: 'Tu ronroneo agradecido llena el silencio de la noche. Supiste confiar en quienes te ayudaron y tuviste paciencia para no dejarte tentar por comidas engañosas. Ahora Blinky duerme abrigado en una cama caliente, rodeado de amor de verdad.',
       choices: [
         { label: 'Volver a la portada de la novela visual', next: 'S01', isRestart: true }
       ]
@@ -753,9 +766,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Goteo pesado sobre contenedores metálicos',
-      text: 'Llegas al basurero detrás de un restaurante de sushi. Comes con desesperación restos congelados de pieles de salmón y arroz duro tirado en el suelo. Llenas tu barriga rápidamente, pero la comida fría te produce un dolor pesado por dentro.',
+      text: 'Al llegar al basurero detrás del restaurante de sushi, te lanzas hambriento sobre las bolsas rotas. Devoras con desesperación restos congelados de pieles de salmón y arroz duro tirados en el barro. Llenas la barriga rápido, pero la comida helada te deja un dolor pesado por dentro.',
       choices: [
-        { label: 'Buscar desesperadamente un lugar caliente para no temblar', next: 'S48' }
+        { label: 'Alejarte tambaleando en busca de algo caliente', next: 'S48' }
       ]
     },
     {
@@ -766,9 +779,9 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Viento helado de madrugada y temblor continuo',
-      text: 'El viento de la madrugada te empapa los costados y el cansancio hace que tus patas se doblen. La comida fría no te da energía. Sientes que si no encuentras el calor de un cuerpo vivo en los próximos minutos, te vas a quedar congelado en el barro.',
+      text: 'Cada paso te cuesta más. El viento de la madrugada empapa tus costados y el cansancio hace que tus patitas se doblen. La comida fría no te da energía; sientes que si no encuentras pronto el calor de un cuerpo vivo, te quedarás congelado en el barro.',
       choices: [
-        { label: 'Buscar en el aire cualquier vibración que te recuerde a mamá', next: 'S49' }
+        { label: 'Detenerte a buscar en el aire cualquier vibración conocida', next: 'S49' }
       ]
     },
     {
@@ -779,10 +792,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Hmmmmmmmm... Zumbido constante y rígido a ras del suelo',
-      text: 'Hmmmmmmmm... De repente, sientes que el piso tiembla con un ritmo constante. Una ráfaga tibia de aire te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra... tiene que ser el ronroneo de mamá esperándome!».',
-      html: '<em class="vn-sound-whisper font-semibold">Hmmmmmmmm...</em> De repente, sientes que el piso tiembla con un ritmo constante. Una ráfaga tibia de aire te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra... tiene que ser el ronroneo de mamá esperándome!».',
+      text: 'Al detenerte y agudizar tus sentidos, lo sientes bajo tus almohadillas: Hmmmmmmmm... El piso tiembla con un ritmo constante y una ráfaga tibia te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra… tiene que ser el ronroneo de mamá esperándome!».',
+      html: 'Al detenerte y agudizar tus sentidos, lo sientes bajo tus almohadillas: <em class="vn-sound-whisper font-semibold">Hmmmmmmmm...</em> El piso tiembla con un ritmo constante y una ráfaga tibia te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra… tiene que ser el ronroneo de mamá esperándome!».',
       choices: [
-        { label: 'Correr emocionado a frotarte contra ella', next: 'S50' }
+        { label: 'Correr emocionado a frotarte contra ese calor', next: 'S50' }
       ]
     },
     {
@@ -794,10 +807,10 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       tension: 'impact',
       audioCue: '¡¡CLANC!! Choque seco contra fierro oxidado y zumbido eléctrico',
-      text: '¡¡CLANC!! Te tiras de golpe esperando encontrar el pelaje suave de mamá, pero tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo; es un aparato eléctrico dañado.',
-      html: '<span class="vn-onomatopoeia block mb-1">¡¡CLANC!!</span>Te tiras de golpe esperando encontrar el pelaje suave de mamá, pero tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo; es un aparato eléctrico dañado.',
+      text: 'Te lanzas hacia adelante esperando hundirte en el pelaje suave de mamá… ¡¡CLANC!! Tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo: es un calefactor eléctrico dañado.',
+      html: 'Te lanzas hacia adelante esperando hundirte en el pelaje suave de mamá… <span class="vn-onomatopoeia">¡¡CLANC!!</span> Tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo: es un calefactor eléctrico dañado.',
       choices: [
-        { label: 'Olfatear el suelo bajo la máquina para entender dónde estás', next: 'S51' }
+        { label: 'Bajar la nariz al lodo para entender dónde estás', next: 'S51' }
       ]
     },
     {
@@ -808,7 +821,7 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Zumbido eléctrico monótono bajo la lluvia incesante',
-      text: 'Pones la nariz en el lodo. Reconoces el olor de tus propias huellas: caminaste en círculos durante horas para terminar en el mismo callejón donde empezó todo. El aparato viejo vibra tirando un poco de calor falso entre las latas.',
+      text: 'Al olfatear el barro bajo la máquina, reconoces el rastro de tus propias huellas: caminaste en círculos durante horas hasta terminar en el mismo callejón donde empezó todo. El aparato viejo vibra soltando apenas un poco de calor artificial entre las latas.',
       choices: [
         { label: 'Rendirte y echarte pegado al metal', next: 'S52' }
       ]
@@ -823,7 +836,7 @@ window.BLINKY_STORY = (function () {
       isEnding: 'F02',
       musicTrack: 'final_triste',
       audioCue: '♫ «500 Miles» (Peter, Paul and Mary) junto a lluvia apagada',
-      text: 'Desconfiar de la ayuda y dejarte ganar por el hambre fácil te llevó a un callejón sin salida. Sin fuerzas para levantarte, te quedas dormido pegado al metal que vibra, conformándote con su calor artificial mientras la lluvia cae en la noche.',
+      text: 'Te dejas caer vencido contra la rejilla tibia. Desconfiar de la ayuda y dejarte ganar por el hambre fácil te devolvió a un callejón sin salida. Sin fuerzas para volver a levantarte, te quedas dormido pegado al metal que vibra, conformándote con su falso calor mientras la lluvia cae en la noche.',
       choices: [
         { label: 'Reiniciar la historia para probar otras decisiones', next: 'S01', isRestart: true }
       ]

@@ -18,14 +18,20 @@
   <!-- ==================== LIENZO PRINCIPAL DEL JUEGO ==================== -->
   <main id="game-screen" class="relative w-screen h-screen overflow-hidden flex flex-col justify-between" data-purpose="game-screen">
 
-    <!-- ==================== CAPA 1: FONDO E ILUSTRACIÓN s(n).png ==================== -->
+    <!-- ==================== CAPA 1: FONDO E ILUSTRACIÓN s(n).png (DOBLE CAPA PARA SECUENCIAS ONE-SHOT) ==================== -->
     <div id="scene-bg-wrapper" class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden" aria-hidden="true">
-      <!-- Imagen automática images/s1.png ... images/s52.png (oculta limpiamente si aún no existe) -->
+      <!-- Capa base y capa superior para fundidos fluidos entre fotogramas sin parpadeos -->
       <img
         id="scene-bg"
         src=""
         alt=""
         class="scene-bg-image absolute inset-0 w-full h-full object-cover is-loading hidden"
+      />
+      <img
+        id="scene-bg-next"
+        src=""
+        alt=""
+        class="scene-bg-image absolute inset-0 w-full h-full object-cover opacity-0 hidden"
       />
     </div>
 
@@ -463,33 +469,41 @@
       // -------------------- Referencias DOM --------------------
       const sceneBgWrapperEl = document.getElementById('scene-bg-wrapper');
       const sceneBgEl = document.getElementById('scene-bg');
+      const sceneBgNextEl = document.getElementById('scene-bg-next');
       const warmLightEl = document.getElementById('warm-light-overlay');
       const tensionOverlayEl = document.getElementById('tension-overlay');
       const chapterTitleEl = document.getElementById('chapter-title');
       const dialogueBoxEl = document.getElementById('dialogue-box');
 
+      function triggerImpactShake(screen) {
+        if (appState.prefs.reduceMotion) return;
+        sceneBgWrapperEl.classList.remove('scene-impact-shake', 'scene-uneasy-drift');
+        void sceneBgWrapperEl.offsetWidth;
+        sceneBgWrapperEl.classList.add('scene-impact-shake');
+        setTimeout(() => {
+          if (appState.currentId === screen.id && !appState.prefs.reduceMotion) {
+            sceneBgWrapperEl.classList.remove('scene-impact-shake');
+            sceneBgWrapperEl.classList.add('scene-uneasy-drift');
+          }
+        }, 500);
+      }
+
       function applyTensionAtmosphere(screen) {
         const mode = screen.tension || null;
         sceneBgWrapperEl.classList.remove('scene-impact-shake', 'scene-uneasy-drift');
 
+        // Si la pantalla tiene fotogramas con shake sincronizado (ej. S06 al 1.48s), el temblor se dispara en ese fotograma exacto
+        const hasTimedShake = Array.isArray(screen.frames) && screen.frames.some((f) => f.shake);
+
         if (mode && !appState.prefs.reduceMotion) {
           tensionOverlayEl.classList.add('is-active');
           warmLightEl.style.opacity = '0.35';
-          void sceneBgWrapperEl.offsetWidth;
-          if (mode === 'impact') {
-            sceneBgWrapperEl.classList.add('scene-impact-shake');
-            // Tras la sacudida breve inicial, deja una micro-turbulencia sutil flotando
-            setTimeout(() => {
-              if (appState.currentId === screen.id && !appState.prefs.reduceMotion) {
-                sceneBgWrapperEl.classList.remove('scene-impact-shake');
-                sceneBgWrapperEl.classList.add('scene-uneasy-drift');
-              }
-            }, 500);
+          if (mode === 'impact' && !hasTimedShake) {
+            triggerImpactShake(screen);
           } else {
             sceneBgWrapperEl.classList.add('scene-uneasy-drift');
           }
         } else if (mode) {
-          // Con Reducir movimiento activo: solo tono rojizo estático muy leve
           tensionOverlayEl.classList.add('is-active');
           warmLightEl.style.opacity = '0.35';
         } else {
@@ -752,25 +766,94 @@
         };
       })();
 
-      // -------------------- Carga Rápida de Imágenes s(n).png --------------------
+      // -------------------- Carga Rápida de Imágenes + Secuencias One-Shot (Sin Bucle) --------------------
       let activeImageToken = 0;
+      let frameTimers = [];
 
-      function loadSceneBackground(imagePath) {
-        const token = ++activeImageToken;
+      function clearFrameTimers() {
+        frameTimers.forEach((id) => clearTimeout(id));
+        frameTimers = [];
+      }
+
+      function showImageFrame(imagePath, transitionMode = 'cut', token) {
         const probe = new Image();
         probe.onload = function () {
           if (token !== activeImageToken) return;
-          sceneBgEl.src = imagePath;
-          sceneBgEl.classList.remove('hidden', 'is-loading');
-          sceneBgEl.classList.add('is-loaded');
+          if (transitionMode === 'fade' && !sceneBgEl.classList.contains('hidden')) {
+            sceneBgNextEl.src = imagePath;
+            sceneBgNextEl.style.transition = 'opacity 0.55s ease';
+            sceneBgNextEl.style.opacity = '0';
+            sceneBgNextEl.classList.remove('hidden');
+            requestAnimationFrame(() => {
+              if (token !== activeImageToken) return;
+              sceneBgNextEl.style.opacity = '1';
+            });
+            const commitTimer = setTimeout(() => {
+              if (token !== activeImageToken) return;
+              sceneBgEl.src = imagePath;
+              sceneBgEl.classList.remove('hidden', 'is-loading');
+              sceneBgEl.classList.add('is-loaded');
+              sceneBgNextEl.classList.add('hidden');
+              sceneBgNextEl.style.opacity = '0';
+            }, 580);
+            frameTimers.push(commitTimer);
+          } else {
+            sceneBgNextEl.classList.add('hidden');
+            sceneBgNextEl.style.opacity = '0';
+            sceneBgEl.src = imagePath;
+            sceneBgEl.classList.remove('hidden', 'is-loading');
+            sceneBgEl.classList.add('is-loaded');
+          }
         };
         probe.onerror = function () {
           if (token !== activeImageToken) return;
-          sceneBgEl.classList.add('hidden', 'is-loading');
-          sceneBgEl.classList.remove('is-loaded');
-          sceneBgEl.removeAttribute('src');
+          if (transitionMode === 'cut') {
+            sceneBgEl.classList.add('hidden', 'is-loading');
+            sceneBgEl.classList.remove('is-loaded');
+            sceneBgEl.removeAttribute('src');
+          }
         };
         probe.src = imagePath;
+      }
+
+      function loadSceneBackground(screenOrPath) {
+        clearFrameTimers();
+        const token = ++activeImageToken;
+        sceneBgNextEl.classList.add('hidden');
+        sceneBgNextEl.style.opacity = '0';
+
+        if (typeof screenOrPath === 'string') {
+          showImageFrame(screenOrPath, 'cut', token);
+          return;
+        }
+
+        const screen = screenOrPath;
+        const frames = screen.frames;
+
+        // Si tiene secuencia one-shot y Reducir movimiento está desactivado, la reproduce UNA sola vez
+        if (Array.isArray(frames) && frames.length > 0 && !appState.prefs.reduceMotion) {
+          // Precargar todos los fotogramas de la escena en memoria para transiciones instantáneas
+          frames.forEach((f) => { const pre = new Image(); pre.src = f.src; });
+
+          frames.forEach((frame) => {
+            const delay = Math.max(0, Number(frame.delay) || 0);
+            const run = () => {
+              if (token !== activeImageToken) return;
+              showImageFrame(frame.src, frame.transition || 'cut', token);
+              if (frame.shake) {
+                triggerImpactShake(screen);
+              }
+            };
+            if (delay === 0) {
+              run();
+            } else {
+              frameTimers.push(setTimeout(run, delay));
+            }
+          });
+        } else {
+          // Modo estándar o Reducir movimiento: muestra directamente la imagen final de la pantalla
+          showImageFrame(screen.image, 'cut', token);
+        }
       }
 
       // -------------------- Lógica de Tutorial (solo primeras veces) --------------------
@@ -796,7 +879,7 @@
         chapterTitleEl.textContent = act ? act.shortTitle : 'El Nido Roto';
         document.title = `Blinky's Blind Heart — ${screen.title}`;
 
-        loadSceneBackground(screen.image);
+        loadSceneBackground(screen);
         applyTensionAtmosphere(screen);
         audioEngine.onScreenChange(screen);
 

@@ -1,0 +1,996 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- Geometría y márgenes ---
+\usepackage[a4paper, margin=2cm, top=2.3cm, bottom=2.3cm]{geometry}
+
+% --- Tipografía y soporte de idioma ---
+\usepackage{fontspec}
+\usepackage[spanish, es-noshorthands]{babel}
+\IfFontExistsTF{Noto Sans}{\setmainfont{Noto Sans}}{\setmainfont{Segoe UI}}
+
+% --- Paquetes para tablas y diseño visual ---
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{colortbl}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% --- Colores de interfaz ---
+\definecolor{colorHeader}{HTML}{1A365D}     % Azul noche (Cabecera)
+\definecolor{colorTextoBox}{HTML}{F8FAFC}   % Fondo de diálogo
+\definecolor{colorBotonBox}{HTML}{EDF2F7}   % Fondo de botones de acción
+\definecolor{colorEmisor}{HTML}{2B6CB0}     % Azul para nombre del emisor
+\definecolor{colorAlerta}{HTML}{9B2C2C}     % Rojo oscuro para peligros y final malo
+\definecolor{colorExito}{HTML}{22543D}      % Verde bosque para final bueno
+\definecolor{colorDecision}{HTML}{4A5568}   % Gris pizarra para dilemas
+
+% --- Encabezados y pies de página ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small \textbf{\textcolor{colorHeader}{Blinky's Blind Heart}} \textbar\ Libreto Técnico y Diálogos}
+\fancyhead[R]{\small \textcolor{gray}{Diseño de Pantallas Atómicas}}
+\fancyfoot[L]{\small \textcolor{gray}{Novela Visual Sensorial}}
+\fancyfoot[R]{\small \textbf{\textcolor{colorHeader}{Página \thepage}}}
+
+% --- Hipervínculos ---
+\usepackage[colorlinks=true, linkcolor=colorHeader, urlcolor=colorHeader, citecolor=colorHeader]{hyperref}
+
+\begin{document}
+
+% ==============================================================================
+% PORTADA Y CRITERIOS EDITORIALES
+% ==============================================================================
+\begin{center}
+    {\Huge \textbf{\textcolor{colorHeader}{Blinky's Blind Heart}}}\\[0.4em]
+    {\LARGE \textbf{Libreto de Interacción Pantalla a Pantalla}}\\[0.6em]
+    {\large \textbf{Guion Técnico y Cajas de Diálogo Individuales para Novela Visual}}\\[1.2em]
+    
+    \begin{tabularx}{0.88\textwidth}{>{\bfseries}r X}
+        Autores: & Samuel Arenas Valencia (202341928) \\
+                 & Juan Manuel Ampudia (202342174) \\
+        Docente: & Paola Johanna Rodríguez Carrillo \\
+        Curso: & Diseño de contenido para interfaces de usuario \\
+        Versión: & 4.0 (Cohesión literaria causa--efecto, continuidad sensorial y concordancia masculina de Blinky) \\
+        Estructura: & 52 Pantallas atómicas ($S01$ a $S52$) \textbar\ 5 Decisiones ($D01$ a $D05$) \\
+        Desenlaces: & F01 (Final Bueno / Adopción) \textbar\ F02 (Final Malo / Calefactor Frío)
+    \end{tabularx}
+\end{center}
+
+\vspace{0.6em}
+\hrule height 1pt
+\vspace{0.8em}
+
+\section*{Criterios de Contenido y Experiencia de Lectura}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Una sola voz por pantalla:} Ninguna pantalla mezcla a dos personajes hablando o describiendo hechos en la misma caja de texto. Si dos seres interactúan, cada uno tiene su propia pantalla secuencial.
+    \item \textbf{El mundo según un gatito macho ciego:} Blinky no ve nada ni entiende palabras humanas. Sus pensamientos son sensaciones puras: frío, hambre, vibraciones, calor y olores. Todos los adjetivos y participios referidos al protagonista mantienen estricta concordancia masculina (\textit{pequeño, quieto, helado, solo, desorientado, dormido}).
+    \item \textbf{Continuidad literaria causa--efecto:} Cada pantalla abre validando de manera directa la acción elegida en el botón anterior, garantizando cohesión narrativa sin saltos abruptos entre viñetas.
+    \item \textbf{Botones con intención clara:} Cada botón indica con precisión qué acción física realiza el gatito o la interfaz, evitando palabras vacías como «Siguiente».
+\end{itemize}
+
+\vspace{0.8em}
+
+% ==============================================================================
+% ACTO I: EL NIDO ROTO Y EL RUIDO EN LA CALLE (S01 - S07)
+% ==============================================================================
+\section*{Acto I: El Nido Roto y el Ruido en la Calle}
+
+% S01
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S01 $\cdot$ El Mundo a Oscuras}} \hfill \small\textcolor{white}{Inicio \textbar\ Sentido: Tacto y Frío} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Nunca has visto la ciudad ni sabes qué forma tiene la noche. Para un gatito ciego como tú, el mundo entero cabe en tres cosas: el golpeteo de la lluvia sobre el cartón húmedo, el frío que se cuela por las rendijas y el calor tibio del cuerpo de tu mamá a tu lado. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Acurrucarte más fuerte contra el calor de mamá $\rightarrow$ Salta a S02 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S02
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S02 $\cdot$ Un Latido Inquieto}} \hfill \small\textcolor{white}{Sentido: Sensación de Hambre} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Hundes la nariz en su pelaje buscando abrigo\ldots\ pero su cuerpo ya no está recostado. Sientes sus músculos tensos junto a la entrada del cartón: mamá está sentada, muy alerta hacia la lluvia. En ese instante, tu barriguita suelta un \textit{Grrr...} vacío que te hace encoger las patitas. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Pegar la oreja a su pecho para escucharla $\rightarrow$ Salta a S03 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S03
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S03 $\cdot$ La Promesa en un Ronroneo}} \hfill \small\textcolor{white}{Sentido: Tacto y Ronroneo} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ MAMÁ GATO ]}} \vspace{0.2em}\newline
+Al sentirte temblar contra su costado, inclina la cabeza y pasa su lengua áspera por tu frente para secarte el agua. \newline
+--- \textit{Prrrr... Miau} ---su ronroneo vibra despacio contra tus costillas, como una promesa clara: «Quédate aquí quieto, pequeño. Voy a buscar algo para comer y vuelvo enseguida». \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Obedecer y quedarte quieto en el cartón $\rightarrow$ Salta a S04 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S04
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S04 $\cdot$ El Frío que Regresa}} \hfill \small\textcolor{white}{Sentido: Temperatura y Tiempo} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Sus pasos suaves se pierden bajo la tormenta. Te quedas quieto tal como te pidió, contando gotas contra el cartón. Pasan los minutos\ldots\ y el tibio hueco que dejó a tu lado se enfría por completo. Mamá nunca se había tardado tanto. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Asomar el hocico fuera de la caja para buscar su olor $\rightarrow$ Salta a S05 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S05
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S05 $\cdot$ El Hilo de Leche y Lluvia}} \hfill \small\textcolor{white}{Sentido: Olfato Guiado} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+El viento helado te golpea la nariz, pero entre el olor a barro y basura mojada distingues su rastro intacto: leche tibia y pelaje limpio. Avanzas despacio siguiendo esa estela invisible hacia la salida del callejón, rozando latas vacías con tus bigotes. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Seguir su rastro hasta la esquina de la avenida $\rightarrow$ Salta a S06 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S06
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S06 $\cdot$ El Estruendo en la Esquina [ESTADO CRÍTICO 1]}} \hfill \small\textcolor{white}{Sentido: Oído Violento} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorAlerta}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Justo cuando el asfalto áspero anuncia el final del callejón, un motor ruge demasiado cerca. \textbf{¡¡SKRRRRRCH!! ¡¡PUM!!} Un frenazo desesperado de llantas rasga el pavimento mojado, seguido de un golpe seco. El humo a goma quemada borra el olor de mamá\ldots\ y todo queda en silencio. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Quedarte helado, escuchando el silencio $\rightarrow$ Salta a S07 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S07
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorDecision}
+\textbf{\textcolor{white}{PANTALLA S07 $\cdot$ Dos Caminos en la Oscuridad [DECISIÓN D01]}} \hfill \small\textcolor{white}{Dilema del Jugador} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Tus bigotes tiemblan y el silencio de la esquina pesa más que la lluvia. Hacia la avenida aún flota un último hilo del olor de mamá mezclado con humo; a tu espalda sigue intacto el refugio de cartón. ¿Qué haces? \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Opciones de decisión (D01):} \newline
+\textbf{[D01 A]} \texttt{[ > Avanzar hacia la avenida siguiendo su último olor $\rightarrow$ Salta a S08 ]} \vspace{0.3em}\newline
+\textbf{[D01 B]} \texttt{[ > Retroceder corriendo hacia la seguridad de la caja $\rightarrow$ Salta a S17 ]} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% ACTO II-A: LA BÚSQUEDA Y EL GATO GUÍA (S08 - S12) + SUB-RAMA GATO (S13 - S16)
+% ==============================================================================
+\section*{Acto II-A: La Búsqueda y el Gato Guía}
+
+% S08
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S08 $\cdot$ El Rastro en la Carretera}} \hfill \small\textcolor{white}{Entrada: D01 A \textbar\ Sentido: Tacto y Olfato} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+A pesar del temblor en tus patitas, te decides a salir del callejón siguiendo ese último hilo. El suelo cambia bajo tus almohadillas: de las piedras mojadas pasas al asfalto áspero de la avenida, donde el olor de mamá se vuelve intensísimo justo frente a ti. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Acercarte despacio hacia donde brota su olor $\rightarrow$ Salta a S09 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S09
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S09 $\cdot$ El Cuerpo en el Suelo}} \hfill \small\textcolor{white}{Sentido: Tacto y Desilusión} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+A pocos pasos, tus patitas chocan con un bulto peludo tendido en el asfalto. Te acercas emocionado frotando tu cabeza para buscar su calor protector\ldots\ pero ese cuerpo no se mueve. No respira y está completamente frío. Mamá siempre era tibia y cariñosa; esto ya no es mamá. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Apartarte despacio, sintiendo un vacío helado $\rightarrow$ Salta a S10 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S10
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S10 $\cdot$ Cruzando al Otro Lado}} \hfill \small\textcolor{white}{Sentido: Oído y Desorientación} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Mientras te alejas desorientado de la escena, escuchas voces humanas lamentándose y puertas de autos cerrándose. Por suerte, los carros siguen detenidos. Cruzas con pasos torpes hasta chocar con el bordillo del andén de enfrente, sintiéndote completamente solo en el mundo. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Trepar al andén y sacudirte el agua de los bigotes $\rightarrow$ Salta a S11 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S11
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S11 $\cdot$ Un Roce Desconocido}} \hfill \small\textcolor{white}{Sentido: Tacto y Olor Nuevo} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ GATO GUÍA ]}} \vspace{0.2em}\newline
+Apenas trepas a la acera y sacudes tu pelaje empapado, un lomo ágil se frota contra tu costado con suavidad. Huele a tejados altos y a comida callejera. \newline
+--- \textit{Prrrr... Prrrr... Miau} ---ronronea con un ritmo parejo y calmado, marcándote con su voz dónde está parado. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Inclinar las orejas y atender a su ronroneo $\rightarrow$ Salta a S12 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S12
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorDecision}
+\textbf{\textcolor{white}{PANTALLA S12 $\cdot$ La Ayuda del Compañero [DECISIÓN D02]}} \hfill \small\textcolor{white}{Dilema de Confianza} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Al notar que prestas atención a su llamada, el gato adulto da unos pasos hacia un pasaje estrecho y se detiene a esperarte, repitiendo su ronroneo para guiarte. No sabes a dónde te llevará. ¿Confías en este extraño o prefieres seguir solo? \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Opciones de decisión (D02):} \newline
+\textbf{[D02 A]} \texttt{[ > Confiar en él y seguir el ritmo de su ronroneo $\rightarrow$ Salta a S13 ]} \vspace{0.3em}\newline
+\textbf{[D02 B]} \texttt{[ > Rechazar su ayuda y buscar tu camino solo $\rightarrow$ Salta a S27 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+\subsection*{Sub-Rama Gato: El Callejón Protegido (S13 a S16)}
+
+% S13
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S13 $\cdot$ Caminando al Compás}} \hfill \small\textcolor{white}{Entrada: D02 A \textbar\ Sentido: Oído y Paso} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Decides confiar en él y te pegas a su costado, ajustando tus pequeños pasos a los suyos. El gato camina despacio sin dejar de ronronear ni un segundo para que no pierdas su rastro, guiándote por atajos estrechos lejos del estruendo de los carros y los charcos más hondos. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Mantenerte pegado a su paso hasta que se detenga $\rightarrow$ Salta a S14 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S14
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S14 $\cdot$ La Despedida del Amigo}} \hfill \small\textcolor{white}{Sentido: Tacto y Separación} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ GATO GUÍA ]}} \vspace{0.2em}\newline
+Sin soltar su compás, notas que la lluvia deja de golpearte el lomo: acaban de entrar a un callejón techado. El gato se frena y apoya su cabeza con suavidad contra tu cuello en señal de despedida. \newline
+--- \textit{Miau} ---dice con dulzura antes de trepar por una reja alta y perderse en la noche. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Quedarte bajo el techo y olfatear el aire del callejón $\rightarrow$ Salta a S15 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S15
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S15 $\cdot$ El Aroma Familiar}} \hfill \small\textcolor{white}{Sentido: Olfato Modesto} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Al respirar hondo en este rincón seco y protegido, un aroma conocido te llena el pecho: atún en lata. Es un olor modesto y sencillo, exactamente igual a la comida que mamá lograba traerte en las noches buenas. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Dar unos pasos hacia el fondo del pasaje $\rightarrow$ Salta a S16 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S16
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorDecision}
+\textbf{\textcolor{white}{PANTALLA S16 $\cdot$ La Quietud del Callejón [DECISIÓN D04]}} \hfill \small\textcolor{white}{Dilema de Paciencia} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Avanzas unos metros siguiendo el rastro a atún, pero el pasaje está tan callado que te inquieta. Más allá, en la esquina abierta, el viento trae risas y olores a comida mucho más intensa y abundante. ¿Te quedas en este callejón seguro o sales a investigar la otra calle? \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Opciones de decisión (D04):} \newline
+\textbf{[D04 A]} {\small\texttt{[ > Quedarte en el callejón y seguir el olor sencillo a atún $\rightarrow$ Salta a S35 ]}} \vspace{0.3em}\newline
+\textbf{[D04 B]} {\small\texttt{[ > Desconfiar del silencio y salir hacia los olores más fuertes $\rightarrow$ Salta a S47 ]}} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% ACTO II-B: EL PÁNICO Y EL PERRO SALVADOR (S17 - S23) + SUB-RAMA PERRO (S24 - S26)
+% ==============================================================================
+\section*{Acto II-B: El Pánico y el Perro Salvador}
+
+% S17
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S17 $\cdot$ La Huida Desesperada [ESTADO CRÍTICO 2]}} \hfill \footnotesize\textcolor{white}{Entrada: D01 B \textbar\ Sentido: Miedo y Carrera} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+El pánico te vence: das media vuelta y corres a ciegas de regreso al callejón. Chocas contra cajas y bolsas mojadas hasta colarte bien al fondo de tu nido de cartón, donde te encoges hecho un ovillo tembloroso con las orejas gachas. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Quedarte quieto en silencio esperando que pase el peligro $\rightarrow$ Salta a S18 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S18
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S18 $\cdot$ El Hambre Obliga a Moverse}} \hfill \small\textcolor{white}{Sentido: Frío y Vacío} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Esperas encogido durante horas hasta que el ruido de la avenida se calma, pero nadie regresa por ti. El estómago te duele de hambre y tienes las patitas entumecidas por la humedad. Si sigues ahí encerrado, no vas a resistir el frío. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Salir a tientas por el lado opuesto del callejón $\rightarrow$ Salta a S19 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S19
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S19 $\cdot$ Al Borde del Peligro}} \hfill \small\textcolor{white}{Sentido: Pérdida de Suelo} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Te obligas a abandonar el refugio y caminas rozando la pared húmeda con tus bigotes para guiarte. De pronto, el muro se acaba bajo tu mejilla. Das un paso al frente sin saber que el andén terminó\ldots\ y que estás a un centímetro de caer al paso de vehículos veloces. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Clavar las uñitas e intentar frenar en el borde $\rightarrow$ Salta a S20 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S20
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S20 $\cdot$ El Viento del Camión y la Mordida}} \hfill \small\textcolor{white}{Sentido: Rescate en el Aire} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorAlerta}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Intentas frenarte en seco, pero tus patitas resbalan sobre la piedra mojada. \textbf{¡¡FROOOOSH!!} Un camión pasa volando a milímetros de tu nariz y su ráfaga casi te voltea hacia la calle. Justo antes de caer, unos dientes grandes y firmes te sujetan con cuidado por el pellejo del cuello y te levantan en el aire. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Quedarte quieto mientras te apartan del peligro $\rightarrow$ Salta a S21 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S21
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S21 $\cdot$ El Gigante de Pelaje Mojado}} \hfill \small\textcolor{white}{Sentido: Tacto y Olor Fuerte} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Sin forcejear, sientes cómo te depositan con delicadeza sobre un piso seco y seguro. No te dolió nada. Alzas el hocico para descubrir quién te rescató: no huele a gato, sino a pelo grueso empapado, tierra húmeda y cuero. Es un animal enorme. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Frotar tu cabecita tímidamente contra su pata delantera $\rightarrow$ Salta a S22 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S22
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S22 $\cdot$ La Voz del Perro}} \hfill \small\textcolor{white}{Sentido: Oído Grave y Vibración} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ PERRO SALVADOR ]}} \vspace{0.2em}\newline
+Al sentir tu roce agradecido contra su pata, el gigante suelta un ladrido hondo que hace retumbar tu pecho. \textbf{¡¡GUAU!!} No suena enojado; suena como la advertencia cariñosa de un adulto protector: «¡Cuidado, pequeñajo! Casi no la cuentas». Luego da media vuelta y empieza a caminar despacio. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Escuchar el eco pesado de sus pasos al alejarse $\rightarrow$ Salta a S23 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S23
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorDecision}
+\textbf{\textcolor{white}{PANTALLA S23 $\cdot$ ¿Seguir al Perro? [DECISIÓN D03]}} \hfill \small\textcolor{white}{Dilema del Jugador} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Sus pisadas se detienen a pocos pasos, esperando ver si decides ir detrás de él. Ese perro gigante acaba de salvarte la vida, pero su tamaño impone respeto; a tu derecha, el viento silba por el hueco estrecho de una reja. ¿Confías en él o escapas solo? \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Opciones de decisión (D03):} \newline
+\textbf{[D03 A]} \texttt{[ > Confiar en su tamaño y caminar junto al perro $\rightarrow$ Salta a S24 ]} \vspace{0.3em}\newline
+\textbf{[D03 B]} \texttt{[ > Asustarte de él y escapar solo por la reja $\rightarrow$ Salta a S31 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+\subsection*{Sub-Rama Perro: La Escolta hacia el Cruce (S24 a S26)}
+
+% S24
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S24 $\cdot$ Escoltado por el Canino}} \hfill \small\textcolor{white}{Entrada: D03 A \textbar\ Sentido: Calor y Paso Seguro} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Decides confiar y corres hasta pegarte a su pata delantera. Su cuerpo ancho te cubre del viento helado como una pared tibia, y sus garras marcan un compás firme sobre las piedras: \textit{tac... tac... tac...} guiándote sin que te pierdas. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Avanzar al ritmo seguro de sus pisadas $\rightarrow$ Salta a S25 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S25
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S25 $\cdot$ El Arco Seguro}} \hfill \small\textcolor{white}{Sentido: Tacto y Despedida} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ PERRO SALVADOR ]}} \vspace{0.2em}\newline
+Siguiendo su paso firme, llegas bajo un arco techado de piedra donde no cae ni una gota. El perro se frena, te da un empujón suave con su hocico húmedo hacia el centro y suelta un bufido tibio: «Hasta aquí llego yo, enano. Ahora te toca a ti». Da la vuelta y se marcha bajo la lluvia. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Adentrarte solo en el cruce protegido $\rightarrow$ Salta a S26 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S26
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S26 $\cdot$ En la Encrucijada}} \hfill \small\textcolor{white}{Sentido: Corrientes de Viento} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+A salvo bajo el arco gracias al perro, das unos pasos hacia un cruce donde chocan varias corrientes de aire. Apenas te detienes, tu estómago vuelve a rugir desesperado: necesitas encontrar alimento pronto. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Alzar el hocico y concentrarte en los olores del aire $\rightarrow$ Salta a S27 ]} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% ACTO III: MINIJUEGO OLFATIVO DE CINTAS (S27 - S30)
+% ==============================================================================
+\section*{Acto III: La Encrucijada Olfativa (Minijuego Sensorial)}
+
+% S27
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S27 $\cdot$ El Mapa en la Imaginación}} \hfill \small\textcolor{white}{Entrada: D02 B o S26 \textbar\ Modo Concentración} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Estás solo en un cruce batido por corrientes de aire. Como tus ojos no pueden ver la calle, cierras tus otros sentidos y enfocas toda tu atención en tu nariz. Poco a poco, los olores del viento empiezan a dibujarse en tu mente como cintas de humo flotando en la oscuridad. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Distinguir cada una de las dos corrientes de olor $\rightarrow$ Salta a S28 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S28
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S28 $\cdot$ Las Dos Cintas de Color}} \hfill \small\textcolor{white}{Sentido: Olfato Comparativo} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Al concentrarte, separas dos rastros claros. Hacia un lado flota una \textbf{cinta naranja brillante}: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante. \newline
+Hacia el otro lado serpentea una \textbf{cinta azul delgada y modesta}: huele suavemente a atún en lata, justo como la comida sencilla que mamá siempre compartía contigo. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Inspirar de nuevo antes de que cambie el viento $\rightarrow$ Salta a S29 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S29
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S29 $\cdot$ La Ráfaga que se Acerca}} \hfill \small\textcolor{white}{Sentido: Prisa del Viento} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Al inhalar otra vez, una ráfaga de aire frío sacude el cruce y empieza a deshacer ambas cintas de olor. Tienes que elegir rápido qué camino vas a seguir antes de que el viento se lleve los aromas y te deje a oscuras sin guía. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Elegir qué rastro guiará tus pasos $\rightarrow$ Salta a S30 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S30
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorDecision}
+\textbf{\textcolor{white}{PANTALLA S30 $\cdot$ ¿Qué Rastro Elegir? [DECISIÓN D05]}} \hfill \small\textcolor{white}{Dilema del Minijuego} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+¿A cuál de los dos aromas le confías tu destino? ¿A la modesta cinta azul que te recuerda al cuidado sencillo de mamá, o a la brillante cinta naranja que promete un banquete gigante? \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Opciones de decisión (D05):} \newline
+\textbf{[D05 A]} {\small\texttt{[ > Desenredar la cinta azul y modesta con olor a atún $\rightarrow$ Salta a S35 ]}} \vspace{0.3em}\newline
+\textbf{[D05 B]} {\small\texttt{[ > Desenredar la cinta naranja y codiciosa con olor a salmón $\rightarrow$ Salta a S47 ]}} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% SUB-RAMA: ESCAPE EN SOLITARIO Y EXTRAVÍO (S31 - S34)
+% ==============================================================================
+\section*{Sub-Rama: El Extravío en Solitario}
+
+% S31
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S31 $\cdot$ Escape por las Rejas}} \hfill \small\textcolor{white}{Entrada: D03 B \textbar\ Sentido: Miedo a las Fauces} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+El tamaño del perro te asusta demasiado. Pegas un brinco hacia atrás bufando con desconfianza y te metes a la fuerza entre los barrotes de una reja oxidada. Detrás de ti escuchas al perro quejarse con pena, pero se queda atrás. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Arrastrarte por el lodo adentrándote en la oscuridad $\rightarrow$ Salta a S32 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S32
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S32 $\cdot$ Entre Paredes Frías}} \hfill \small\textcolor{white}{Sentido: Tacto Áspero y Dolor} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Al avanzar empapado por el barro estrecho, tus costados rozan muros llenos de moho y alambres viejos. \textit{Roce... roce...} Te lastimas la punta de las orejas mientras el agua gotea directo sobre tu cabeza. No queda ningún sonido amigable; estás completamente desorientado. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Continuar avanzando a tientas a pesar del cansancio $\rightarrow$ Salta a S33 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S33
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S33 $\cdot$ La Tentación Desesperada}} \hfill \small\textcolor{white}{Sentido: Olfato Pesado} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Sigues caminando apenas sosteniéndote en pie cuando un golpe de olor fuerte y pesado a restos de pescado crudo te pega de lleno en la nariz. Sale de unas bolsas tiradas en un rincón oscuro detrás de un callejón sin salida. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Dejarte llevar por el hambre hacia ese olor $\rightarrow$ Salta a S34 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S34
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S34 $\cdot$ Corriendo a Ciegas al Basurero}} \hfill \small\textcolor{white}{Sentido: Apetito Impulsivo} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Vencido por el hambre y sin fijarte por dónde pisas, corres a tientas siguiendo ese aroma pesado hasta la parte trasera de un restaurante de sushi, donde se amontonan bolsas rasgadas en el suelo. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Lanzarte directo sobre las bolsas de basura $\rightarrow$ Salta a S47 ]} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% ACTO IV-A: FINAL BUENO F01 (S35 - S46)
+% ==============================================================================
+\section*{Acto IV-A: Desenlace F01 -- El Encuentro con la Niña y el Nuevo Hogar}
+
+% S35
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S35 $\cdot$ La Lata en el Callejón}} \hfill \small\textcolor{white}{Entrada: D04 A o D05 A \textbar\ Sentido: Olfato y Sabor} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Sigues con calma el aroma sencillo a atún por un pasaje seco hasta que tu hocico tropieza con una latita apoyada en el suelo. Tiene comida fresca y alguien dobló con mucho cuidado sus bordes metálicos para que ningún animalito se corte la lengua. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Comer despacio todo el atún hasta dejar limpia la lata $\rightarrow$ Salta a S36 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S36
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S36 $\cdot$ El Choque con lo Desconocido}} \hfill \small\textcolor{white}{Sentido: Tacto Suave y Choque} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Tras lamer hasta el último bocado, sientes la barriguita llena y reconfortada. Das un par de pasos buscando un rincón para descansar y tu frente choca suavemente contra algo justo al lado de la lata. Es blando, huele a ropa limpia y no se mueve con violencia. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Frotar tu hocico contra esa superficie tibia $\rightarrow$ Salta a S37 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S37
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S37 $\cdot$ La Niña que Espera}} \hfill \small\textcolor{white}{Voz Humana en la Oscuridad} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ LA NIÑA ]}} \vspace{0.2em}\newline
+Tu roce provoca un pequeño sobresalto seguido de una vocecita temblorosa muy cerca de tus orejas. \newline
+--- ¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé? ---pregunta una niña sentada en el suelo, perdida y esperando a que su familia la encuentre. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Trepar despacio hacia su regazo buscando calor $\rightarrow$ Salta a S38 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S38
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S38 $\cdot$ El Sueño en el Regazo}} \hfill \small\textcolor{white}{Sentido: Calor y Descanso Pleno} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+No entiendes lo que dice, pero su calor humano es el refugio más seguro que has sentido en toda la noche. Trepas con cuidado hasta su regazo de lana, das dos vueltas sobre ti mismo y te quedas profundamente dormido tras tantas horas de miedo. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Descansar profundamente mientras afuera arrecia la noche $\rightarrow$ Salta a S39 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S39
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S39 $\cdot$ Pasos Rápidos en el Agua}} \hfill \small\textcolor{white}{Oído Lejano entre Sueños} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+En medio de tu sueño tranquilo, el sonido de unas botas chapoteando a toda prisa en los charcos resuena hacia el callejón. Una presencia agitada se detiene de golpe justo frente a ustedes. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Entreabrir las orejas adormiladas hacia la llegada $\rightarrow$ Salta a S40 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S40
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S40 $\cdot$ El Alivio de la Madre}} \hfill \small\textcolor{white}{Voz Emocionada de Adulta} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ MAMÁ DE LA NIÑA ]}} \vspace{0.2em}\newline
+Apenas alzas las orejas, oyes a una mujer arrodillarse sobre el pavimento y abrazar con fuerza a la pequeña, llorando de pura alegría. \newline
+--- ¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada? \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Sentir el abrazo cálido que los rodea a los tres $\rightarrow$ Salta a S41 ]} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% S41
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S41 $\cdot$ El Ruego de la Pequeña}} \hfill \small\textcolor{white}{Voz Infantil Suplicante} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ LA NIÑA ]}} \vspace{0.2em}\newline
+Envuelto en ese abrazo, notas que la niña no te suelta de su pecho. Con su manita acaricia tu lomo húmedo y le pide con mucha ilusión: \newline
+--- ¡Mamá, estoy bien! Mira\ldots\ este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras! \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Aguardar en silencio la respuesta de la madre $\rightarrow$ Salta a S42 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S42
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S42 $\cdot$ La Duda de la Madre}} \hfill \small\textcolor{white}{Voz de Reflexión} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ MAMÁ DE LA NIÑA ]}} \vspace{0.2em}\newline
+Tras un breve silencio, la mujer acaricia la cabeza de su hija, algo indecisa mientras te mira empapado. \newline
+--- Cariño\ldots\ ya sabes que un gatito de la calle necesita muchos cuidados. Pero\ldots\ a ver, déjame verlo de cerca\ldots\ pobrecito, ven acá. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Dejar que la señora te tome con ternura entre sus manos $\rightarrow$ Salta a S43 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S43
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S43 $\cdot$ Los Ojos que Parpadean}} \hfill \small\textcolor{white}{El Descubrimiento Visual} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ MAMÁ DE LA NIÑA ]}} \vspace{0.2em}\newline
+Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa. \newline
+--- Hija\ldots\ mira esto. Toca su carita con cuidado\ldots\ Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Sentir las manitas de la niña rozando tus párpados $\rightarrow$ Salta a S44 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S44
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S44 $\cdot$ La Promesa de la Niña}} \hfill \small\textcolor{white}{Conexión Emocional} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ LA NIÑA ]}} \vspace{0.2em}\newline
+La pequeña pasa sus deditos por tus ojos cerrados con muchísimo cariño y sonríe conmovida. \newline
+--- ¿Es ciego como yo, mami?... Entonces se viene a casa para siempre. Yo lo voy a cuidar, te lo prometo. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Acurrucarte en su pecho mientras te abrigan con una manta $\rightarrow$ Salta a S45 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S45
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S45 $\cdot$ El Bautizo [FINAL BUENO F01]}} \hfill \small\textcolor{white}{Desenlace Principal} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ LA NIÑA ]}} \vspace{0.2em}\newline
+Te acurrucas envuelto en una manta tibia y sientes el balanceo tranquilo de sus pasos rumbo a tu nuevo hogar mientras la niña te susurra al oído: \newline
+\textbf{«No ves, pero tus ojos parpadean buscando la luz a cada instante\ldots\ De ahora en adelante nunca más estarás solo. Te llamarás Blinky».} \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Ronronear feliz sabiendo que encontraste una familia $\rightarrow$ Salta a S46 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S46
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorExito}
+\textbf{\textcolor{white}{PANTALLA S46 $\cdot$ Cierre del Final Óptimo}} \hfill \small\textcolor{white}{Victoria Narrativa} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorExito}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Tu ronroneo agradecido llena el silencio de la noche. Supiste confiar en quienes te ayudaron y tuviste paciencia para no dejarte tentar por comidas engañosas. Ahora Blinky duerme abrigado en una cama caliente, rodeado de amor de verdad. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Control de cierre:} \newline
+\texttt{[ > Volver a la portada de la novela visual ]} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% ACTO IV-B: FINAL MALO F02 (S47 - S52)
+% ==============================================================================
+\section*{Acto IV-B: Desenlace F02 -- El Falso Calor y la Soledad}
+
+% S47
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S47 $\cdot$ Las Sobras Grasosas}} \hfill \small\textcolor{white}{Entrada: D04 B, D05 B o S34 \textbar\ Sentido: Gusto Frío} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Al llegar al basurero detrás del restaurante de sushi, te lanzas hambriento sobre las bolsas rotas. Devoras con desesperación restos congelados de pieles de salmón y arroz duro tirados en el barro. Llenas la barriga rápido, pero la comida helada te deja un dolor pesado por dentro. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Alejarte tambaleando en busca de algo caliente $\rightarrow$ Salta a S48 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S48
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S48 $\cdot$ El Temblor del Cuerpo}} \hfill \small\textcolor{white}{Sentido: Frío Intenso} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Cada paso te cuesta más. El viento de la madrugada empapa tus costados y el cansancio hace que tus patitas se doblen. La comida fría no te da energía; sientes que si no encuentras pronto el calor de un cuerpo vivo, te quedarás congelado en el barro. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Detenerte a buscar en el aire cualquier vibración conocida $\rightarrow$ Salta a S49 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S49
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorHeader}
+\textbf{\textcolor{white}{PANTALLA S49 $\cdot$ El Zumbido en el Suelo}} \hfill \small\textcolor{white}{Sentido: Vibración Engañosa} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Al detenerte y agudizar tus sentidos, lo sientes bajo tus almohadillas: \textit{Hmmmmmmmm...} El piso tiembla con un ritmo constante y una ráfaga tibia te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra\ldots\ tiene que ser el ronroneo de mamá esperándome!». \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Correr emocionado a frotarte contra ese calor $\rightarrow$ Salta a S50 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S50
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S50 $\cdot$ El Choque con el Metal}} \hfill \small\textcolor{white}{Sentido: Golpe Seco} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorAlerta}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Te lanzas hacia adelante esperando hundirte en el pelaje suave de mamá\ldots\ \textbf{¡¡CLANC!!} Tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo: es un calefactor eléctrico dañado. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Bajar la nariz al lodo para entender dónde estás $\rightarrow$ Salta a S51 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S51
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S51 $\cdot$ Caminando en Círculos}} \hfill \small\textcolor{white}{Sentido: Olfato y Desengaño} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorEmisor}{[ BLINKY ]}} \vspace{0.2em}\newline
+Al olfatear el barro bajo la máquina, reconoces el rastro de tus propias huellas: caminaste en círculos durante horas hasta terminar en el mismo callejón donde empezó todo. El aparato viejo vibra soltando apenas un poco de calor artificial entre las latas. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Acción del jugador:} \newline
+\texttt{[ > Rendirte y echarte pegado al metal $\rightarrow$ Salta a S52 ]} \\ \hline
+\end{tabularx}
+
+\vspace{1em}
+
+% S52
+\noindent
+\begin{tabularx}{\textwidth}{|X|}
+\hline
+\rowcolor{colorAlerta}
+\textbf{\textcolor{white}{PANTALLA S52 $\cdot$ Cierre del Final Malo [FINAL MALO F02]}} \hfill \small\textcolor{white}{Desenlace Trágico} \\ \hline
+\rowcolor{colorTextoBox}
+\textbf{\textcolor{colorAlerta}{[ NARRADOR ]}} \vspace{0.2em}\newline
+Te dejas caer vencido contra la rejilla tibia. Desconfiar de la ayuda y dejarte ganar por el hambre fácil te devolvió a un callejón sin salida. Sin fuerzas para volver a levantarte, te quedas dormido pegado al metal que vibra, conformándote con su falso calor mientras la lluvia cae en la noche. \\ \hline
+\rowcolor{colorBotonBox}
+\textbf{Control de cierre:} \newline
+\texttt{[ > Reiniciar la historia para probar otras decisiones ]} \\ \hline
+\end{tabularx}
+
+\newpage
+
+% ==============================================================================
+% MATRIZ DE PANTALLAS Y EQUIVALENCIA SENSORIAL
+% ==============================================================================
+\section*{Resumen de Pantallas y Guía de Interacción}
+
+La siguiente tabla presenta la relación completa de las 52 pantallas del prototipo, demostrando cómo se comunican las sensaciones sin depender de la visión:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}p{0.22\textwidth}|p{0.24\textwidth}|X|}
+\hline
+\textbf{Acto / Fase} & \textbf{Pantallas} & \textbf{Estímulo Sensorial Central} & \textbf{Propósito en la Novela Visual} \\ \hline
+Acto I & $S01$ a $S07$ & Frío, lluvia, rugido de estómago, frenazo fuerte & Conectar con la vulnerabilidad inicial; enseñar a leer el entorno y tomar la decisión D01. \\ \hline
+Acto II-A & $S08$ a $S12$ & Asfalto, cuerpo helado, ronroneo rítmico & Entender la pérdida real; conocer al gato guía y decidir si confiar en D02. \\ \hline
+Sub-Rama Gato & $S13$ a $S16$ & Caminata suave, aroma modesto a atún & Seguir un guía por sonido; llegar al callejón seguro y decidir en D04. \\ \hline
+Acto II-B & $S17$ a $S23$ & Pánico, caída al vacío, rescate con dientes & Vivir el peligro de la calle; conocer al perro salvador y decidir en D03. \\ \hline
+Sub-Rama Perro & $S24$ a $S26$ & Calor de espalda ancha, pisadas firmes & Escolta segura hasta el cruce de vientos. \\ \hline
+Acto III (Minijuego) & $S27$ a $S30$ & Cintas de humo azul (atún) y naranja (salmón) & Minijuego deductivo: elegir entre prudencia o engaño en D05. \\ \hline
+Sub-Rama Extravío & $S31$ a $S34$ & Alambres cortantes, olor a basura pesada & Desorientación por rechazar la ayuda del perro. \\ \hline
+Acto IV-A (Final F01) & $S35$ a $S46$ & Lata limpia, tacto de ropa, calor de regazo & Encuentro con la niña ciega, diálogo de la madre, adopción y frase final. \\ \hline
+Acto IV-B (Final F02) & $S47$ a $S52$ & Salmón rancio, temblor frío, golpe con fierro & Consecuencia del engaño: soledad junto al motor del calefactor dañado. \\ \hline
+\end{tabularx}
+\end{table}
+
+\end{document}
