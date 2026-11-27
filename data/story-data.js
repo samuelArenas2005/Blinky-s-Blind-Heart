@@ -765,7 +765,7 @@ window.BLINKY_STORY = (function () {
       audioCue: '♫ Compases finales de «Hijo del corazón, deja ya de llorar»',
       text: 'Tu ronroneo agradecido llena el silencio de la noche. Supiste confiar en quienes te ayudaron y tuviste paciencia para no dejarte tentar por comidas engañosas. Ahora Blinky duerme abrigado en una cama caliente, rodeado de amor de verdad.',
       choices: [
-        { label: 'Volver a la portada de la novela visual', next: 'S01', isRestart: true }
+        { label: 'Ver créditos y volver a la portada', isEndingCredits: true }
       ]
     },
 
@@ -855,7 +855,7 @@ window.BLINKY_STORY = (function () {
       audioCue: '♫ «500 Miles» (Peter, Paul and Mary) junto a lluvia apagada',
       text: 'Te dejas caer vencido contra la rejilla tibia. Desconfiar de la ayuda y dejarte ganar por el hambre fácil te devolvió a un callejón sin salida. Sin fuerzas para volver a levantarte, te quedas dormido pegado al metal que vibra, conformándote con su falso calor mientras la lluvia cae en la noche.',
       choices: [
-        { label: 'Reiniciar la historia para probar otras decisiones', next: 'S01', isRestart: true }
+        { label: 'Ver créditos y volver a la portada', isEndingCredits: true }
       ]
     }
   ];
