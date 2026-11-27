@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="h-full w-full overflow-hidden select-none" lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,153 +10,134 @@
   <!-- Google Fonts: Cormorant Garamond, Great Vibes (cursiva de actos), Merriweather & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600&family=Great+Vibes&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600&family=Great+Vibes&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
   <!-- Estilos compartidos responsive -->
   <link rel="stylesheet" href="styles/theme.css" />
 </head>
-<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-100 antialiased font-narrative relative scene-fallback-bg" style="background-color: #0D131A;">
+
+<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-100 antialiased font-narrative relative scene-fallback-bg"
+  style="background-color: #0D131A;">
 
   <!-- ==================== LIENZO PRINCIPAL DEL JUEGO ==================== -->
-  <main id="game-screen" class="relative w-screen h-screen overflow-hidden flex flex-col justify-between" data-purpose="game-screen">
+  <main id="game-screen" class="relative w-screen h-screen overflow-hidden flex flex-col justify-between"
+    data-purpose="game-screen">
 
     <!-- ==================== CAPA 1: FONDO E ILUSTRACIÓN s(n).png (DOBLE CAPA PARA SECUENCIAS ONE-SHOT) ==================== -->
-    <div id="scene-bg-wrapper" class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden" aria-hidden="true">
+    <div id="scene-bg-wrapper" class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden"
+      aria-hidden="true">
       <!-- Capa base y capa superior para fundidos fluidos entre fotogramas sin parpadeos -->
-      <img
-        id="scene-bg"
-        src=""
-        alt=""
-        class="scene-bg-image absolute inset-0 w-full h-full object-cover is-loading hidden"
-      />
-      <img
-        id="scene-bg-next"
-        src=""
-        alt=""
-        class="scene-bg-image absolute inset-0 w-full h-full object-cover opacity-0 hidden"
-      />
+      <img id="scene-bg" src="" alt=""
+        class="scene-bg-image absolute inset-0 w-full h-full object-cover is-loading hidden" />
+      <img id="scene-bg-next" src="" alt=""
+        class="scene-bg-image absolute inset-0 w-full h-full object-cover opacity-0 hidden" />
     </div>
 
     <!-- Resplandor ambiental suave -->
-    <div
-      id="warm-light-overlay"
+    <div id="warm-light-overlay"
       class="absolute right-[18%] bottom-[26%] w-[42vw] max-w-[520px] h-[36vh] max-h-[380px] rounded-full bg-amber-400/20 blur-3xl pointer-events-none mix-blend-screen z-[1] transition-opacity duration-500"
-      data-purpose="warm-light-overlay"
-      aria-hidden="true"
-    ></div>
+      data-purpose="warm-light-overlay" aria-hidden="true"></div>
 
     <!-- Capa leve rojiza animada para escenas de impacto o tensión catártica -->
-    <div
-      id="tension-overlay"
-      class="tension-crimson-layer absolute inset-0 pointer-events-none z-[2]"
-      aria-hidden="true"
-    >
-      <div class="tension-crimson-pulse absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,transparent_38%,rgba(185,28,28,0.18)_100%)]"></div>
+    <div id="tension-overlay" class="tension-crimson-layer absolute inset-0 pointer-events-none z-[2]"
+      aria-hidden="true">
+      <div
+        class="tension-crimson-pulse absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,transparent_38%,rgba(185,28,28,0.18)_100%)]">
+      </div>
     </div>
 
     <!-- Viñeta cinematográfica -->
     <div
       class="absolute inset-0 pointer-events-none z-[2] bg-[radial-gradient(ellipse_at_55%_50%,transparent_44%,rgba(20,27,38,0.68)_88%,rgba(11,16,24,0.9)_100%)]"
-      data-purpose="cinematic-vignette"
-      aria-hidden="true"
-    ></div>
+      data-purpose="cinematic-vignette" aria-hidden="true"></div>
 
     <!-- ==================== CAPA 2: BARRA SUPERIOR HUD (COMPACTA Y RESPONSIVE) ==================== -->
-    <header class="vn-hud-header relative z-10 w-full flex items-center justify-between gap-2 pointer-events-none" data-purpose="system-hud">
+    <header class="vn-hud-header relative z-10 w-full flex items-center justify-between gap-2 pointer-events-none"
+      data-purpose="system-hud">
       <!-- Indicador de Capítulo / Acto -->
-      <div
-        id="chapter-indicator"
+      <div id="chapter-indicator"
         class="vn-chapter-pill pointer-events-auto flex items-center bg-[#0D131A]/75 backdrop-blur-md border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.4)] max-w-[48vw] sm:max-w-none"
-        data-purpose="chapter-indicator"
-      >
-        <span id="chapter-title" class="vn-chapter-title font-title font-semibold tracking-wide text-stone-200 leading-tight whitespace-nowrap truncate">
+        data-purpose="chapter-indicator">
+        <span id="chapter-title"
+          class="vn-chapter-title font-title font-semibold tracking-wide text-stone-200 leading-tight whitespace-nowrap truncate">
           El Nido Roto
         </span>
       </div>
 
       <!-- Menú Hamburguesa Compacto con Despliegue Vertical Centrado de Íconos -->
       <div id="hud-menu-wrapper" class="relative pointer-events-auto" data-purpose="quick-menu">
-        <button
-          id="btn-hud-toggle"
-          type="button"
-          aria-label="Abrir menú"
-          aria-expanded="false"
-          aria-controls="hud-dropdown"
-          title="Menú"
-          class="vn-hud-btn vn-menu-toggle relative flex items-center justify-center rounded-xl bg-[#0D131A]/80 backdrop-blur-md border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.45)] text-stone-200 cursor-pointer"
-        >
+        <button id="btn-hud-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"
+          aria-controls="hud-dropdown" title="Menú"
+          class="vn-hud-btn vn-menu-toggle relative flex items-center justify-center rounded-xl bg-[#0D131A]/80 backdrop-blur-md border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.45)] text-stone-200 cursor-pointer">
           <!-- Ícono hamburguesa perfectamente centrado -->
-          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--bars" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <line x1="4" y1="7" x2="20" y2="7" />
             <line x1="4" y1="12" x2="20" y2="12" />
             <line x1="4" y1="17" x2="20" y2="17" />
           </svg>
           <!-- Ícono X perfectamente centrado -->
-          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--close" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <line x1="6" y1="6" x2="18" y2="18" />
             <line x1="18" y1="6" x2="6" y2="18" />
           </svg>
         </button>
 
-        <nav
-          id="hud-dropdown"
-          aria-label="Menú del juego"
-          class="vn-hud-dropdown absolute top-full mt-2 flex flex-col items-center gap-1 p-1.5 rounded-2xl bg-[#0D131A]/88 backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.62)] text-stone-300"
-        >
-          <button
-            id="btn-home"
-            type="button"
-            aria-label="Inicio / Menú Principal"
-            title="Inicio"
-            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
-          >
-            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+        <nav id="hud-dropdown" aria-label="Menú del juego"
+          class="vn-hud-dropdown absolute top-full mt-2 flex flex-col items-center gap-1 p-1.5 rounded-2xl bg-[#0D131A]/88 backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.62)] text-stone-300">
+          <button id="btn-home" type="button" aria-label="Inicio / Menú Principal" title="Inicio"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer">
+            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
             </svg>
           </button>
 
           <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
 
-          <button
-            id="btn-audio"
-            type="button"
-            aria-label="Configuración de audio"
-            title="Audio"
-            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
-          >
-            <svg id="audio-icon-on" class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+          <button id="btn-audio" type="button" aria-label="Configuración de audio" title="Audio"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer">
+            <svg id="audio-icon-on" class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path
+                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
             </svg>
-            <svg id="audio-icon-off" class="vn-hud-icon opacity-70 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l4-4m0 4l-4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
-            </svg>
-          </button>
-
-          <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
-
-          <button
-            id="btn-accessibility"
-            type="button"
-            aria-label="Accesibilidad y Contraste"
-            title="Accesibilidad"
-            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
-          >
-            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
-              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            <svg id="audio-icon-off" class="vn-hud-icon opacity-70 hidden" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l4-4m0 4l-4-4"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
             </svg>
           </button>
 
           <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
 
-          <button
-            id="btn-history"
-            type="button"
-            aria-label="Historial de diálogos"
-            title="Historial"
-            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer"
-          >
-            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+          <button id="btn-accessibility" type="button" aria-label="Accesibilidad y Contraste" title="Accesibilidad"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer">
+            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="1.9" />
+              <path
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
+            </svg>
+          </button>
+
+          <span class="w-5 h-px bg-white/10" aria-hidden="true"></span>
+
+          <button id="btn-history" type="button" aria-label="Historial de diálogos" title="Historial"
+            class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-xl cursor-pointer">
+            <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" />
             </svg>
           </button>
         </nav>
@@ -163,36 +145,35 @@
     </header>
 
     <!-- ==================== CAPA 3: ÁREA DE DIÁLOGO ADV ==================== -->
-    <section class="vn-dialogue-section relative z-10 w-full flex flex-col items-center" data-purpose="dialogue-container">
+    <section class="vn-dialogue-section relative z-10 w-full flex flex-col items-center"
+      data-purpose="dialogue-container">
       <blinky-dialogue-box id="dialogue-box" class="w-full flex justify-center"></blinky-dialogue-box>
     </section>
 
     <!-- ==================== TRANSICIÓN DE TÍTULO DE ACTO (TIPOGRAFÍA + PINCELADA) ==================== -->
-    <div
-      id="act-intro-overlay"
+    <div id="act-intro-overlay"
       class="act-intro-overlay is-hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#070B10] px-6 text-center cursor-pointer"
-      role="status"
-      aria-live="polite"
-    >
+      role="status" aria-live="polite">
       <script>
         if (window.location.search.indexOf('play=1') !== -1) {
           document.getElementById('act-intro-overlay').classList.remove('is-hidden');
         }
       </script>
       <div class="relative flex flex-col items-center max-w-2xl">
-        <p id="act-intro-eyebrow" class="act-intro-eyebrow font-ui text-[clamp(0.7rem,1.4vh,0.85rem)] uppercase text-amber-200/80 mb-3">
+        <p id="act-intro-eyebrow"
+          class="act-intro-eyebrow font-ui text-[clamp(0.7rem,1.4vh,0.85rem)] uppercase text-amber-200/80 mb-3">
           Acto I
         </p>
 
-        <h1
-          id="act-intro-title"
+        <h1 id="act-intro-title"
           class="font-act-cursive text-stone-100 text-[clamp(3.1rem,8vw,5.6rem)] leading-[1.12] tracking-[0.02em] px-2"
-          style="text-shadow: 0 6px 28px rgba(0, 0, 0, 0.82);"
-        ></h1>
+          style="text-shadow: 0 6px 28px rgba(0, 0, 0, 0.82);"></h1>
 
         <!-- Pincelada orgánica estilo acuarela/tinta dorada al final de la tipografía -->
         <div class="relative mt-2 w-[clamp(13rem,30vw,22rem)] h-8 flex items-center justify-center" aria-hidden="true">
-          <div class="act-brush-glow absolute inset-x-4 top-1/2 -translate-y-1/2 h-3 rounded-full bg-amber-400/25 blur-md"></div>
+          <div
+            class="act-brush-glow absolute inset-x-4 top-1/2 -translate-y-1/2 h-3 rounded-full bg-amber-400/25 blur-md">
+          </div>
           <svg class="w-full h-full overflow-visible" viewBox="0 0 340 34" fill="none">
             <defs>
               <linearGradient id="actBrushGrad" x1="0" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
@@ -209,21 +190,11 @@
               </linearGradient>
             </defs>
             <!-- Trazo principal de pincelada con ligera curvatura orgánica -->
-            <path
-              class="act-brush-path"
-              d="M 14 20 C 78 12, 162 11, 245 15 C 282 17, 310 15, 328 11"
-              stroke="url(#actBrushGrad)"
-              stroke-width="3.6"
-              stroke-linecap="round"
-            />
+            <path class="act-brush-path" d="M 14 20 C 78 12, 162 11, 245 15 C 282 17, 310 15, 328 11"
+              stroke="url(#actBrushGrad)" stroke-width="3.6" stroke-linecap="round" />
             <!-- Segunda cerda fina de pincel para efecto artístico artesanal -->
-            <path
-              class="act-brush-accent"
-              d="M 32 23 C 102 18, 188 18, 266 20 C 292 21, 308 19, 320 16"
-              stroke="url(#actBrushSubGrad)"
-              stroke-width="1.35"
-              stroke-linecap="round"
-            />
+            <path class="act-brush-accent" d="M 32 23 C 102 18, 188 18, 266 20 C 292 21, 308 19, 320 16"
+              stroke="url(#actBrushSubGrad)" stroke-width="1.35" stroke-linecap="round" />
           </svg>
         </div>
       </div>
@@ -234,31 +205,39 @@
   <!-- ==================== MODALES DE SISTEMA (HUD) ==================== -->
 
   <!-- 1. Modal de Inicio / Menú Principal -->
-  <div id="modal-home" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-home-title">
-    <div class="w-full max-w-md rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+  <div id="modal-home" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+    role="dialog" aria-modal="true" aria-labelledby="modal-home-title">
+    <div
+      class="w-full max-w-md rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
       <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between gap-4">
         <div>
           <p class="text-[10px] uppercase tracking-[0.2em] text-amber-300/90 font-semibold">Novela Visual Sensorial</p>
           <h2 id="modal-home-title" class="font-title text-2xl font-semibold text-stone-100">Blinky's Blind Heart</h2>
         </div>
-        <button data-close-modal="modal-home" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar menú">✕</button>
+        <button data-close-modal="modal-home" type="button"
+          class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer"
+          aria-label="Cerrar menú">✕</button>
       </div>
 
       <div class="p-5 space-y-3">
         <p class="text-xs text-slate-300 leading-relaxed">
-          Guía a Blinky a través de la ciudad escuchando, olfateando y sintiendo el entorno. Tus decisiones definirán su destino.
+          Guía a Blinky a través de la ciudad escuchando, olfateando y sintiendo el entorno. Tus decisiones definirán su
+          destino.
         </p>
 
         <div class="flex flex-col gap-2.5 pt-1">
-          <button id="home-continue" type="button" class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
+          <button id="home-continue" type="button"
+            class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
             <span>Continuar lectura</span>
             <span aria-hidden="true">→</span>
           </button>
-          <button id="home-restart" type="button" class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
+          <button id="home-restart" type="button"
+            class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
             <span>Reiniciar la historia desde el inicio</span>
             <span aria-hidden="true">↺</span>
           </button>
-          <a href="inicio.html" class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
+          <a href="inicio.html"
+            class="vn-btn w-full rounded-xl text-left font-narrative font-medium cursor-pointer flex items-center justify-between">
             <span>Volver a la pantalla de inicio</span>
             <span aria-hidden="true">⌂</span>
           </a>
@@ -268,11 +247,15 @@
   </div>
 
   <!-- 2. Modal de Audio -->
-  <div id="modal-audio" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-audio-title">
-    <div class="w-full max-w-sm rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+  <div id="modal-audio" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+    role="dialog" aria-modal="true" aria-labelledby="modal-audio-title">
+    <div
+      class="w-full max-w-sm rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
       <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
         <h2 id="modal-audio-title" class="font-title text-xl font-semibold text-stone-100">Audio y Ambiente</h2>
-        <button data-close-modal="modal-audio" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar audio">✕</button>
+        <button data-close-modal="modal-audio" type="button"
+          class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer"
+          aria-label="Cerrar audio">✕</button>
       </div>
       <div class="p-5 space-y-4 text-sm">
         <div class="flex items-center justify-between gap-4">
@@ -280,7 +263,8 @@
             <p class="font-medium text-stone-100 text-xs sm:text-sm">Sonido ambiental e interfaz</p>
             <p class="text-[11px] text-slate-400 mt-0.5">Activa lluvia suave, efectos y música.</p>
           </div>
-          <button id="audio-toggle-btn" type="button" class="px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-white/5 border-white/15 text-slate-200 hover:border-amber-300/50">
+          <button id="audio-toggle-btn" type="button"
+            class="px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-white/5 border-white/15 text-slate-200 hover:border-amber-300/50">
             Desactivado
           </button>
         </div>
@@ -290,7 +274,8 @@
             <label for="audio-volume">Volumen general</label>
             <span id="audio-volume-label">45%</span>
           </div>
-          <input id="audio-volume" type="range" min="0" max="100" value="45" class="w-full accent-amber-400 cursor-pointer" />
+          <input id="audio-volume" type="range" min="0" max="100" value="45"
+            class="w-full accent-amber-400 cursor-pointer" />
         </div>
 
         <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-slate-300 space-y-0.5">
@@ -302,11 +287,16 @@
   </div>
 
   <!-- 3. Modal de Accesibilidad -->
-  <div id="modal-accessibility" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-a11y-title">
-    <div class="w-full max-w-sm rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+  <div id="modal-accessibility"
+    class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog"
+    aria-modal="true" aria-labelledby="modal-a11y-title">
+    <div
+      class="w-full max-w-sm rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
       <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
         <h2 id="modal-a11y-title" class="font-title text-xl font-semibold text-stone-100">Accesibilidad y Lectura</h2>
-        <button data-close-modal="modal-accessibility" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar accesibilidad">✕</button>
+        <button data-close-modal="modal-accessibility" type="button"
+          class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer"
+          aria-label="Cerrar accesibilidad">✕</button>
       </div>
       <div class="p-5 space-y-4 text-sm">
         <label class="flex items-center justify-between gap-4 cursor-pointer">
@@ -314,7 +304,8 @@
             <p class="font-medium text-stone-100 text-xs sm:text-sm">Alto Contraste</p>
             <p class="text-[11px] text-slate-400">Fondo negro puro y bordes de máximo contraste.</p>
           </div>
-          <input id="a11y-contrast" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
+          <input id="a11y-contrast" type="checkbox"
+            class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
         </label>
 
         <label class="flex items-center justify-between gap-4 cursor-pointer">
@@ -322,7 +313,8 @@
             <p class="font-medium text-stone-100 text-xs sm:text-sm">Subtítulos de sonido</p>
             <p class="text-[11px] text-slate-400">Muestra descripciones sonoras en el diálogo.</p>
           </div>
-          <input id="a11y-subtitles" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
+          <input id="a11y-subtitles" type="checkbox"
+            class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
         </label>
 
         <label class="flex items-center justify-between gap-4 cursor-pointer">
@@ -330,15 +322,19 @@
             <p class="font-medium text-stone-100 text-xs sm:text-sm">Reducir movimiento</p>
             <p class="text-[11px] text-slate-400">Desactiva animaciones y transiciones.</p>
           </div>
-          <input id="a11y-motion" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
+          <input id="a11y-motion" type="checkbox"
+            class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-4 w-4 cursor-pointer" />
         </label>
 
         <div class="space-y-2 pt-2 border-t border-white/10">
           <p class="font-medium text-stone-100 text-xs sm:text-sm">Tamaño de letra</p>
           <div class="grid grid-cols-3 gap-2">
-            <button data-font-scale="1" type="button" class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Normal</button>
-            <button data-font-scale="1.12" type="button" class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Grande</button>
-            <button data-font-scale="1.24" type="button" class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Extra</button>
+            <button data-font-scale="1" type="button"
+              class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Normal</button>
+            <button data-font-scale="1.12" type="button"
+              class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Grande</button>
+            <button data-font-scale="1.24" type="button"
+              class="a11y-scale-btn py-1.5 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Extra</button>
           </div>
         </div>
       </div>
@@ -346,60 +342,79 @@
   </div>
 
   <!-- 4. Modal de Historial de Diálogos -->
-  <div id="modal-history" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-history-title">
-    <div class="w-full max-w-xl max-h-[82vh] flex flex-col rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
+  <div id="modal-history" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+    role="dialog" aria-modal="true" aria-labelledby="modal-history-title">
+    <div
+      class="w-full max-w-xl max-h-[82vh] flex flex-col rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
       <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
         <div>
-          <h2 id="modal-history-title" class="font-title text-xl font-semibold text-stone-100">Historial de Diálogos</h2>
+          <h2 id="modal-history-title" class="font-title text-xl font-semibold text-stone-100">Historial de Diálogos
+          </h2>
           <p class="font-ui text-[11px] text-slate-400">Relee los momentos y decisiones de tu recorrido.</p>
         </div>
-        <button data-close-modal="modal-history" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar historial">✕</button>
+        <button data-close-modal="modal-history" type="button"
+          class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer"
+          aria-label="Cerrar historial">✕</button>
       </div>
       <div id="history-list" class="p-5 overflow-y-auto vn-scroll space-y-3"></div>
     </div>
   </div>
 
   <!-- 5. Modal de Encuesta de Experiencia (opcional desde el cierre de la historia) -->
-  <div id="modal-survey" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-survey-title">
-    <div class="w-full max-w-md max-h-[88vh] flex flex-col rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
+  <div id="modal-survey" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm"
+    role="dialog" aria-modal="true" aria-labelledby="modal-survey-title">
+    <div
+      class="w-full max-w-md max-h-[88vh] flex flex-col rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
       <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between">
-        <h2 id="modal-survey-title" class="font-title text-xl font-semibold text-stone-100">Comparte tus impresiones</h2>
-        <button data-close-modal="modal-survey" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar encuesta">✕</button>
+        <h2 id="modal-survey-title" class="font-title text-xl font-semibold text-stone-100">Comparte tus impresiones
+        </h2>
+        <button data-close-modal="modal-survey" type="button"
+          class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer"
+          aria-label="Cerrar encuesta">✕</button>
       </div>
 
       <div id="survey-body" class="p-5 overflow-y-auto vn-scroll space-y-4 text-xs sm:text-sm">
         <p class="text-slate-300 leading-relaxed">
-          Has llegado al final del recorrido. Cuéntanos cómo te sentiste durante la lectura y cómo crees que se sintió Blinky.
+          Has llegado al final del recorrido. Cuéntanos cómo te sentiste durante la lectura y cómo crees que se sintió
+          Blinky.
         </p>
 
-        <div id="survey-error" class="hidden p-3 rounded-xl bg-white/5 border border-amber-300/50 text-amber-200 text-xs font-medium" role="alert">
+        <div id="survey-error"
+          class="hidden p-3 rounded-xl bg-white/5 border border-amber-300/50 text-amber-200 text-xs font-medium"
+          role="alert">
           Por favor, selecciona a qué final llegaste e ingresa tu alias o nombre para poder enviar tus respuestas.
         </div>
 
         <form id="survey-form" class="space-y-3.5" novalidate>
           <div>
             <label for="survey-alias" class="block text-xs font-medium text-slate-200 mb-1">Tu nombre o alias</label>
-            <input id="survey-alias" type="text" placeholder="Ej. Sofía" class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300" />
+            <input id="survey-alias" type="text" placeholder="Ej. Sofía"
+              class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300" />
           </div>
 
           <fieldset class="space-y-1.5">
             <legend class="text-xs font-medium text-slate-200 mb-1">¿A qué final llegaste?</legend>
             <label class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-              <input type="radio" name="survey-ending" value="F01" class="text-amber-400 bg-[#161F2B] border-white/25" />
+              <input type="radio" name="survey-ending" value="F01"
+                class="text-amber-400 bg-[#161F2B] border-white/25" />
               <span class="text-xs text-stone-200">Un nuevo hogar (Adopción con la niña)</span>
             </label>
             <label class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-              <input type="radio" name="survey-ending" value="F02" class="text-amber-400 bg-[#161F2B] border-white/25" />
+              <input type="radio" name="survey-ending" value="F02"
+                class="text-amber-400 bg-[#161F2B] border-white/25" />
               <span class="text-xs text-stone-200">El falso calor (El calefactor metálico)</span>
             </label>
           </fieldset>
 
           <div>
-            <label for="survey-reflection" class="block text-xs font-medium text-slate-200 mb-1">¿Cómo crees que se sintió Blinky a lo largo del viaje? (Opcional)</label>
-            <textarea id="survey-reflection" rows="3" placeholder="Escribe tus impresiones..." class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300"></textarea>
+            <label for="survey-reflection" class="block text-xs font-medium text-slate-200 mb-1">¿Cómo crees que se
+              sintió Blinky a lo largo del viaje? (Opcional)</label>
+            <textarea id="survey-reflection" rows="3" placeholder="Escribe tus impresiones..."
+              class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300"></textarea>
           </div>
 
-          <button type="submit" class="vn-btn w-full rounded-xl font-ui font-semibold text-center justify-center flex cursor-pointer">
+          <button type="submit"
+            class="vn-btn w-full rounded-xl font-ui font-semibold text-center justify-center flex cursor-pointer">
             Enviar mis impresiones
           </button>
         </form>
@@ -409,10 +424,12 @@
             ¿Deseas enviar tus impresiones sobre la experiencia de Blinky con estos datos?
           </p>
           <div class="flex gap-2">
-            <button id="survey-confirm-yes" type="button" class="vn-btn flex-1 rounded-xl font-ui text-xs font-semibold justify-center flex cursor-pointer">
+            <button id="survey-confirm-yes" type="button"
+              class="vn-btn flex-1 rounded-xl font-ui text-xs font-semibold justify-center flex cursor-pointer">
               Confirmar y enviar
             </button>
-            <button id="survey-confirm-no" type="button" class="flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-slate-200 cursor-pointer">
+            <button id="survey-confirm-no" type="button"
+              class="flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-slate-200 cursor-pointer">
               Volver y corregir
             </button>
           </div>
@@ -423,7 +440,8 @@
           <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
             Tus reflexiones nos ayudan a mejorar la experiencia sensorial e inclusiva de Blinky.
           </p>
-          <button id="survey-restart-btn" type="button" class="vn-btn w-full rounded-xl font-ui text-xs sm:text-sm font-semibold justify-center flex cursor-pointer">
+          <button id="survey-restart-btn" type="button"
+            class="vn-btn w-full rounded-xl font-ui text-xs sm:text-sm font-semibold justify-center flex cursor-pointer">
             Volver a la portada principal
           </button>
         </div>
@@ -528,7 +546,7 @@
             ctx = new AudioCtx();
           }
           if (ctx.state === 'suspended') {
-            ctx.resume().catch(() => {});
+            ctx.resume().catch(() => { });
           }
           return ctx;
         }
@@ -539,7 +557,7 @@
               enabled: appState.audioEnabled,
               volume: appState.volume
             }));
-          } catch (e) {}
+          } catch (e) { }
         }
 
         function startAmbientRain() {
@@ -570,13 +588,13 @@
           const base = `audio/s${screen.number}`;
           const audio = new Audio(`${base}.wav`);
           audio.volume = appState.volume * 0.68;
-          // Escenas atmosféricas de bucle suave (S01, S03, S04, S07)
-          audio.loop = [1, 3, 4, 7].includes(screen.number);
+          // Escenas atmosféricas de bucle suave (S01, S03, S04, S07, S13)
+          audio.loop = [1, 3, 4, 7, 13].includes(screen.number);
           audio.addEventListener('error', () => {
             if (!audio.dataset.triedMp3) {
               audio.dataset.triedMp3 = '1';
               audio.src = `${base}.mp3`;
-              audio.play().catch(() => {});
+              audio.play().catch(() => { });
             }
           });
           audio.play().catch(() => {
@@ -703,7 +721,7 @@
           const audio = new Audio(`audio/${trackKey}.mp3`);
           audio.loop = true;
           audio.volume = appState.volume * 0.65;
-          audio.play().catch(() => {});
+          audio.play().catch(() => { });
           musicAudio = audio;
           currentTrackKey = trackKey;
         }
@@ -714,8 +732,9 @@
           pendingUnlock = false;
           const screen = STORY.SCREENS[appState.currentId];
           startAmbientRain();
-          if (sceneAudio) sceneAudio.play().catch(() => {});
+          if (sceneAudio) sceneAudio.play().catch(() => { });
           else if (screen) playSceneSound(screen);
+          if (screen && screen.musicTrack) tryPlayTrack(screen.musicTrack);
         }
         window.addEventListener('pointerdown', unlockOnGesture, { passive: true });
         window.addEventListener('keydown', unlockOnGesture, { passive: true });
@@ -1081,26 +1100,23 @@
         entries.forEach((entry) => {
           if (!entry.screen) return;
           const card = document.createElement('article');
-          card.className = `p-3.5 rounded-xl border ${
-            entry.isCurrent ? 'bg-white/[0.06] border-amber-300/35' : 'bg-white/[0.02] border-white/10'
-          } space-y-1.5`;
+          card.className = `p-3.5 rounded-xl border ${entry.isCurrent ? 'bg-white/[0.06] border-amber-300/35' : 'bg-white/[0.02] border-white/10'
+            } space-y-1.5`;
 
           card.innerHTML = `
             <div class="flex items-center justify-between gap-2">
               <span class="font-ui text-[10px] font-semibold uppercase tracking-[0.18em] text-stone-200">
                 ${entry.screen.speaker}
               </span>
-              ${
-                entry.isCurrent
-                  ? '<span class="font-ui text-[10px] uppercase tracking-wider text-amber-200 font-medium">Actual</span>'
-                  : `<button type="button" class="font-ui text-[11px] text-slate-300 hover:text-amber-200 underline underline-offset-2 cursor-pointer" data-jump-idx="${entry.historyIndex}">Volver aquí</button>`
-              }
+              ${entry.isCurrent
+              ? '<span class="font-ui text-[10px] uppercase tracking-wider text-amber-200 font-medium">Actual</span>'
+              : `<button type="button" class="font-ui text-[11px] text-slate-300 hover:text-amber-200 underline underline-offset-2 cursor-pointer" data-jump-idx="${entry.historyIndex}">Volver aquí</button>`
+            }
             </div>
             <p class="font-narrative text-xs sm:text-sm text-stone-200 leading-relaxed">${entry.screen.text.replace(/\n/g, '<br>')}</p>
-            ${
-              entry.chosenLabel
-                ? `<p class="font-ui text-[11px] text-slate-400 pt-1 border-t border-white/10">→ ${entry.chosenLabel}</p>`
-                : ''
+            ${entry.chosenLabel
+              ? `<p class="font-ui text-[11px] text-slate-400 pt-1 border-t border-white/10">→ ${entry.chosenLabel}</p>`
+              : ''
             }
           `;
 
@@ -1174,7 +1190,7 @@
 
         try {
           localStorage.setItem('blinky_prefs', JSON.stringify(appState.prefs));
-        } catch (e) {}
+        } catch (e) { }
 
         if (!renderOptions.skipRender) {
           renderScreen(appState.currentId, renderOptions);
@@ -1319,7 +1335,7 @@
             appState.audioEnabled = savedAudio.enabled;
           }
         }
-      } catch (e) {}
+      } catch (e) { }
 
       // -------------------- Transición Cinematográfica del Acto I --------------------
       const actIntroOverlay = document.getElementById('act-intro-overlay');
@@ -1389,7 +1405,7 @@
             if (appState.audioEnabled) {
               const transAudio = new Audio('audio/transicion_acto.wav');
               transAudio.volume = Math.max(0.14, Math.min(1, appState.volume * 0.82));
-              transAudio.play().catch(() => {});
+              transAudio.play().catch(() => { });
             }
           }, brushStart)
         );
@@ -1424,4 +1440,5 @@
     })();
   </script>
 </body>
+
 </html>

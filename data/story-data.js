@@ -197,6 +197,7 @@ window.BLINKY_STORY = (function () {
       act: 'acto-2a',
       speaker: 'BLINKY',
       speakerType: 'blinky',
+      musicTrack: 'piano_melancolico',
       audioCue: 'Silencio absoluto; ausencia de respiración y ronroneo',
       text: 'A pocos pasos, tus patitas chocan con un bulto peludo tendido en el asfalto. Te acercas emocionado frotando tu cabeza para buscar su calor protector… pero ese cuerpo no se mueve. No respira y está completamente frío. Mamá siempre era tibia y cariñosa; esto ya no es mamá.',
       choices: [
@@ -210,6 +211,7 @@ window.BLINKY_STORY = (function () {
       act: 'acto-2a',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
+      musicTrack: 'piano_melancolico',
       audioCue: 'Voces humanas lamentándose y puertas de autos cerrándose',
       text: 'Mientras te alejas desorientado de la escena, escuchas voces humanas lamentándose y puertas de autos cerrándose. Por suerte, los carros siguen detenidos. Cruzas con pasos torpes hasta chocar con el bordillo del andén de enfrente, sintiéndote completamente solo en el mundo.',
       choices: [
