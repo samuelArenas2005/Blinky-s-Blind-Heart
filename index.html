@@ -163,7 +163,7 @@
     </header>
 
     <!-- ==================== CAPA 3: ÁREA DE DIÁLOGO ADV ==================== -->
-    <section class="vn-dialogue-section relative z-10 w-full flex flex-col items-center" data-purpose="dialogue-container">
+    <section id="dialogue-section" class="vn-dialogue-section relative z-10 w-full flex flex-col items-center transition-opacity duration-500" data-purpose="dialogue-container">
       <blinky-dialogue-box id="dialogue-box" class="w-full flex justify-center"></blinky-dialogue-box>
     </section>
 
@@ -285,12 +285,22 @@
           </button>
         </div>
 
+        <div class="flex items-center justify-between gap-4 pt-1 border-t border-white/10">
+          <div>
+            <p class="font-medium text-stone-100 text-xs sm:text-sm">Narración con voz</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Voces expresivas con Gemini TTS sincronizadas al diálogo.</p>
+          </div>
+          <button id="voice-toggle-btn" type="button" class="px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-amber-400/20 border-amber-400/50 text-amber-200">
+            Activada
+          </button>
+        </div>
+
         <div class="space-y-1.5">
           <div class="flex justify-between text-xs text-slate-300">
             <label for="audio-volume">Volumen general</label>
-            <span id="audio-volume-label">45%</span>
+            <span id="audio-volume-label">60%</span>
           </div>
-          <input id="audio-volume" type="range" min="0" max="100" value="45" class="w-full accent-amber-400 cursor-pointer" />
+          <input id="audio-volume" type="range" min="0" max="100" value="60" class="w-full accent-amber-400 cursor-pointer" />
         </div>
 
         <div class="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-slate-300 space-y-0.5">
@@ -433,6 +443,7 @@
 
   <!-- ==================== SCRIPTS: DATOS + COMPONENTES + ORQUESTADOR ==================== -->
   <script src="data/story-data.js"></script>
+  <script src="data/voice-sync.js"></script>
   <script src="components/action-buttons.js"></script>
   <script src="components/dialogue-box.js"></script>
 
@@ -462,8 +473,9 @@
           reduceMotion: false,
           fontScale: 1
         },
-        audioEnabled: false,
-        volume: 0.45
+        audioEnabled: true,
+        voiceEnabled: true,
+        volume: 0.6
       };
 
       // -------------------- Referencias DOM --------------------
@@ -473,6 +485,7 @@
       const warmLightEl = document.getElementById('warm-light-overlay');
       const tensionOverlayEl = document.getElementById('tension-overlay');
       const chapterTitleEl = document.getElementById('chapter-title');
+      const dialogueSectionEl = document.getElementById('dialogue-section');
       const dialogueBoxEl = document.getElementById('dialogue-box');
 
       function triggerImpactShake(screen) {
@@ -512,14 +525,69 @@
         }
       }
 
-      // -------------------- Motor de Audio (WAV/MP3 reales + Web Audio) --------------------
+      // -------------------- Motor de Audio (WAV/MP3 + Voces Gemini TTS Sincronizadas) --------------------
+      const VOICE_SYNC = window.BLINKY_VOICE_SYNC || {};
+      let activeSceneToken = 0;
+
+      // Calcula pesos de cadencia hablada por carácter (pausas naturales en comas, puntos y guiones)
+      function buildSpeechWeights(chars, startIdx, endIdx) {
+        const weights = [];
+        let total = 0;
+        for (let i = startIdx; i < endIdx; i++) {
+          const ch = chars[i];
+          let w = 1.0;
+          if (ch === '.' || ch === '!' || ch === '?' || ch === '…') w = 7.2;
+          else if (ch === ',' || ch === ';' || ch === ':' || ch === '—') w = 4.4;
+          else if (ch === '\n') w = 5.0;
+          else if (ch === ' ') w = 0.45;
+          total += w;
+          weights.push(total);
+        }
+        return { weights, total: total || 1 };
+      }
+
+      function computeSyncedCharCount(chars, segTables, currentTime) {
+        if (!segTables.length) return chars.length;
+        let revealed = 0;
+        for (let i = 0; i < segTables.length; i++) {
+          const seg = segTables[i];
+          if (currentTime < seg.start) {
+            break;
+          }
+          if (currentTime >= seg.end) {
+            revealed = Math.max(revealed, seg.charEnd);
+            continue;
+          }
+          const span = Math.max(0.05, seg.end - seg.start);
+          const p = Math.min(1, Math.max(0, (currentTime - seg.start) / span));
+          const targetWeight = p * seg.totalWeight;
+          let lo = 0;
+          let hi = seg.weights.length - 1;
+          while (lo < hi) {
+            const mid = (lo + hi) >> 1;
+            if (seg.weights[mid] < targetWeight) lo = mid + 1;
+            else hi = mid;
+          }
+          revealed = Math.max(revealed, seg.charStart + lo + 1);
+          break;
+        }
+        return Math.min(chars.length, revealed);
+      }
+
       const audioEngine = (function () {
         let ctx = null;
         let rainAudio = null;
         let sceneAudio = null;
+        let voiceAudio = null;
         let musicAudio = null;
         let currentTrackKey = null;
         let pendingUnlock = false;
+        let isVoiceSpeaking = false;
+        let voiceDelayTimer = null;
+        let voiceRafId = null;
+        let activeCueAudios = [];
+        let sfxBoostTimer = null;
+        let sceneAudioBoosted = false;
 
         function ensureContext() {
           if (!ctx) {
@@ -537,9 +605,21 @@
           try {
             localStorage.setItem('blinky_audio', JSON.stringify({
               enabled: appState.audioEnabled,
+              voiceEnabled: appState.voiceEnabled,
               volume: appState.volume
             }));
           } catch (e) {}
+        }
+
+        function updateAmbientMix() {
+          if (rainAudio) {
+            const factor = isVoiceSpeaking ? 0.22 : 0.46;
+            rainAudio.volume = appState.volume * factor;
+          }
+          if (sceneAudio && !sceneAudioBoosted) {
+            const factor = isVoiceSpeaking ? 0.36 : 0.64;
+            sceneAudio.volume = appState.volume * factor;
+          }
         }
 
         function startAmbientRain() {
@@ -548,7 +628,7 @@
             rainAudio = new Audio('audio/lluvia.wav');
             rainAudio.loop = true;
           }
-          rainAudio.volume = appState.volume * 0.48;
+          updateAmbientMix();
           rainAudio.play().catch(() => {
             pendingUnlock = true;
           });
@@ -560,16 +640,220 @@
           }
         }
 
-        function playSceneSound(screen) {
+        function clearCueAudios() {
+          if (sfxBoostTimer) {
+            clearTimeout(sfxBoostTimer);
+            sfxBoostTimer = null;
+          }
+          sceneAudioBoosted = false;
+          activeCueAudios.forEach((a) => {
+            try {
+              a.pause();
+              a.currentTime = 0;
+            } catch (e) {}
+          });
+          activeCueAudios = [];
+        }
+
+        function stopVoiceNarration() {
+          if (voiceDelayTimer) {
+            clearTimeout(voiceDelayTimer);
+            voiceDelayTimer = null;
+          }
+          if (voiceRafId) {
+            cancelAnimationFrame(voiceRafId);
+            voiceRafId = null;
+          }
+          clearCueAudios();
+          if (voiceAudio) {
+            try {
+              voiceAudio.pause();
+              voiceAudio.currentTime = 0;
+            } catch (e) {}
+            voiceAudio = null;
+          }
+          isVoiceSpeaking = false;
+          updateAmbientMix();
+        }
+
+        function hasSyncedVoice(screen) {
+          return Boolean(
+            screen &&
+            appState.audioEnabled &&
+            appState.voiceEnabled &&
+            VOICE_SYNC[screen.id]
+          );
+        }
+
+        function playOneShotSfx(src, relVol = 0.72) {
+          if (!appState.audioEnabled) return;
+          const sfx = new Audio(src);
+          sfx.volume = Math.min(1, appState.volume * relVol);
+          sfx.addEventListener('ended', () => {
+            activeCueAudios = activeCueAudios.filter((a) => a !== sfx);
+          });
+          activeCueAudios.push(sfx);
+          sfx.play().catch(() => {});
+        }
+
+        function boostSceneAudio(relVol = 0.85, durationMs = 1400) {
+          if (!sceneAudio || !appState.audioEnabled) return;
+          sceneAudioBoosted = true;
+          sceneAudio.volume = Math.min(1, appState.volume * relVol);
+          if (sfxBoostTimer) clearTimeout(sfxBoostTimer);
+          sfxBoostTimer = setTimeout(() => {
+            sceneAudioBoosted = false;
+            updateAmbientMix();
+          }, durationMs);
+        }
+
+        /**
+         * Reproduce la voz de Gemini TTS sincronizando palabra por palabra con el
+         * recuadro de diálogo, fotogramas clave y efectos de sonido puntuales.
+         */
+        function playVoiceNarration(screen, sceneToken, options = {}) {
+          stopVoiceNarration();
+          if (!appState.audioEnabled || !appState.voiceEnabled || !screen) return;
+
+          const sync = VOICE_SYNC[screen.id];
+          if (!sync) return;
+
+          const chars = Array.from(screen.text || '');
+          const segTables = (sync.segments || []).map((seg) => {
+            const { weights, total } = buildSpeechWeights(chars, seg.charStart, seg.charEnd);
+            return {
+              start: seg.start,
+              end: seg.end,
+              charStart: seg.charStart,
+              charEnd: seg.charEnd,
+              weights,
+              totalWeight: total
+            };
+          });
+
+          const firedCues = new Set();
+          const cues = Array.isArray(sync.cues) ? sync.cues : [];
+
+          function runCue(cue) {
+            if (sceneToken !== activeSceneToken) return;
+            if (cue.type === 'sfx' && cue.src) {
+              playOneShotSfx(cue.src, cue.volume || 0.75);
+            } else if (cue.type === 'frame' && cue.src && !appState.prefs.reduceMotion) {
+              showImageFrame(cue.src, cue.transition || 'fade', activeImageToken);
+              if (cue.shake) {
+                triggerImpactShake(screen);
+              }
+            } else if (cue.type === 'sfxBoost') {
+              boostSceneAudio(cue.volume || 0.85, cue.durationMs || 1400);
+            }
+          }
+
+          function fallbackIfBlockedOrFailed() {
+            if (sceneToken !== activeSceneToken) return;
+            if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
+              dialogueBoxEl.startAutoTypewriter();
+            }
+            if (sync.deferFrames && !appState.prefs.reduceMotion) {
+              runClassicFrames(screen, activeImageToken);
+            }
+            if (sync.deferSceneSfx) {
+              playSceneSound(screen, true);
+            }
+          }
+
+          const delayMs = options.immediate ? 0 : Math.max(0, Number(sync.startDelayMs) || 180);
+
+          voiceDelayTimer = setTimeout(() => {
+            voiceDelayTimer = null;
+            if (sceneToken !== activeSceneToken) return;
+
+            const audio = new Audio(sync.audio);
+            audio.preload = 'auto';
+            audio.volume = Math.min(1, appState.volume * 1.15);
+            voiceAudio = audio;
+
+            let syncLoopStarted = false;
+
+            const tickSync = () => {
+              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
+              const t = audio.currentTime || 0;
+
+              // Disparar cues de SFX/fotogramas exactamente en el segundo medido
+              cues.forEach((cue, idx) => {
+                if (!firedCues.has(idx) && t >= cue.at) {
+                  firedCues.add(idx);
+                  runCue(cue);
+                }
+              });
+
+              // Actualizar progreso del diálogo estrictamente ligado al reloj del audio
+              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping() && !audio.paused) {
+                const count = computeSyncedCharCount(chars, segTables, t);
+                dialogueBoxEl.setRevealProgress(count);
+              }
+
+              if (!audio.ended && !audio.paused) {
+                voiceRafId = requestAnimationFrame(tickSync);
+              }
+            };
+
+            audio.addEventListener('playing', () => {
+              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
+              isVoiceSpeaking = true;
+              updateAmbientMix();
+              if (!syncLoopStarted) {
+                syncLoopStarted = true;
+                voiceRafId = requestAnimationFrame(tickSync);
+              }
+            });
+
+            audio.addEventListener('ended', () => {
+              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
+              // Aseguramos cualquier cue final pendiente y completamos el texto al 100%
+              cues.forEach((cue, idx) => {
+                if (!firedCues.has(idx) && cue.type === 'frame') {
+                  firedCues.add(idx);
+                  runCue(cue);
+                }
+              });
+              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
+                dialogueBoxEl.setRevealProgress(chars.length);
+              }
+              isVoiceSpeaking = false;
+              updateAmbientMix();
+            });
+
+            audio.addEventListener('error', () => {
+              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
+              isVoiceSpeaking = false;
+              voiceAudio = null;
+              updateAmbientMix();
+              fallbackIfBlockedOrFailed();
+            });
+
+            audio.play().catch(() => {
+              pendingUnlock = true;
+              fallbackIfBlockedOrFailed();
+            });
+          }, delayMs);
+        }
+
+        function playSceneSound(screen, forceImmediate = false) {
           if (sceneAudio) {
             sceneAudio.pause();
             sceneAudio = null;
           }
           if (!appState.audioEnabled || !screen) return;
 
+          // Si la escena coordina su SFX puntual con la voz narrada (ej. S02, S05, S06), no lo dispares al t=0
+          const sync = VOICE_SYNC[screen.id];
+          if (!forceImmediate && appState.voiceEnabled && sync && sync.deferSceneSfx) {
+            return;
+          }
+
           const base = `audio/s${screen.number}`;
           const audio = new Audio(`${base}.wav`);
-          audio.volume = appState.volume * 0.68;
+          audio.volume = appState.volume * (isVoiceSpeaking ? 0.36 : 0.64);
           // Escenas atmosféricas de bucle suave (S01, S03, S04, S07)
           audio.loop = [1, 3, 4, 7].includes(screen.number);
           audio.addEventListener('error', () => {
@@ -595,7 +879,6 @@
           const data = buf.getChannelData(0);
           for (let i = 0; i < len; i++) {
             const t = i / ac.sampleRate;
-            // Golpe mecánico seco + resonancia metálica corta de tecla antigua
             const click = (Math.random() * 2 - 1) * Math.exp(-t * 280);
             const body = Math.sin(2 * Math.PI * 1250 * t) * Math.exp(-t * 210) * 0.45;
             const thud = Math.sin(2 * Math.PI * 240 * t) * Math.exp(-t * 160) * 0.35;
@@ -607,11 +890,12 @@
 
         function playTypewriterKey(strong = false) {
           if (!appState.audioEnabled) return;
+          // Silenciamos los clics de diálogo mientras una voz humana está narrando para máxima limpieza
+          if (!strong && isVoiceSpeaking) return;
           const ac = ensureContext();
           if (!ac) return;
           const src = ac.createBufferSource();
           src.buffer = getTypewriterBuffer(ac);
-          // Ligera variación orgánica de tono; más grave y contundente en el título del acto
           src.playbackRate.value = strong
             ? (0.78 + Math.random() * 0.16)
             : (0.88 + Math.random() * 0.26);
@@ -626,14 +910,13 @@
           const gain = ac.createGain();
           gain.gain.value = strong
             ? (0.34 + Math.random() * 0.08) * appState.volume
-            : (0.09 + Math.random() * 0.05) * appState.volume;
+            : (0.09 + Math.random() * 0.035) * appState.volume;
 
           src.connect(filter);
           filter.connect(gain);
           gain.connect(ac.destination);
           src.start();
 
-          // En el título del acto añadimos un golpe mecánico grave adicional más marcado
           if (strong) {
             const osc = ac.createOscillator();
             const thudGain = ac.createGain();
@@ -708,7 +991,7 @@
           currentTrackKey = trackKey;
         }
 
-        // Si el navegador bloquea el autoplay inicial, reanuda en el primer clic/tecla
+        // Si el navegador bloquea el autoplay inicial, reanuda en el primer gesto
         function unlockOnGesture() {
           if (!pendingUnlock || !appState.audioEnabled) return;
           pendingUnlock = false;
@@ -716,11 +999,24 @@
           startAmbientRain();
           if (sceneAudio) sceneAudio.play().catch(() => {});
           else if (screen) playSceneSound(screen);
+          if (appState.voiceEnabled && screen && VOICE_SYNC[screen.id]) {
+            if (voiceAudio && voiceAudio.paused && voiceAudio.currentTime === 0) {
+              voiceAudio.play().catch(() => {});
+            } else if (!voiceAudio) {
+              playVoiceNarration(screen, activeSceneToken, { immediate: true });
+            }
+          }
         }
         window.addEventListener('pointerdown', unlockOnGesture, { passive: true });
         window.addEventListener('keydown', unlockOnGesture, { passive: true });
 
         return {
+          hasSyncedVoice,
+          startAmbientOnly(screen) {
+            if (!appState.audioEnabled) return;
+            startAmbientRain();
+            if (screen) playSceneSound(screen);
+          },
           setEnabled(enabled) {
             appState.audioEnabled = enabled;
             persistAudioPrefs();
@@ -728,9 +1024,16 @@
             if (enabled) {
               startAmbientRain();
               playSceneSound(screen);
+              if (screen && hasSyncedVoice(screen)) {
+                renderScreen(screen.id);
+              }
               if (screen && screen.musicTrack) tryPlayTrack(screen.musicTrack);
             } else {
               stopAmbientRain();
+              stopVoiceNarration();
+              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
+                dialogueBoxEl.stopTypewriter(true);
+              }
               if (sceneAudio) {
                 sceneAudio.pause();
                 sceneAudio = null;
@@ -739,21 +1042,42 @@
             }
             updateAudioUI();
           },
+          setVoiceEnabled(enabled) {
+            appState.voiceEnabled = enabled;
+            persistAudioPrefs();
+            const screen = STORY.SCREENS[appState.currentId];
+            if (enabled && appState.audioEnabled && screen && VOICE_SYNC[screen.id]) {
+              renderScreen(screen.id);
+            } else {
+              stopVoiceNarration();
+              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
+                dialogueBoxEl.stopTypewriter(true);
+              }
+            }
+            updateAudioUI();
+          },
           setVolume(vol) {
             appState.volume = vol;
             persistAudioPrefs();
-            if (rainAudio) rainAudio.volume = vol * 0.48;
-            if (sceneAudio) sceneAudio.volume = vol * 0.68;
+            updateAmbientMix();
+            if (voiceAudio) voiceAudio.volume = Math.min(1, vol * 1.15);
             if (musicAudio) musicAudio.volume = vol * 0.65;
+            activeCueAudios.forEach((a) => { a.volume = Math.min(1, vol * 0.75); });
           },
-          onScreenChange(screen) {
-            if (!appState.audioEnabled) return;
+          onScreenChange(screen, sceneToken, options = {}) {
+            stopVoiceNarration();
+            if (!appState.audioEnabled) {
+              return;
+            }
             if (screen.isEnding === 'F01') {
               stopAmbientRain();
             } else {
               startAmbientRain();
             }
             playSceneSound(screen);
+            if (hasSyncedVoice(screen)) {
+              playVoiceNarration(screen, sceneToken, options);
+            }
             if (screen.musicTrack) {
               tryPlayTrack(screen.musicTrack);
             } else if (currentTrackKey) {
@@ -829,31 +1153,43 @@
 
         const screen = screenOrPath;
         const frames = screen.frames;
+        const sync = VOICE_SYNC[screen.id];
+        const voiceDrivesFrames = Boolean(
+          audioEngine.hasSyncedVoice(screen) && sync && sync.deferFrames
+        );
 
-        // Si tiene secuencia one-shot y Reducir movimiento está desactivado, la reproduce UNA sola vez
+        // Si tiene secuencia one-shot y Reducir movimiento está desactivado, precargamos todos los fotogramas
         if (Array.isArray(frames) && frames.length > 0 && !appState.prefs.reduceMotion) {
-          // Precargar todos los fotogramas de la escena en memoria para transiciones instantáneas
           frames.forEach((f) => { const pre = new Image(); pre.src = f.src; });
 
-          frames.forEach((frame) => {
-            const delay = Math.max(0, Number(frame.delay) || 0);
-            const run = () => {
-              if (token !== activeImageToken) return;
-              showImageFrame(frame.src, frame.transition || 'cut', token);
-              if (frame.shake) {
-                triggerImpactShake(screen);
-              }
-            };
-            if (delay === 0) {
-              run();
-            } else {
-              frameTimers.push(setTimeout(run, delay));
-            }
-          });
+          if (voiceDrivesFrames) {
+            // Mostramos solo el fotograma inicial; los siguientes saltan al ritmo exacto de la voz
+            showImageFrame(frames[0].src, 'cut', token);
+          } else {
+            runClassicFrames(screen, token);
+          }
         } else {
-          // Modo estándar o Reducir movimiento: muestra directamente la imagen final de la pantalla
           showImageFrame(screen.image, 'cut', token);
         }
+      }
+
+      function runClassicFrames(screen, token) {
+        const frames = screen.frames || [];
+        frames.forEach((frame) => {
+          const delay = Math.max(0, Number(frame.delay) || 0);
+          const run = () => {
+            if (token !== activeImageToken) return;
+            showImageFrame(frame.src, frame.transition || 'cut', token);
+            if (frame.shake) {
+              triggerImpactShake(screen);
+            }
+          };
+          if (delay === 0) {
+            run();
+          } else {
+            frameTimers.push(setTimeout(run, delay));
+          }
+        });
       }
 
       // -------------------- Lógica de Tutorial (solo primeras veces) --------------------
@@ -873,6 +1209,7 @@
         const screen = STORY.SCREENS[screenId];
         if (!screen) return;
 
+        const sceneToken = ++activeSceneToken;
         appState.currentId = screen.id;
 
         const act = STORY.ACTS[screen.act];
@@ -881,13 +1218,14 @@
 
         loadSceneBackground(screen);
         applyTensionAtmosphere(screen);
-        audioEngine.onScreenChange(screen);
 
+        const hasVoiceSync = audioEngine.hasSyncedVoice(screen);
         const useTypewriter =
           !options.skipTypewriter &&
           !appState.prefs.reduceMotion &&
-          screen.act === 'acto-1';
+          (hasVoiceSync || screen.act === 'acto-1');
 
+        // Renderizamos primero la caja de diálogo antes de disparar la voz para sincronización 1:1
         dialogueBoxEl.render({
           speaker: screen.speaker,
           speakerType: screen.speakerType,
@@ -899,7 +1237,13 @@
           showTutorialHints: shouldShowTutorialHints(screen),
           canGoBack: appState.history.length > 0,
           showSurveyAction: Boolean(screen.isEnding),
-          typewriter: useTypewriter
+          typewriter: useTypewriter,
+          syncMode: hasVoiceSync ? 'external' : 'auto'
+        });
+
+        // Iniciamos el audio (y el reloj sincronizado voz -> texto -> SFX/frames) una vez montado el diálogo
+        audioEngine.onScreenChange(screen, sceneToken, {
+          immediate: Boolean(options.immediateVoice)
         });
 
         document.getElementById('audio-current-cue').textContent = screen.audioCue || 'Ambiente silencioso';
@@ -914,6 +1258,17 @@
       // -------------------- Eventos del Componente de Diálogo y Botones --------------------
       dialogueBoxEl.addEventListener('blinky:type-tick', () => {
         audioEngine.playTypewriterKey();
+      });
+
+      dialogueBoxEl.addEventListener('blinky:reveal-complete', (e) => {
+        if (e.detail && e.detail.skipped) {
+          const screen = STORY.SCREENS[appState.currentId];
+          const sync = screen && VOICE_SYNC[screen.id];
+          if (sync && sync.deferFrames && Array.isArray(screen.frames) && screen.frames.length > 0) {
+            const lastFrame = screen.frames[screen.frames.length - 1];
+            showImageFrame(lastFrame.src, 'fade', activeImageToken);
+          }
+        }
       });
 
       dialogueBoxEl.addEventListener('blinky:btn-hover', () => {
@@ -1125,6 +1480,7 @@
       // -------------------- Controles de Audio --------------------
       function updateAudioUI() {
         const toggleBtn = document.getElementById('audio-toggle-btn');
+        const voiceToggleBtn = document.getElementById('voice-toggle-btn');
         const iconOn = document.getElementById('audio-icon-on');
         const iconOff = document.getElementById('audio-icon-off');
         const hudAudioBtn = document.getElementById('btn-audio');
@@ -1142,10 +1498,24 @@
           iconOff.classList.remove('hidden');
           hudAudioBtn.classList.remove('text-amber-200');
         }
+
+        if (voiceToggleBtn) {
+          if (appState.voiceEnabled) {
+            voiceToggleBtn.textContent = 'Activada';
+            voiceToggleBtn.className = 'px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-amber-400/20 border-amber-400/50 text-amber-200';
+          } else {
+            voiceToggleBtn.textContent = 'Desactivada';
+            voiceToggleBtn.className = 'px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer bg-white/5 border-white/15 text-slate-200 hover:border-amber-300/50';
+          }
+        }
       }
 
       document.getElementById('audio-toggle-btn').addEventListener('click', () => {
         audioEngine.setEnabled(!appState.audioEnabled);
+      });
+
+      document.getElementById('voice-toggle-btn').addEventListener('click', () => {
+        audioEngine.setVoiceEnabled(!appState.voiceEnabled);
       });
 
       const volInput = document.getElementById('audio-volume');
@@ -1318,6 +1688,9 @@
           if (typeof savedAudio.enabled === 'boolean') {
             appState.audioEnabled = savedAudio.enabled;
           }
+          if (typeof savedAudio.voiceEnabled === 'boolean') {
+            appState.voiceEnabled = savedAudio.voiceEnabled;
+          }
         }
       } catch (e) {}
 
@@ -1332,16 +1705,24 @@
         actIntroTimers = [];
       }
 
-      function hideActIntro() {
+      function hideActIntro(skippedByUser = false) {
         const wasVisible = !actIntroOverlay.classList.contains('is-hidden');
         clearActIntroTimers();
         actIntroOverlay.classList.add('is-hidden');
-        // Al levantarse la cortina del Acto I, inicia el ambiente de lluvia y el diálogo de S01 limpiamente
+
+        // Al levantarse la cortina del Acto I, entra primero la lluvia ambiental;
+        // el diálogo y la voz de S01 arrancan SOLO cuando la escena ya es visible (sin desfase).
         if (wasVisible && appState.currentId === 'S01') {
           if (appState.audioEnabled) {
-            audioEngine.setEnabled(true);
+            audioEngine.startAmbientOnly(STORY.SCREENS['S01']);
           }
-          renderScreen('S01');
+          const revealDelay = appState.prefs.reduceMotion ? 0 : (skippedByUser ? 260 : 980);
+          actIntroTimers.push(
+            setTimeout(() => {
+              dialogueSectionEl.classList.remove('opacity-0', 'pointer-events-none');
+              renderScreen('S01', { immediateVoice: false });
+            }, revealDelay)
+          );
         }
       }
 
@@ -1402,7 +1783,7 @@
         );
       }
 
-      actIntroOverlay.addEventListener('click', hideActIntro);
+      actIntroOverlay.addEventListener('click', () => hideActIntro(true));
 
       // Si viene desde inicio.html (?play=1), reproduce primero el título del Acto I en silencio limpio (sin lluvia ni tipeo de S01 detrás)
       const params = new URLSearchParams(window.location.search);
@@ -1411,8 +1792,10 @@
       updateAudioUI();
 
       if (fromStartScreen && !appState.prefs.reduceMotion) {
+        // Ocultamos la caja de diálogo detrás de la cortina hasta que termine la presentación del Acto I
+        dialogueSectionEl.classList.add('opacity-0', 'pointer-events-none');
         applyAccessibilityPrefs({ skipRender: true });
-        // Precargamos la imagen de S01 en segundo plano sin iniciar su diálogo ni su lluvia aún
+        // Precargamos la imagen de S01 en segundo plano sin iniciar su diálogo, voz ni lluvia aún
         loadSceneBackground(STORY.SCREENS['S01'].image);
         playActIntro('Acto I', 'El Nido Roto');
       } else {

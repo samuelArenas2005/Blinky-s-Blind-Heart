@@ -549,16 +549,503 @@ body.reduce-motion *::after {
   transition-duration: 0.001ms !important;
 }
 
+/* ==========================================================================
+   Menú Lateral Desplegable con Etiquetas Animadas + Paneles Estilo Videojuego
+   (Minimalista, sin cápsulas genéricas, con tabs y switches claros)
+   ========================================================================== */
+
+.vn-hud-dropdown {
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -8px) scale(0.96);
+  pointer-events: none;
+  visibility: hidden;
+  background: rgba(10, 15, 22, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+  transition:
+    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.24s ease;
+}
+
+.vn-hud-dropdown.is-open {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* Etiqueta flotante animada en hover junto a cada ícono del menú lateral */
+.vn-hud-item-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vn-hud-tooltip {
+  position: absolute;
+  right: calc(100% + 0.72rem);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  padding: 0.34rem 0.72rem;
+  border-radius: 0.38rem;
+  background: rgba(10, 15, 22, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-right: 2px solid rgba(251, 191, 36, 0.78);
+  color: #F5F5F4;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vn-hud-tooltip--right {
+  right: auto;
+  left: calc(100% + 0.65rem);
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  border-left: 2px solid rgba(251, 191, 36, 0.78);
+  transform: translateY(-50%) translateX(-8px);
+}
+
+.vn-hud-item-wrap:hover .vn-hud-tooltip,
+.vn-hud-item-wrap:focus-within .vn-hud-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Ventanas Modales Estilo Videojuego (sin bordes redondeados genéricos excesivos) */
+.vn-game-backdrop {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: rgba(5, 8, 13, 0.76);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    opacity 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0.24s ease;
+}
+
+.vn-game-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.vn-game-panel {
+  position: relative;
+  background: linear-gradient(180deg, rgba(13, 19, 28, 0.96) 0%, rgba(9, 13, 20, 0.97) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 0.65rem;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.82),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: translateY(10px) scale(0.975);
+  transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vn-game-backdrop.is-open .vn-game-panel {
+  transform: translateY(0) scale(1);
+}
+
+/* Filamento superior dorado sutil y detalles de esquina estilo interfaz de juego */
+.vn-game-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.48), transparent);
+  pointer-events: none;
+}
+
+.vn-panel-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  border-color: rgba(251, 191, 36, 0.36);
+}
+
+.vn-panel-corner--tl { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
+.vn-panel-corner--tr { top: 6px; right: 6px; border-top: 1px solid; border-right: 1px solid; }
+.vn-panel-corner--bl { bottom: 6px; left: 6px; border-bottom: 1px solid; border-left: 1px solid; }
+.vn-panel-corner--br { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
+
+.vn-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  color: #94A3B8;
+  transition: color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.vn-close-btn:hover {
+  color: #FDE68A;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.vn-close-btn:active {
+  transform: scale(0.94);
+}
+
+/* Pestañas (Tabs) Minimalistas con Indicador Deslizante */
+.vn-tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vn-tab-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8494A7;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.vn-tab-btn:hover {
+  color: #E2E8F0;
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+.vn-tab-btn[aria-selected="true"] {
+  color: #FDE68A;
+}
+
+.vn-tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.2), #FBBF24 50%, rgba(251, 191, 36, 0.2));
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.45);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+@keyframes vnTabReveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vn-tab-panel {
+  animation: vnTabReveal 0.22s ease-out forwards;
+}
+
+/* Filas de Ajustes + Switch Minimalista con Estado Claro */
+.vn-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: opacity 0.22s ease;
+}
+
+.vn-setting-row:last-child {
+  border-bottom: none;
+}
+
+.vn-setting-row.is-dimmed {
+  opacity: 0.45;
+}
+
+.vn-setting-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  color: #94A3B8;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.vn-setting-row:hover .vn-setting-icon {
+  color: #FDE68A;
+}
+
+.vn-switch-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.vn-switch-state {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  min-width: 3.7rem;
+  text-align: right;
+  color: #64748B;
+  transition: color 0.2s ease;
+}
+
+.vn-switch-control[aria-checked="true"] .vn-switch-state {
+  color: #FDE68A;
+}
+
+.vn-switch-track {
+  position: relative;
+  width: 2.35rem;
+  height: 1.2rem;
+  border-radius: 9999px;
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.vn-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.2rem - 6px);
+  height: calc(1.2rem - 6px);
+  border-radius: 9999px;
+  background: #94A3B8;
+  transition:
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.vn-switch-control[aria-checked="true"] .vn-switch-track {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.65);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.18);
+}
+
+.vn-switch-control[aria-checked="true"] .vn-switch-thumb {
+  transform: translateX(1.15rem);
+  background: #FDE68A;
+  box-shadow: 0 0 8px rgba(253, 230, 138, 0.65);
+}
+
+.vn-switch-control:hover .vn-switch-track {
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+.vn-switch-control:focus-visible,
+.vn-tab-btn:focus-visible,
+.vn-close-btn:focus-visible,
+.vn-scale-option:focus-visible,
+.vn-ghost-action:focus-visible {
+  outline: 2px solid #22D3EE;
+  outline-offset: 2px;
+}
+
+/* Slider Minimalista de Volumen Estilo Videojuego */
+.vn-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 191, 36, 0.85) 0%,
+    rgba(251, 191, 36, 0.85) var(--range-pct, 60%),
+    rgba(255, 255, 255, 0.12) var(--range-pct, 60%),
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.vn-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 9999px;
+  background: #FDE68A;
+  border: 2px solid #0B1017;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.55);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vn-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px rgba(253, 230, 138, 0.85);
+}
+
+.vn-range::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 9999px;
+  background: #FDE68A;
+  border: 2px solid #0B1017;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.55);
+}
+
+/* Selector Segmentado Minimalista de Tamaño de Texto (sin cápsulas) */
+.vn-scale-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vn-scale-option {
+  position: relative;
+  padding: 0.52rem 0.5rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #8494A7;
+  text-align: center;
+  transition: color 0.18s ease, background-color 0.18s ease;
+  cursor: pointer;
+}
+
+.vn-scale-option::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -1px;
+  height: 2px;
+  background: #FBBF24;
+  transform: scaleX(0);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vn-scale-option:hover {
+  color: #E2E8F0;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.vn-scale-option.is-active {
+  color: #FDE68A;
+}
+
+.vn-scale-option.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Botón Fantasma Minimalista para Acciones de Menú (Reiniciar, Confirmar, etc.) */
+.vn-ghost-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.36rem 0.6rem;
+  border-radius: 0.38rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #94A3B8;
+  transition: color 0.18s ease, background-color 0.18s ease;
+  cursor: pointer;
+}
+
+.vn-ghost-action:hover {
+  color: #FDE68A;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.vn-ghost-action--danger:hover {
+  color: #FCA5A5;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Línea de Tiempo Minimalista del Historial (Crónica limpia sin tarjetas saturadas) */
+.vn-chronicle-entry {
+  position: relative;
+  padding-left: 1.25rem;
+  padding-bottom: 1.15rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.vn-chronicle-entry:last-child {
+  padding-bottom: 0.25rem;
+  border-left-color: transparent;
+}
+
+.vn-chronicle-dot {
+  position: absolute;
+  left: -4px;
+  top: 0.32rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #475569;
+  border: 1px solid #0B1017;
+}
+
+.vn-chronicle-entry.is-current .vn-chronicle-dot {
+  background: #FBBF24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.75);
+}
+
+/* Soporte Alto Contraste para nuevos menús y switches */
+body.high-contrast .vn-game-panel {
+  background: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+}
+
+body.high-contrast .vn-switch-control[aria-checked="true"] .vn-switch-track {
+  background: #22D3EE !important;
+  border-color: #FFFFFF !important;
+}
+
+body.high-contrast .vn-switch-control[aria-checked="true"] .vn-switch-thumb {
+  background: #000000 !important;
+}
+
+body.high-contrast .vn-hud-tooltip {
+  background: #000000 !important;
+  border: 1px solid #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
 /* Scrollbar elegante para modales e historial */
 .vn-scroll::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 .vn-scroll::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.4);
-  border-radius: 9999px;
+  background: transparent;
 }
 .vn-scroll::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.32);
+  background: rgba(148, 163, 184, 0.25);
   border-radius: 9999px;
 }
 .vn-scroll::-webkit-scrollbar-thumb:hover {

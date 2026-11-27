@@ -50,7 +50,10 @@
       super();
       this._typeTimer = null;
       this._isTyping = false;
+      this._syncMode = 'auto';
       this._fullMarkup = '';
+      this._plainChars = [];
+      this._revealedCount = 0;
       this._props = {
         speaker: 'NARRADOR',
         speakerType: 'narrador',
@@ -62,7 +65,8 @@
         showTutorialHints: false,
         canGoBack: false,
         showSurveyAction: false,
-        typewriter: false
+        typewriter: false,
+        syncMode: 'auto'
       };
     }
 
@@ -71,32 +75,107 @@
         clearTimeout(this._typeTimer);
         this._typeTimer = null;
       }
-      if (completeNow && this._isTyping) {
+      const wasTyping = this._isTyping;
+      if (completeNow && wasTyping) {
         const p = this.querySelector('[data-slot="narrative-text"]');
         if (p) p.innerHTML = this._fullMarkup;
+        this._revealedCount = this._plainChars.length;
       }
       this._isTyping = false;
+      if (completeNow && wasTyping) {
+        this.dispatchEvent(
+          new CustomEvent('blinky:reveal-complete', {
+            bubbles: true,
+            composed: true,
+            detail: { skipped: true }
+          })
+        );
+      }
     }
 
     isTyping() {
       return this._isTyping;
     }
 
-    _startTypewriter(targetEl, fullMarkup, plainText) {
-      this.stopTypewriter(false);
-      this._fullMarkup = fullMarkup;
-      this._isTyping = true;
-      targetEl.textContent = '';
+    /**
+     * Revela progresivamente los primeros `charCount` caracteres (usado por el
+     * sincronizador ligado al reloj real de la voz narrada).
+     */
+    setRevealProgress(charCount) {
+      if (!this._isTyping) return;
+      const targetEl = this.querySelector('[data-slot="narrative-text"]');
+      if (!targetEl) return;
 
-      const chars = Array.from(plainText);
-      let idx = 0;
+      const total = this._plainChars.length;
+      const nextCount = Math.max(this._revealedCount, Math.min(total, Math.floor(charCount)));
+      if (nextCount === this._revealedCount && nextCount < total) return;
+
+      this._revealedCount = nextCount;
+      if (nextCount >= total) {
+        this._isTyping = false;
+        targetEl.innerHTML = this._fullMarkup;
+        this.dispatchEvent(
+          new CustomEvent('blinky:reveal-complete', {
+            bubbles: true,
+            composed: true,
+            detail: { skipped: false }
+          })
+        );
+        return;
+      }
+
+      const slice = this._plainChars.slice(0, nextCount).join('');
+      targetEl.innerHTML = this._formatPartialSlice(slice);
+    }
+
+    /**
+     * Inicia el efecto máquina de escribir interno (fallback cuando no hay voz sincronizada).
+     */
+    startAutoTypewriter() {
+      if (!this._isTyping) return;
+      const targetEl = this.querySelector('[data-slot="narrative-text"]');
+      if (!targetEl) return;
+      this._syncMode = 'auto';
+      this._startTypewriter(targetEl, this._fullMarkup, this._plainChars.join(''), this._revealedCount);
+    }
+
+    _formatPartialSlice(slice) {
+      return escapeHtml(slice)
+        .replace(/\n/g, '<br>')
+        .replace(/¡¡SKRRRRRCH!!/g, '<span class="vn-onomatopoeia">¡¡SKRRRRRCH!!</span>')
+        .replace(/¡¡PUM!!/g, '<span class="vn-onomatopoeia">¡¡PUM!!</span>')
+        .replace(/¡¡FROOOOSH!!/g, '<span class="vn-onomatopoeia">¡¡FROOOOSH!!</span>')
+        .replace(/¡¡GUAU!!/g, '<span class="vn-onomatopoeia">¡¡GUAU!!</span>')
+        .replace(/¡¡CLANC!!/g, '<span class="vn-onomatopoeia">¡¡CLANC!!</span>')
+        .replace(/Grrr\.\.\./g, '<em class="vn-sound-whisper font-semibold">Grrr...</em>')
+        .replace(/Prrrr\.\.\. Prrrr\.\.\. Miau/g, '<em class="vn-sound-whisper font-semibold">Prrrr... Prrrr... Miau</em>')
+        .replace(/Prrrr\.\.\. Miau/g, '<em class="vn-sound-whisper font-semibold">Prrrr... Miau</em>')
+        .replace(/tac\.\.\. tac\.\.\. tac\.\.\./g, '<em class="vn-sound-whisper font-semibold">tac... tac... tac...</em>')
+        .replace(/Roce\.\.\. roce\.\.\./g, '<em class="vn-sound-whisper font-semibold">Roce... roce...</em>')
+        .replace(/Hmmmmmmmm\.\.\./g, '<em class="vn-sound-whisper font-semibold">Hmmmmmmmm...</em>');
+    }
+
+    _startTypewriter(targetEl, fullMarkup, plainText, startIndex = 0) {
+      if (this._typeTimer) {
+        clearTimeout(this._typeTimer);
+        this._typeTimer = null;
+      }
+      this._fullMarkup = fullMarkup;
+      this._plainChars = Array.from(plainText);
+      this._isTyping = true;
+      this._revealedCount = startIndex;
+      if (startIndex === 0) targetEl.textContent = '';
+
+      const chars = this._plainChars;
+      let idx = startIndex;
       let tickCounter = 0;
 
       const step = () => {
         if (!this._isTyping) return;
         idx += 1;
+        this._revealedCount = idx;
         const slice = chars.slice(0, idx).join('');
-        targetEl.innerHTML = escapeHtml(slice).replace(/\n/g, '<br>');
+        targetEl.innerHTML = this._formatPartialSlice(slice);
 
         const ch = chars[idx - 1];
         if (ch && ch.trim() !== '') {
@@ -116,8 +195,14 @@
         if (idx >= chars.length) {
           this._isTyping = false;
           this._typeTimer = null;
-          // Al completar, aplicamos el HTML enriquecido final (cursivas/negritas)
           targetEl.innerHTML = fullMarkup;
+          this.dispatchEvent(
+            new CustomEvent('blinky:reveal-complete', {
+              bubbles: true,
+              composed: true,
+              detail: { skipped: false }
+            })
+          );
           return;
         }
 
@@ -180,11 +265,15 @@
         showTutorialHints,
         canGoBack,
         showSurveyAction,
-        typewriter
+        typewriter,
+        syncMode
       } = this._props;
 
       const bodyMarkup = html || escapeHtml(text).replace(/\n/g, '<br>');
       this._fullMarkup = bodyMarkup;
+      this._plainChars = Array.from(text || '');
+      this._revealedCount = typewriter ? 0 : this._plainChars.length;
+      this._syncMode = syncMode || 'auto';
 
       this.innerHTML = `
         <div class="vn-dialogue-shell relative">
@@ -265,11 +354,17 @@
         </div>
       `;
 
-      // Iniciar efecto máquina de escribir si está activado
+      // Iniciar efecto máquina de escribir (automático o sincronizado externamente por voz)
       if (typewriter) {
         const textEl = this.querySelector('[data-slot="narrative-text"]');
         if (textEl) {
-          this._startTypewriter(textEl, bodyMarkup, text);
+          if (this._syncMode === 'external') {
+            this._isTyping = true;
+            this._revealedCount = 0;
+            textEl.textContent = '';
+          } else {
+            this._startTypewriter(textEl, bodyMarkup, text);
+          }
         }
         const skipZone = this.querySelector('[data-action="skip-typewriter"]');
         if (skipZone) {

@@ -1,0 +1,11 @@
+{
+  "model": "gemini-3.8-flash-tts",
+  "cast_version": 3,
+  "mode": "voice_design",
+  "narrador": "voice_mfhvrz7lvuz8",
+  "blinky": "voice_bs3nm3ah7p5p",
+  "mama_gato": "voice_nfkzw2278bpp",
+  "mama_nina": "voice_nfkzw2278bpp",
+  "nina": "Leda",
+  "policy": "narrador_unico_mas_dialogos_humanos"
+}
