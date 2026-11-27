@@ -777,6 +777,7 @@
         let sceneAudio = null;
         let voiceAudio = null;
         let musicAudio = null;
+        let musicFadeTimer = null;
         let currentTrackKey = null;
         let pendingUnlock = false;
         let isVoiceSpeaking = false;
@@ -816,6 +817,10 @@
           if (sceneAudio && !sceneAudioBoosted) {
             const factor = isVoiceSpeaking ? 0.36 : 0.64;
             sceneAudio.volume = appState.volume * factor;
+          }
+          if (musicAudio && !musicFadeTimer) {
+            const factor = isVoiceSpeaking ? 0.38 : 0.65;
+            musicAudio.volume = appState.volume * factor;
           }
         }
 
@@ -1156,8 +1161,22 @@
           if (window.BlinkyUiSfx) window.BlinkyUiSfx.playClick();
         }
 
+        const MUSIC_TRACKS = {
+          piano_melancolico: 'audio/piano_melancolico.mp3',
+          final_bueno: 'audio/good ending.mp3',
+          final_triste: 'audio/bad ending.mp3'
+        };
+
+        function clearMusicFade() {
+          if (musicFadeTimer) {
+            clearInterval(musicFadeTimer);
+            musicFadeTimer = null;
+          }
+        }
+
         function tryPlayTrack(trackKey) {
           if (!appState.audioEnabled || !trackKey) {
+            clearMusicFade();
             if (musicAudio) {
               musicAudio.pause();
               musicAudio = null;
@@ -1165,20 +1184,48 @@
             }
             return;
           }
+          const targetVol = appState.volume * (isVoiceSpeaking ? 0.38 : 0.65);
           if (currentTrackKey === trackKey && musicAudio) {
-            musicAudio.volume = appState.volume * 0.65;
+            if (!musicFadeTimer) {
+              musicAudio.volume = targetVol;
+            }
+            if (musicAudio.paused) {
+              musicAudio.play().catch(() => { pendingUnlock = true; });
+            }
             return;
           }
+          clearMusicFade();
           if (musicAudio) {
             musicAudio.pause();
             musicAudio = null;
           }
-          const audio = new Audio(`audio/${trackKey}.mp3`);
+          const rawPath = MUSIC_TRACKS[trackKey] || `audio/${trackKey}.mp3`;
+          const audio = new Audio(encodeURI(rawPath));
           audio.loop = true;
-          audio.volume = appState.volume * 0.65;
-          audio.play().catch(() => { });
+          const useFadeIn = trackKey === 'final_bueno' || trackKey === 'final_triste';
+          audio.volume = useFadeIn ? 0 : targetVol;
           musicAudio = audio;
           currentTrackKey = trackKey;
+
+          audio.play().then(() => {
+            if (musicAudio !== audio || !useFadeIn) return;
+            let step = 0;
+            const totalSteps = 20;
+            musicFadeTimer = setInterval(() => {
+              if (musicAudio !== audio || !appState.audioEnabled) {
+                clearMusicFade();
+                return;
+              }
+              step += 1;
+              const endVol = appState.volume * (isVoiceSpeaking ? 0.38 : 0.65);
+              audio.volume = Math.min(endVol, endVol * (step / totalSteps));
+              if (step >= totalSteps) {
+                clearMusicFade();
+              }
+            }, 60);
+          }).catch(() => {
+            pendingUnlock = true;
+          });
         }
 
         // Si el navegador bloquea el autoplay inicial, reanuda en el primer gesto
@@ -1186,9 +1233,16 @@
           if (!pendingUnlock || !appState.audioEnabled) return;
           pendingUnlock = false;
           const screen = STORY.SCREENS[appState.currentId];
-          startAmbientRain();
+          if (screen && screen.isEnding === 'F01') {
+            stopAmbientRain();
+          } else {
+            startAmbientRain();
+          }
           if (sceneAudio) sceneAudio.play().catch(() => { });
           else if (screen) playSceneSound(screen);
+          if (screen && screen.musicTrack) {
+            tryPlayTrack(screen.musicTrack);
+          }
           if (appState.voiceEnabled && screen && VOICE_SYNC[screen.id]) {
             if (voiceAudio && voiceAudio.paused && voiceAudio.currentTime === 0) {
               voiceAudio.play().catch(() => {});
@@ -1218,6 +1272,7 @@
               sceneAudio.pause();
               sceneAudio = null;
             }
+            tryPlayTrack(null);
             stopAmbientRain();
           },
           setEnabled(enabled) {
@@ -1225,7 +1280,11 @@
             persistAudioPrefs();
             const screen = STORY.SCREENS[appState.currentId];
             if (enabled) {
-              startAmbientRain();
+              if (screen && screen.isEnding === 'F01') {
+                stopAmbientRain();
+              } else {
+                startAmbientRain();
+              }
               playSceneSound(screen);
               if (screen && hasSyncedVoice(screen)) {
                 renderScreen(screen.id);
