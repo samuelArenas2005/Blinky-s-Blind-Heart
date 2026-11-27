@@ -16,7 +16,7 @@ Audios ya generados e integrados automáticamente (Acto I):
   - s12.wav     -> La Ayuda del Compañero (otro maullido extraído de s3.wav, sin ronroneo; suena una vez)
   - s13.mp3     -> El Callejón Protegido (pasos suaves en charcos bajo la lluvia; bucle suave)
 
-Para futuras pantallas (S08 a S52) o música de cierre:
+Para futuras pantallas (S08 a S52) y soundtracks de desenlace integrados:
   - Coloca s8.wav / s8.mp3 ... s52.wav / s52.mp3 y se reproducirán solos.
-  - final_bueno.mp3 -> Melodía de cierre F01 (S45-S46)
-  - final_triste.mp3 -> Melodía de cierre F02 (S52)
+  - good ending.mp3 -> Soundtrack continuo del Final Bueno F01 (S35–S46, encuentro con la niña y nuevo hogar)
+  - bad ending.mp3  -> Soundtrack continuo del Final Malo F02 (S47–S52, callejón del restaurante y calefactor)
