@@ -202,5 +202,117 @@ window.BLINKY_VOICE_SYNC = {
       }
     ],
     "cues": []
+  },
+  "S08": {
+    "audio": "audio/voice/voz_s8.mp3",
+    "duration": 21.504,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 21.504,
+        "charStart": 0,
+        "charEnd": 258
+      }
+    ],
+    "cues": []
+  },
+  "S09": {
+    "audio": "audio/voice/voz_s9.mp3",
+    "duration": 27.014,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 27.014,
+        "charStart": 0,
+        "charEnd": 271
+      }
+    ],
+    "cues": []
+  },
+  "S10": {
+    "audio": "audio/voice/voz_s10.mp3",
+    "duration": 23.293,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 23.293,
+        "charStart": 0,
+        "charEnd": 273
+      }
+    ],
+    "cues": []
+  },
+  "S11": {
+    "audio": "audio/voice/voz_s11.mp3",
+    "duration": 22.988,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 22.988,
+        "charStart": 0,
+        "charEnd": 259
+      }
+    ],
+    "cues": []
+  },
+  "S12": {
+    "audio": "audio/voice/voz_s12.mp3",
+    "duration": 21.491,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 21.491,
+        "charStart": 0,
+        "charEnd": 239
+      }
+    ],
+    "cues": []
+  },
+  "S13": {
+    "audio": "audio/voice/voz_s13.mp3",
+    "duration": 23.192,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 23.192,
+        "charStart": 0,
+        "charEnd": 271
+      }
+    ],
+    "cues": []
+  },
+  "S14": {
+    "audio": "audio/voice/voz_s14.mp3",
+    "duration": 25.154,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 25.154,
+        "charStart": 0,
+        "charEnd": 279
+      }
+    ],
+    "cues": []
+  },
+  "S15": {
+    "audio": "audio/voice/voz_s15.mp3",
+    "duration": 18.215,
+    "startDelayMs": 200,
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 18.215,
+        "charStart": 0,
+        "charEnd": 209
+      }
+    ],
+    "cues": []
   }
 };
