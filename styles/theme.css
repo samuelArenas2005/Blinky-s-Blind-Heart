@@ -190,6 +190,17 @@
 }
 
 .act-intro-overlay {
+  --act-bg: #070B10;
+  --act-mist-a: rgba(251, 191, 36, 0.14);
+  --act-mist-b: rgba(30, 41, 59, 0.34);
+  --act-eyebrow: rgba(253, 230, 138, 0.82);
+  --act-glow: rgba(251, 191, 36, 0.28);
+  --act-title-tint: rgba(251, 191, 36, 0.16);
+  background-color: var(--act-bg);
+  background-image:
+    radial-gradient(ellipse 68% 52% at 50% 48%, var(--act-mist-a) 0%, transparent 66%),
+    radial-gradient(ellipse 92% 76% at 50% 62%, var(--act-mist-b) 0%, transparent 74%),
+    radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(3, 6, 10, 0.86) 100%);
   transition: opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.15s ease;
 }
 
@@ -199,14 +210,183 @@
   pointer-events: none;
 }
 
+/* Temas nocturnos armónicos por Acto y Senda (tonos parecidos, atmósfera propia) */
+.act-intro-overlay[data-act-theme="acto-1"] {
+  --act-bg: #070B10;
+  --act-mist-a: rgba(251, 191, 36, 0.14);
+  --act-mist-b: rgba(30, 41, 59, 0.34);
+  --act-eyebrow: rgba(253, 230, 138, 0.84);
+  --act-glow: rgba(251, 191, 36, 0.30);
+  --act-title-tint: rgba(251, 191, 36, 0.18);
+}
+
+.act-intro-overlay[data-act-theme="acto-2a"] {
+  --act-bg: #060A13;
+  --act-mist-a: rgba(129, 140, 248, 0.15);
+  --act-mist-b: rgba(30, 58, 95, 0.34);
+  --act-eyebrow: rgba(199, 210, 254, 0.84);
+  --act-glow: rgba(147, 197, 253, 0.28);
+  --act-title-tint: rgba(147, 197, 253, 0.18);
+}
+
+.act-intro-overlay[data-act-theme="rama-gato"] {
+  --act-bg: #080914;
+  --act-mist-a: rgba(167, 139, 250, 0.16);
+  --act-mist-b: rgba(49, 46, 129, 0.30);
+  --act-eyebrow: rgba(221, 214, 254, 0.84);
+  --act-glow: rgba(167, 139, 250, 0.30);
+  --act-title-tint: rgba(196, 181, 253, 0.18);
+}
+
+.act-intro-overlay[data-act-theme="acto-2b"] {
+  --act-bg: #0B080B;
+  --act-mist-a: rgba(217, 119, 6, 0.15);
+  --act-mist-b: rgba(127, 29, 29, 0.28);
+  --act-eyebrow: rgba(253, 186, 116, 0.84);
+  --act-glow: rgba(234, 88, 12, 0.28);
+  --act-title-tint: rgba(251, 146, 60, 0.18);
+}
+
+.act-intro-overlay[data-act-theme="rama-perro"] {
+  --act-bg: #0B0A08;
+  --act-mist-a: rgba(217, 119, 6, 0.17);
+  --act-mist-b: rgba(68, 49, 32, 0.34);
+  --act-eyebrow: rgba(252, 211, 77, 0.82);
+  --act-glow: rgba(217, 119, 6, 0.30);
+  --act-title-tint: rgba(245, 158, 11, 0.18);
+}
+
+.act-intro-overlay[data-act-theme="acto-3"] {
+  --act-bg: #060B11;
+  --act-mist-a: rgba(56, 189, 248, 0.14);
+  --act-mist-b: rgba(180, 83, 9, 0.22);
+  --act-eyebrow: rgba(186, 230, 253, 0.84);
+  --act-glow: rgba(125, 211, 252, 0.28);
+  --act-title-tint: rgba(125, 211, 252, 0.16);
+}
+
+.act-intro-overlay[data-act-theme="rama-extravio"] {
+  --act-bg: #06090D;
+  --act-mist-a: rgba(100, 116, 139, 0.16);
+  --act-mist-b: rgba(22, 34, 48, 0.36);
+  --act-eyebrow: rgba(203, 213, 225, 0.78);
+  --act-glow: rgba(148, 163, 184, 0.26);
+  --act-title-tint: rgba(148, 163, 184, 0.16);
+}
+
+.act-intro-overlay[data-act-theme="acto-4a"] {
+  --act-bg: #090C13;
+  --act-mist-a: rgba(253, 230, 138, 0.17);
+  --act-mist-b: rgba(186, 230, 253, 0.16);
+  --act-eyebrow: rgba(254, 243, 199, 0.88);
+  --act-glow: rgba(253, 230, 138, 0.34);
+  --act-title-tint: rgba(254, 240, 138, 0.22);
+}
+
+.act-intro-overlay[data-act-theme="acto-4b"] {
+  --act-bg: #08080B;
+  --act-mist-a: rgba(194, 65, 12, 0.14);
+  --act-mist-b: rgba(30, 41, 59, 0.34);
+  --act-eyebrow: rgba(253, 186, 116, 0.74);
+  --act-glow: rgba(194, 65, 12, 0.26);
+  --act-title-tint: rgba(234, 88, 12, 0.15);
+}
+
+/* Halo acuarela sutil en el fondo de la placa del acto */
+@keyframes actMistDrift {
+  0%, 100% {
+    opacity: 0.72;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.96;
+    transform: translate3d(0, -1.2%, 0) scale(1.06);
+  }
+}
+
+.act-intro-mist-layer {
+  background:
+    radial-gradient(circle at 36% 42%, var(--act-mist-a) 0%, transparent 52%),
+    radial-gradient(circle at 66% 58%, var(--act-mist-b) 0%, transparent 56%);
+  filter: blur(42px);
+  animation: actMistDrift 9s ease-in-out infinite;
+  transition: opacity 0.85s ease;
+}
+
+/* Fase negra previa al título del acto para "Este acto tendrá consecuencias…" */
+.act-intro-overlay.is-consequence-phase {
+  background-color: #030508 !important;
+  background-image: none !important;
+}
+
+.act-intro-overlay.is-consequence-phase .act-intro-mist-layer {
+  opacity: 0 !important;
+}
+
+.act-intro-content {
+  transition: opacity 0.5s ease;
+}
+
+.act-intro-overlay.is-consequence-phase .act-intro-content {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
 .act-intro-eyebrow {
   opacity: 0;
+  color: var(--act-eyebrow);
+}
+
+.act-intro-eyebrow.is-entering {
   animation: actEyebrowIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
 }
 
-.act-intro-letter {
+#act-intro-title {
+  text-shadow: 0 6px 28px rgba(0, 0, 0, 0.85), 0 0 34px var(--act-title-tint);
+  word-spacing: 0.16em;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+  font-synthesis: none;
+}
+
+/* Cada palabra viaja completa al siguiente renglón; las letras internas fluyen inline preservando kerning cursivo */
+.act-intro-word {
   display: inline-block;
+  white-space: nowrap;
+  padding-inline: 0.04em;
+}
+
+.act-intro-char {
+  display: inline;
+  opacity: 0;
+  transition: opacity 0.14s ease-out;
+}
+
+.act-intro-char.is-visible {
+  opacity: 1;
+}
+
+.act-intro-letter {
+  display: inline;
   animation: actLetterIn 0.09s ease-out forwards;
+}
+
+/* Palabras indivisibles en máquina de escribir del diálogo (nunca salta una sola letra) */
+.vn-tw-word {
+  display: inline;
+  white-space: nowrap;
+}
+
+.vn-tw-ch {
+  display: inline;
+  opacity: 0;
+  transition: opacity 0.07s ease-out;
+}
+
+.vn-tw-ch.is-shown {
+  opacity: 1;
 }
 
 .act-brush-path {
@@ -230,10 +410,18 @@
 .act-brush-glow {
   opacity: 0;
   transform-origin: left center;
+  background-color: var(--act-glow);
 }
 
 .act-brush-glow.is-sweeping {
   animation: brushGlowIn 1.25s ease-out 0.12s forwards;
+}
+
+/* Estado suave de espera mientras se muestra el aviso de consecuencias antes de cambiar de acto */
+.vn-dialogue-section.is-choice-locked blinky-button-group {
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 0.35s ease;
 }
 
 /* ==========================================================================
@@ -330,6 +518,8 @@
 .font-act-cursive {
   font-family: 'Great Vibes', 'Cormorant Garamond', Georgia, cursive;
   font-weight: 400;
+  font-synthesis: none;
+  font-kerning: normal;
 }
 
 .vn-hud-item {
@@ -376,6 +566,10 @@
 .vn-narrative-text {
   font-size: calc(clamp(0.98rem, 2.05vh, 1.2rem) * var(--narrative-scale));
   line-height: 1.72;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+  text-wrap: pretty;
 }
 
 .vn-actions-area {
@@ -1035,6 +1229,211 @@ body.high-contrast .vn-hud-tooltip {
   background: #000000 !important;
   border: 1px solid #FFFFFF !important;
   color: #FFFFFF !important;
+}
+
+/* ==========================================================================
+   Interludio en Negro de Consecuencias (Estilo Life is Strange con Patita de Gato)
+   ========================================================================== */
+
+.vn-consequence-toast {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.85rem, 1.85vw, 1.35rem);
+  padding: 0 1.5rem;
+  background: transparent;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  text-align: center;
+}
+
+.vn-consequence-paw-wrap {
+  position: relative;
+  width: clamp(2.55rem, 5.4vh, 3.55rem);
+  height: clamp(2.55rem, 5.4vh, 3.55rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vn-consequence-paw {
+  width: 100%;
+  height: 100%;
+  color: rgba(250, 248, 242, 0.94);
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.14));
+  overflow: visible;
+}
+
+.vn-consequence-paw-stroke {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+}
+
+.vn-consequence-ripple {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(250, 248, 242, 0.36);
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.vn-consequence-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.42rem, 3.25vh, 2.08rem);
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  color: rgba(250, 248, 242, 0.93);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 255, 255, 0.08);
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+@keyframes vnConsequenceToastLife {
+  0% {
+    opacity: 0;
+    visibility: visible;
+    transform: translateY(4px);
+  }
+  18% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  76% {
+    opacity: 0.96;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes vnConsequencePawMotion {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) rotate(-5deg);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  76% {
+    opacity: 0.96;
+    transform: scale(1) rotate(-1.5deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.97) rotate(-2deg);
+  }
+}
+
+@keyframes vnConsequenceStrokeDraw {
+  0% {
+    stroke-dashoffset: 120;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes vnConsequenceRippleOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  26% {
+    opacity: 0.28;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.38);
+  }
+}
+
+@keyframes vnConsequenceTextMotion {
+  0% {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  78% {
+    opacity: 0.96;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+}
+
+.vn-consequence-toast.is-showing {
+  animation: vnConsequenceToastLife 3.15s ease-out forwards;
+}
+
+.vn-consequence-toast.is-showing .vn-consequence-paw {
+  animation: vnConsequencePawMotion 3.15s ease-out forwards;
+}
+
+.vn-consequence-toast.is-showing .vn-consequence-paw-stroke {
+  animation: vnConsequenceStrokeDraw 0.65s ease-out forwards;
+}
+
+.vn-consequence-toast.is-showing .vn-consequence-ripple {
+  animation: vnConsequenceRippleOut 1.25s ease-out 0.12s forwards;
+}
+
+.vn-consequence-toast.is-showing .vn-consequence-text {
+  animation: vnConsequenceTextMotion 3.15s ease-out forwards;
+}
+
+@media (max-width: 560px) {
+  .vn-consequence-toast {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+}
+
+body.reduce-motion .vn-consequence-toast.is-showing {
+  animation: none;
+  opacity: 0.95;
+  visibility: visible;
+  transform: none;
+}
+
+body.reduce-motion .vn-consequence-toast.is-showing .vn-consequence-paw,
+body.reduce-motion .vn-consequence-toast.is-showing .vn-consequence-text {
+  animation: none;
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+body.reduce-motion .vn-consequence-toast.is-showing .vn-consequence-paw-stroke {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+
+body.reduce-motion .vn-consequence-toast.is-showing .vn-consequence-ripple {
+  display: none;
+}
+
+body.high-contrast .vn-consequence-paw,
+body.high-contrast .vn-consequence-text {
+  color: #FFFFFF;
 }
 
 /* Scrollbar elegante para modales e historial */

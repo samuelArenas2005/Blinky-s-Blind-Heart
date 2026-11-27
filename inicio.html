@@ -100,7 +100,7 @@
       text-shadow: 0 8px 34px rgba(0, 0, 0, 0.88), 0 2px 12px rgba(251, 191, 36, 0.16);
     }
 
-    /* Botón Play ultra minimalista: solo texto, sin bordes ni fondo de caja */
+    /* Botón Jugar ultra minimalista: solo texto, sin bordes ni fondo de caja */
     .play-text-link {
       position: relative;
       display: inline-flex;
@@ -206,7 +206,7 @@
       aria-hidden="true"
     ></div>
 
-    <!-- Capa 4: Escenario 3D en eje Z para el título + Botón Play -->
+    <!-- Capa 4: Escenario 3D en eje Z para el título + Botón Jugar -->
     <div id="title-z-stage" class="relative z-10 w-full flex flex-col items-center justify-center text-center -translate-y-[clamp(2.5rem,10vh,6rem)] gap-[clamp(1.2rem,3vh,2.2rem)]">
       <div id="hero-title-wrap">
         <h1 class="title-hero font-title font-semibold text-stone-100">
@@ -217,106 +217,273 @@
       <a
         id="btn-play"
         href="index.html?play=1"
+        aria-label="Jugar"
         class="play-text-link font-title font-medium uppercase cursor-pointer"
       >
-        Play
+        Jugar
       </a>
     </div>
 
-    <!-- Esquina inferior izquierda: únicamente el ícono de configuraciones rápidas -->
-    <button
-      id="btn-quick-settings"
-      type="button"
-      aria-label="Configuraciones rápidas"
-      title="Configuraciones rápidas"
-      class="corner-settings-btn fixed bottom-[clamp(1rem,3vh,1.75rem)] left-[clamp(1rem,2.5vw,1.75rem)] z-20 p-2 rounded-full text-stone-300/80 cursor-pointer"
-    >
-      <svg class="w-[clamp(1.3rem,2.5vh,1.65rem)] h-[clamp(1.3rem,2.5vh,1.65rem)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path>
-      </svg>
-    </button>
+    <!-- Esquina inferior izquierda: ícono de ajustes con etiqueta animada al pasar el cursor -->
+    <div class="vn-hud-item-wrap fixed bottom-[clamp(1rem,3vh,1.75rem)] left-[clamp(1rem,2.5vw,1.75rem)] z-20">
+      <button
+        id="btn-quick-settings"
+        type="button"
+        aria-label="Ajustes"
+        class="corner-settings-btn p-2 rounded-lg text-stone-300/80 cursor-pointer"
+      >
+        <svg class="w-[clamp(1.3rem,2.5vh,1.65rem)] h-[clamp(1.3rem,2.5vh,1.65rem)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path>
+        </svg>
+      </button>
+      <span class="vn-hud-tooltip vn-hud-tooltip--right" aria-hidden="true">Ajustes</span>
+    </div>
 
     <!-- Cortina de transición suave hacia la oscuridad -->
     <div
       id="exit-curtain"
-      class="fixed inset-0 z-50 bg-[#070B10] opacity-0 pointer-events-none transition-opacity duration-700 ease-in-out"
+      class="fixed inset-0 z-50 bg-[#070B10] opacity-0 pointer-events-none transition-opacity duration-1000 ease-in-out"
       aria-hidden="true"
     ></div>
 
   </main>
 
-  <!-- ==================== MODAL DE CONFIGURACIONES RÁPIDAS ==================== -->
-  <div id="modal-settings" class="fixed inset-0 z-40 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-settings-title">
-    <div class="w-full max-w-md rounded-2xl bg-[#0D131A]/95 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden font-ui">
-      <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between">
-        <h2 id="modal-settings-title" class="font-title text-2xl font-semibold text-stone-100">Configuraciones rápidas</h2>
-        <button id="close-settings" type="button" class="vn-hud-btn p-1.5 rounded-full hover:bg-white/10 text-slate-300 hover:text-white cursor-pointer" aria-label="Cerrar configuraciones">✕</button>
+  <!-- ==================== MODAL DE AJUSTES ESTILO VIDEOJUEGO (IDÉNTICO AL DEL JUEGO) ==================== -->
+  <div id="modal-settings" class="vn-game-backdrop fixed inset-0 z-40 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-settings-title">
+    <div class="vn-game-panel w-full max-w-md overflow-hidden font-ui">
+      <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
+      <span class="vn-panel-corner vn-panel-corner--tr" aria-hidden="true"></span>
+      <span class="vn-panel-corner vn-panel-corner--bl" aria-hidden="true"></span>
+      <span class="vn-panel-corner vn-panel-corner--br" aria-hidden="true"></span>
+
+      <div class="px-6 pt-5 pb-3.5 flex items-center justify-between">
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.22em] text-amber-200/70 font-medium">Sistema</p>
+          <h2 id="modal-settings-title" class="font-title text-2xl font-semibold text-stone-100 leading-tight">Ajustes</h2>
+        </div>
+        <button id="close-settings" type="button" class="vn-close-btn cursor-pointer" aria-label="Cerrar ajustes">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
+        </button>
       </div>
 
-      <div class="p-6 space-y-5 text-sm">
-        <!-- Audio -->
-        <div class="space-y-3 pb-4 border-b border-white/10">
-          <label class="flex items-center justify-between gap-4 cursor-pointer">
+      <!-- Pestañas Minimalistas con Indicador Deslizante -->
+      <div class="vn-tabs" role="tablist" aria-label="Categorías de ajustes">
+        <button
+          id="tab-btn-sound"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="tab-panel-sound"
+          data-settings-tab="sound"
+          class="vn-tab-btn"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15.536 8.464a5 5 0 010 7.072M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          </svg>
+          <span>Sonido</span>
+        </button>
+        <button
+          id="tab-btn-a11y"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="tab-panel-a11y"
+          data-settings-tab="a11y"
+          class="vn-tab-btn"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          <span>Accesibilidad</span>
+        </button>
+        <span id="settings-tab-indicator" class="vn-tab-indicator" aria-hidden="true"></span>
+      </div>
+
+      <!-- Panel Pestaña 1: Sonido -->
+      <div id="tab-panel-sound" role="tabpanel" aria-labelledby="tab-btn-sound" class="vn-tab-panel px-6 py-4">
+        <div class="vn-setting-row">
+          <div class="flex items-start gap-3">
+            <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
             <div>
-              <p class="font-medium text-stone-100">Música y audio ambiental</p>
-              <p class="text-xs text-slate-400">Piano en portada, lluvia y efectos de escena.</p>
-            </div>
-            <input id="cfg-audio" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-amber-400 focus:ring-amber-400 h-5 w-5 cursor-pointer" />
-          </label>
-
-          <div class="space-y-1.5">
-            <div class="flex justify-between text-xs text-slate-300">
-              <label for="cfg-volume">Volumen</label>
-              <span id="cfg-volume-label">60%</span>
-            </div>
-            <input id="cfg-volume" type="range" min="0" max="100" value="60" class="w-full accent-amber-400 cursor-pointer" />
-          </div>
-        </div>
-
-        <!-- Accesibilidad -->
-        <div class="space-y-3.5">
-          <label class="flex items-center justify-between gap-4 cursor-pointer">
-            <div>
-              <p class="font-medium text-stone-100">Alto Contraste</p>
-              <p class="text-xs text-slate-400">Máximo contraste en cuadros de texto y botones.</p>
-            </div>
-            <input id="cfg-contrast" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-5 w-5 cursor-pointer" />
-          </label>
-
-          <label class="flex items-center justify-between gap-4 cursor-pointer">
-            <div>
-              <p class="font-medium text-stone-100">Subtítulos de sonido</p>
-              <p class="text-xs text-slate-400">Describe los sonidos ambientales dentro del diálogo.</p>
-            </div>
-            <input id="cfg-subtitles" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-5 w-5 cursor-pointer" />
-          </label>
-
-          <label class="flex items-center justify-between gap-4 cursor-pointer">
-            <div>
-              <p class="font-medium text-stone-100">Reducir animaciones</p>
-              <p class="text-xs text-slate-400">Pausa el movimiento suave del fondo.</p>
-            </div>
-            <input id="cfg-motion" type="checkbox" class="rounded bg-[#1E2733] border-white/25 text-cyan-400 focus:ring-cyan-400 h-5 w-5 cursor-pointer" />
-          </label>
-
-          <div class="space-y-2 pt-1">
-            <p class="font-medium text-stone-100">Tamaño de letra</p>
-            <div class="grid grid-cols-3 gap-2">
-              <button data-font-scale="1" type="button" class="cfg-scale-btn py-2 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Normal</button>
-              <button data-font-scale="1.12" type="button" class="cfg-scale-btn py-2 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Grande</button>
-              <button data-font-scale="1.24" type="button" class="cfg-scale-btn py-2 rounded-xl border border-white/15 bg-white/5 hover:border-amber-300/50 text-xs font-medium cursor-pointer">Extra</button>
+              <p class="text-xs sm:text-[13px] font-medium text-stone-100">Audio general</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Piano en portada, lluvia y efectos.</p>
             </div>
           </div>
+          <button id="cfg-switch-audio" type="button" role="switch" aria-checked="true" aria-label="Audio general" class="vn-switch-control">
+            <span class="vn-switch-state">Activo</span>
+            <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
+          </button>
         </div>
 
-        <button id="save-close-settings" type="button" class="vn-btn w-full rounded-xl font-ui text-sm font-semibold justify-center flex cursor-pointer">
-          Listo
+        <div id="cfg-row-voice" class="vn-setting-row">
+          <div class="flex items-start gap-3">
+            <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+              <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+            </svg>
+            <div>
+              <p class="text-xs sm:text-[13px] font-medium text-stone-100">Narración con voz</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Voz sincronizada con cada diálogo.</p>
+            </div>
+          </div>
+          <button id="cfg-switch-voice" type="button" role="switch" aria-checked="true" aria-label="Narración con voz" class="vn-switch-control">
+            <span class="vn-switch-state">Activo</span>
+            <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
+          </button>
+        </div>
+
+        <div id="cfg-row-volume" class="vn-setting-row flex-col items-stretch gap-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <svg class="vn-setting-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
+                <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
+                <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" />
+              </svg>
+              <label for="cfg-volume" class="text-xs sm:text-[13px] font-medium text-stone-100">Volumen</label>
+            </div>
+            <span id="cfg-volume-label" class="text-[11px] font-semibold tracking-wider text-amber-200 tabular-nums">60%</span>
+          </div>
+          <input id="cfg-volume" type="range" min="0" max="100" value="60" style="--range-pct: 60%;" class="vn-range" />
+        </div>
+      </div>
+
+      <!-- Panel Pestaña 2: Accesibilidad -->
+      <div id="tab-panel-a11y" role="tabpanel" aria-labelledby="tab-btn-a11y" class="vn-tab-panel hidden px-6 py-4">
+        <div class="vn-setting-row">
+          <div class="flex items-start gap-3">
+            <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 3v18a9 9 0 000-18z" fill="currentColor" stroke="none" opacity="0.55" />
+            </svg>
+            <div>
+              <p class="text-xs sm:text-[13px] font-medium text-stone-100">Alto contraste</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Máxima nitidez en texto y contornos.</p>
+            </div>
+          </div>
+          <button id="cfg-switch-contrast" type="button" role="switch" aria-checked="false" aria-label="Alto contraste" class="vn-switch-control">
+            <span class="vn-switch-state">Inactivo</span>
+            <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="vn-setting-row">
+          <div class="flex items-start gap-3">
+            <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2" />
+              <line x1="6" y1="12" x2="12" y2="12" /><line x1="15" y1="12" x2="18" y2="12" />
+              <line x1="6" y1="15.5" x2="15" y2="15.5" />
+            </svg>
+            <div>
+              <p class="text-xs sm:text-[13px] font-medium text-stone-100">Subtítulos de sonido</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Describe el ambiente sonoro en pantalla.</p>
+            </div>
+          </div>
+          <button id="cfg-switch-subtitles" type="button" role="switch" aria-checked="false" aria-label="Subtítulos de sonido" class="vn-switch-control">
+            <span class="vn-switch-state">Inactivo</span>
+            <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="vn-setting-row">
+          <div class="flex items-start gap-3">
+            <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7" opacity="0.55" />
+              <line x1="4" y1="4" x2="20" y2="20" />
+            </svg>
+            <div>
+              <p class="text-xs sm:text-[13px] font-medium text-stone-100">Reducir movimiento</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Desactiva transiciones y animaciones.</p>
+            </div>
+          </div>
+          <button id="cfg-switch-motion" type="button" role="switch" aria-checked="false" aria-label="Reducir movimiento" class="vn-switch-control">
+            <span class="vn-switch-state">Inactivo</span>
+            <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="vn-setting-row">
+          <div class="flex items-start gap-3">
+            <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
+            </svg>
+            <div>
+              <p class="text-xs sm:text-[13px] font-medium text-stone-100">Pantalla completa</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">También disponible con la tecla F11.</p>
+            </div>
+          </div>
+          <button id="cfg-switch-fullscreen" type="button" role="switch" aria-checked="false" aria-label="Pantalla completa" class="vn-switch-control">
+            <span class="vn-switch-state">Inactivo</span>
+            <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
+          </button>
+        </div>
+
+        <div class="pt-3.5 pb-1">
+          <p class="text-[11px] uppercase tracking-[0.16em] text-slate-400 mb-2">Tamaño de texto</p>
+          <div class="vn-scale-bar" role="group" aria-label="Tamaño de texto">
+            <button data-font-scale="1" type="button" class="cfg-scale-btn vn-scale-option is-active">Normal</button>
+            <button data-font-scale="1.12" type="button" class="cfg-scale-btn vn-scale-option">Grande</button>
+            <button data-font-scale="1.24" type="button" class="cfg-scale-btn vn-scale-option">Extra</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL FLOTANTE INICIAL (EXPERIENCIA Y DESBLOQUEO DE AUDIO) ==================== -->
+  <div id="modal-welcome" class="vn-game-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-welcome-title">
+    <div class="vn-game-panel w-full max-w-sm overflow-hidden font-ui text-center px-7 py-6">
+      <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
+      <span class="vn-panel-corner vn-panel-corner--tr" aria-hidden="true"></span>
+      <span class="vn-panel-corner vn-panel-corner--bl" aria-hidden="true"></span>
+      <span class="vn-panel-corner vn-panel-corner--br" aria-hidden="true"></span>
+
+      <div class="flex items-center justify-center gap-4 text-amber-200/80 mb-3.5" aria-hidden="true">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 18v-6a9 9 0 0118 0v6" />
+          <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z" />
+        </svg>
+        <span class="w-px h-3.5 bg-white/15"></span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 3 21 3 21 9" />
+          <polyline points="9 21 3 21 3 15" />
+          <line x1="21" y1="3" x2="14" y2="10" />
+          <line x1="3" y1="21" x2="10" y2="14" />
+        </svg>
+      </div>
+
+      <p class="text-[10px] uppercase tracking-[0.24em] text-amber-200/75 font-medium">Experiencia sensorial</p>
+      <h2 id="modal-welcome-title" class="font-title text-2xl font-semibold text-stone-100 mt-0.5">Antes de comenzar</h2>
+
+      <p class="text-xs sm:text-[13px] text-slate-300 leading-relaxed mt-3">
+        Esta historia se disfruta mejor con <span class="text-stone-100 font-medium">audífonos</span> y en <span class="text-stone-100 font-medium">pantalla completa</span> (presiona <span class="text-amber-200/90 font-medium">F11</span> o actívala en Ajustes).
+      </p>
+
+      <div class="mt-5 pt-4 border-t border-white/[0.08] flex justify-center">
+        <button
+          id="btn-welcome-start"
+          type="button"
+          class="vn-btn px-8 rounded-lg font-ui text-xs font-semibold uppercase tracking-[0.2em] justify-center inline-flex items-center cursor-pointer"
+          style="min-height: 2.55rem;"
+        >
+          Empezar
         </button>
       </div>
     </div>
   </div>
 
+  <script src="components/ui-sfx.js"></script>
   <script>
     (function () {
       // Carga inteligente de portada.png con respaldo s1.png
@@ -345,6 +512,7 @@
       };
       const audioPrefs = {
         enabled: true,
+        voiceEnabled: true,
         volume: 0.6
       };
 
@@ -373,40 +541,93 @@
         }
       }
 
-      // Intenta iniciar de inmediato; si el navegador requiere una interacción previa, arranca al primer toque/clic/tecla
-      syncPiano();
+      // El aviso inicial de audífonos se muestra solo la primera vez y guarda su estado en localStorage
+      const WELCOME_SEEN_KEY = 'blinky_welcome_seen';
+      let welcomeAlreadySeen = false;
+      try {
+        welcomeAlreadySeen = localStorage.getItem(WELCOME_SEEN_KEY) === '1';
+      } catch (e) {}
+
+      let welcomeDismissed = welcomeAlreadySeen;
       function unlockPianoOnGesture() {
-        if (pianoUnlocked || !audioPrefs.enabled) return;
+        if (!welcomeDismissed || pianoUnlocked || !audioPrefs.enabled) return;
         syncPiano();
       }
       window.addEventListener('pointerdown', unlockPianoOnGesture, { passive: true });
       window.addEventListener('keydown', unlockPianoOnGesture, { passive: true });
 
+      const UI_SFX = window.BlinkyUiSfx;
+      const modalWelcome = document.getElementById('modal-welcome');
+      if (modalWelcome && !welcomeAlreadySeen) {
+        modalWelcome.classList.add('is-open');
+      } else if (audioPrefs.enabled) {
+        syncPiano();
+      }
       const modal = document.getElementById('modal-settings');
-      const cfgAudio = document.getElementById('cfg-audio');
       const cfgVolume = document.getElementById('cfg-volume');
       const cfgVolumeLabel = document.getElementById('cfg-volume-label');
-      const cfgContrast = document.getElementById('cfg-contrast');
-      const cfgSubtitles = document.getElementById('cfg-subtitles');
-      const cfgMotion = document.getElementById('cfg-motion');
+      const cfgRowVoice = document.getElementById('cfg-row-voice');
+      const cfgRowVolume = document.getElementById('cfg-row-volume');
+      const tabButtons = document.querySelectorAll('[data-settings-tab]');
+      const tabIndicator = document.getElementById('settings-tab-indicator');
+      const tabPanelSound = document.getElementById('tab-panel-sound');
+      const tabPanelA11y = document.getElementById('tab-panel-a11y');
+
+      function syncSwitchEl(id, isOn) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.setAttribute('aria-checked', String(Boolean(isOn)));
+        const stateLabel = el.querySelector('.vn-switch-state');
+        if (stateLabel) stateLabel.textContent = isOn ? 'Activo' : 'Inactivo';
+      }
+
+      function setSettingsTab(tabKey, withSound = false) {
+        const isSound = tabKey === 'sound';
+        tabButtons.forEach((btn) => {
+          btn.setAttribute('aria-selected', String(btn.dataset.settingsTab === tabKey));
+        });
+        if (tabIndicator) {
+          tabIndicator.style.transform = isSound ? 'translateX(0%)' : 'translateX(100%)';
+        }
+        tabPanelSound.classList.toggle('hidden', !isSound);
+        tabPanelA11y.classList.toggle('hidden', isSound);
+        if (withSound && UI_SFX) UI_SFX.playTab();
+      }
+
+      tabButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (btn.getAttribute('aria-selected') === 'true') return;
+          setSettingsTab(btn.dataset.settingsTab, true);
+        });
+      });
 
       function syncUI() {
         document.body.classList.toggle('high-contrast', prefs.highContrast);
         document.body.classList.toggle('reduce-motion', prefs.reduceMotion);
-        cfgAudio.checked = audioPrefs.enabled;
+
+        syncSwitchEl('cfg-switch-audio', audioPrefs.enabled);
+        syncSwitchEl('cfg-switch-voice', audioPrefs.voiceEnabled);
+        syncSwitchEl('cfg-switch-contrast', prefs.highContrast);
+        syncSwitchEl('cfg-switch-subtitles', prefs.subtitles);
+        syncSwitchEl('cfg-switch-motion', prefs.reduceMotion);
+        syncSwitchEl('cfg-switch-fullscreen', Boolean(document.fullscreenElement));
+
+        if (cfgRowVoice) cfgRowVoice.classList.toggle('is-dimmed', !audioPrefs.enabled);
+        if (cfgRowVolume) cfgRowVolume.classList.toggle('is-dimmed', !audioPrefs.enabled);
+
         const pct = Math.round(audioPrefs.volume * 100);
         cfgVolume.value = String(pct);
+        cfgVolume.style.setProperty('--range-pct', `${pct}%`);
         cfgVolumeLabel.textContent = `${pct}%`;
-        cfgContrast.checked = prefs.highContrast;
-        cfgSubtitles.checked = prefs.subtitles;
-        cfgMotion.checked = prefs.reduceMotion;
 
         document.querySelectorAll('.cfg-scale-btn').forEach((btn) => {
           const active = Number(btn.dataset.fontScale) === prefs.fontScale;
-          btn.classList.toggle('bg-amber-400/20', active);
-          btn.classList.toggle('border-amber-400/60', active);
-          btn.classList.toggle('text-amber-200', active);
+          btn.classList.toggle('is-active', active);
         });
+
+        if (UI_SFX) {
+          UI_SFX.configure({ enabled: audioPrefs.enabled, volume: audioPrefs.volume });
+        }
       }
 
       function persist() {
@@ -418,18 +639,18 @@
 
       function openModal() {
         syncUI();
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+        modal.classList.add('is-open');
+        if (UI_SFX) UI_SFX.playMenu(true);
       }
 
       function closeModal() {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+        if (!modal.classList.contains('is-open')) return;
+        modal.classList.remove('is-open');
+        if (UI_SFX) UI_SFX.playMenu(false);
       }
 
       document.getElementById('btn-quick-settings').addEventListener('click', openModal);
       document.getElementById('close-settings').addEventListener('click', closeModal);
-      document.getElementById('save-close-settings').addEventListener('click', closeModal);
       modal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
       });
@@ -437,38 +658,106 @@
         if (e.key === 'Escape') closeModal();
       });
 
-      cfgAudio.addEventListener('change', () => {
-        audioPrefs.enabled = cfgAudio.checked;
+      document.getElementById('cfg-switch-audio').addEventListener('click', () => {
+        audioPrefs.enabled = !audioPrefs.enabled;
+        if (audioPrefs.enabled && UI_SFX) {
+          UI_SFX.configure({ enabled: true, volume: audioPrefs.volume });
+          UI_SFX.playToggle(true);
+        } else if (!audioPrefs.enabled && UI_SFX) {
+          UI_SFX.playToggle(false);
+        }
         persist();
+        syncUI();
         syncPiano();
       });
+
+      document.getElementById('cfg-switch-voice').addEventListener('click', () => {
+        audioPrefs.voiceEnabled = !audioPrefs.voiceEnabled;
+        if (UI_SFX) UI_SFX.playToggle(audioPrefs.voiceEnabled);
+        persist();
+        syncUI();
+      });
+
       cfgVolume.addEventListener('input', () => {
-        audioPrefs.volume = Number(cfgVolume.value) / 100;
-        cfgVolumeLabel.textContent = `${cfgVolume.value}%`;
+        const val = Number(cfgVolume.value);
+        audioPrefs.volume = val / 100;
+        cfgVolume.style.setProperty('--range-pct', `${val}%`);
+        cfgVolumeLabel.textContent = `${val}%`;
         persist();
         syncPiano();
+        if (UI_SFX) UI_SFX.configure({ enabled: audioPrefs.enabled, volume: audioPrefs.volume });
       });
-      cfgContrast.addEventListener('change', () => {
-        prefs.highContrast = cfgContrast.checked;
+
+      document.getElementById('cfg-switch-contrast').addEventListener('click', () => {
+        prefs.highContrast = !prefs.highContrast;
+        if (UI_SFX) UI_SFX.playToggle(prefs.highContrast);
         persist();
         syncUI();
       });
-      cfgSubtitles.addEventListener('change', () => {
-        prefs.subtitles = cfgSubtitles.checked;
-        persist();
-      });
-      cfgMotion.addEventListener('change', () => {
-        prefs.reduceMotion = cfgMotion.checked;
+
+      document.getElementById('cfg-switch-subtitles').addEventListener('click', () => {
+        prefs.subtitles = !prefs.subtitles;
+        if (UI_SFX) UI_SFX.playToggle(prefs.subtitles);
         persist();
         syncUI();
       });
+
+      document.getElementById('cfg-switch-motion').addEventListener('click', () => {
+        prefs.reduceMotion = !prefs.reduceMotion;
+        if (UI_SFX) UI_SFX.playToggle(prefs.reduceMotion);
+        persist();
+        syncUI();
+      });
+
+      document.getElementById('cfg-switch-fullscreen').addEventListener('click', () => {
+        const entering = !document.fullscreenElement;
+        if (UI_SFX) UI_SFX.playToggle(entering);
+        if (entering) {
+          document.documentElement.requestFullscreen?.().catch(() => {});
+        } else {
+          document.exitFullscreen?.().catch(() => {});
+        }
+      });
+
+      document.addEventListener('fullscreenchange', () => {
+        syncSwitchEl('cfg-switch-fullscreen', Boolean(document.fullscreenElement));
+      });
+
+      function dismissWelcome() {
+        if (welcomeDismissed) return;
+        welcomeDismissed = true;
+        try { localStorage.setItem(WELCOME_SEEN_KEY, '1'); } catch (e) {}
+        if (modalWelcome) modalWelcome.classList.remove('is-open');
+        if (UI_SFX) {
+          UI_SFX.configure({ enabled: audioPrefs.enabled, volume: audioPrefs.volume });
+          UI_SFX.unlock();
+          UI_SFX.playClick();
+        }
+        if (audioPrefs.enabled) {
+          syncPiano();
+        }
+      }
+
+      document.getElementById('btn-welcome-start').addEventListener('click', dismissWelcome);
+      document.addEventListener('keydown', (e) => {
+        if (!welcomeDismissed && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          dismissWelcome();
+        }
+      });
+
       document.querySelectorAll('.cfg-scale-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
           prefs.fontScale = Number(btn.dataset.fontScale);
+          if (UI_SFX) UI_SFX.playClick();
           persist();
           syncUI();
         });
       });
+
+      if (UI_SFX) {
+        UI_SFX.attachHoverDelegation();
+      }
 
       let isTransitioning = false;
       const exitCurtain = document.getElementById('exit-curtain');
@@ -477,6 +766,7 @@
         e.preventDefault();
         if (isTransitioning) return;
         isTransitioning = true;
+        if (UI_SFX) UI_SFX.playStartChord();
         persist();
 
         const targetUrl = e.currentTarget.getAttribute('href') || 'index.html?play=1';
@@ -493,7 +783,7 @@
         exitCurtain.classList.add('opacity-100');
 
         const startVol = pianoAudio.volume;
-        const fadeSteps = 14;
+        const fadeSteps = 20;
         let step = 0;
         const fadeTimer = setInterval(() => {
           step += 1;
@@ -502,11 +792,11 @@
             clearInterval(fadeTimer);
             pianoAudio.pause();
           }
-        }, 45);
+        }, 48);
 
         setTimeout(() => {
           window.location.href = targetUrl;
-        }, 720);
+        }, 1150);
       });
 
       syncUI();

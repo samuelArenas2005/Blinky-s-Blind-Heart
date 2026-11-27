@@ -53,6 +53,8 @@
       this._syncMode = 'auto';
       this._fullMarkup = '';
       this._plainChars = [];
+      this._twSpans = [];
+      this._twChars = [];
       this._revealedCount = 0;
       this._props = {
         speaker: 'NARRADOR',
@@ -79,6 +81,8 @@
       if (completeNow && wasTyping) {
         const p = this.querySelector('[data-slot="narrative-text"]');
         if (p) p.innerHTML = this._fullMarkup;
+        this._twSpans = [];
+        this._twChars = [];
         this._revealedCount = this._plainChars.length;
       }
       this._isTyping = false;
@@ -98,6 +102,65 @@
     }
 
     /**
+     * Prepara el texto completo en spans de palabras indivisibles (.vn-tw-word)
+     * y caracteres inline (.vn-tw-ch) con opacidad 0 para evitar saltos de una sola
+     * letra, saltos de línea a mitad de palabra y reajustes de altura al escribir.
+     */
+    _prepareTypewriterSpans(targetEl, fullMarkup) {
+      targetEl.innerHTML = fullMarkup;
+      const spans = [];
+      const chars = [];
+      const walker = document.createTreeWalker(targetEl, NodeFilter.SHOW_TEXT);
+      const textNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue && node.nodeValue.length > 0) {
+          textNodes.push(node);
+        }
+      }
+
+      textNodes.forEach((textNode) => {
+        const frag = document.createDocumentFragment();
+        const tokens = textNode.nodeValue.match(/\S+|\s+/g) || [];
+        tokens.forEach((tok) => {
+          if (/^\s+$/.test(tok)) {
+            const sp = document.createElement('span');
+            sp.className = 'vn-tw-ch';
+            sp.textContent = tok;
+            frag.appendChild(sp);
+            spans.push(sp);
+            chars.push(' ');
+          } else {
+            const wordEl = document.createElement('span');
+            wordEl.className = 'vn-tw-word';
+            Array.from(tok).forEach((ch) => {
+              const chEl = document.createElement('span');
+              chEl.className = 'vn-tw-ch';
+              chEl.textContent = ch;
+              wordEl.appendChild(chEl);
+              spans.push(chEl);
+              chars.push(ch);
+            });
+            frag.appendChild(wordEl);
+          }
+        });
+        textNode.parentNode.replaceChild(frag, textNode);
+      });
+
+      this._twSpans = spans;
+      this._twChars = chars;
+      this._shownSpanCount = 0;
+    }
+
+    _revealSpansUpTo(targetCount) {
+      const clamped = Math.max(this._shownSpanCount || 0, Math.min(this._twSpans.length, targetCount));
+      for (let i = this._shownSpanCount || 0; i < clamped; i++) {
+        this._twSpans[i].classList.add('is-shown');
+      }
+      this._shownSpanCount = clamped;
+    }
+
+    /**
      * Revela progresivamente los primeros `charCount` caracteres (usado por el
      * sincronizador ligado al reloj real de la voz narrada).
      */
@@ -106,13 +169,15 @@
       const targetEl = this.querySelector('[data-slot="narrative-text"]');
       if (!targetEl) return;
 
-      const total = this._plainChars.length;
-      const nextCount = Math.max(this._revealedCount, Math.min(total, Math.floor(charCount)));
-      if (nextCount === this._revealedCount && nextCount < total) return;
+      const totalPlain = this._plainChars.length;
+      const nextCount = Math.max(this._revealedCount, Math.min(totalPlain, Math.floor(charCount)));
+      if (nextCount === this._revealedCount && nextCount < totalPlain) return;
 
       this._revealedCount = nextCount;
-      if (nextCount >= total) {
+      if (nextCount >= totalPlain) {
         this._isTyping = false;
+        this._twSpans = [];
+        this._twChars = [];
         targetEl.innerHTML = this._fullMarkup;
         this.dispatchEvent(
           new CustomEvent('blinky:reveal-complete', {
@@ -124,8 +189,13 @@
         return;
       }
 
-      const slice = this._plainChars.slice(0, nextCount).join('');
-      targetEl.innerHTML = this._formatPartialSlice(slice);
+      if (this._twSpans.length > 0) {
+        const mapped = Math.round((nextCount / Math.max(1, totalPlain)) * this._twSpans.length);
+        this._revealSpansUpTo(mapped);
+      } else {
+        const slice = this._plainChars.slice(0, nextCount).join('');
+        targetEl.innerHTML = this._formatPartialSlice(slice);
+      }
     }
 
     /**
@@ -136,7 +206,7 @@
       const targetEl = this.querySelector('[data-slot="narrative-text"]');
       if (!targetEl) return;
       this._syncMode = 'auto';
-      this._startTypewriter(targetEl, this._fullMarkup, this._plainChars.join(''), this._revealedCount);
+      this._startTypewriter(targetEl, this._fullMarkup, this._plainChars.join(''), this._shownSpanCount || 0);
     }
 
     _formatPartialSlice(slice) {
@@ -163,21 +233,23 @@
       this._fullMarkup = fullMarkup;
       this._plainChars = Array.from(plainText);
       this._isTyping = true;
-      this._revealedCount = startIndex;
-      if (startIndex === 0) targetEl.textContent = '';
 
-      const chars = this._plainChars;
-      let idx = startIndex;
+      if (!this._twSpans || this._twSpans.length === 0) {
+        this._prepareTypewriterSpans(targetEl, fullMarkup);
+      }
+
+      let idx = Math.max(0, Math.min(this._twSpans.length, startIndex));
+      this._revealSpansUpTo(idx);
+      this._revealedCount = idx;
       let tickCounter = 0;
 
       const step = () => {
         if (!this._isTyping) return;
         idx += 1;
+        this._revealSpansUpTo(idx);
         this._revealedCount = idx;
-        const slice = chars.slice(0, idx).join('');
-        targetEl.innerHTML = this._formatPartialSlice(slice);
 
-        const ch = chars[idx - 1];
+        const ch = this._twChars[idx - 1];
         if (ch && ch.trim() !== '') {
           tickCounter += 1;
           // Emitimos sonido cada 2 caracteres visibles para un ritmo suave y natural
@@ -192,9 +264,11 @@
           }
         }
 
-        if (idx >= chars.length) {
+        if (idx >= this._twSpans.length) {
           this._isTyping = false;
           this._typeTimer = null;
+          this._twSpans = [];
+          this._twChars = [];
           targetEl.innerHTML = fullMarkup;
           this.dispatchEvent(
             new CustomEvent('blinky:reveal-complete', {
@@ -358,12 +432,12 @@
       if (typewriter) {
         const textEl = this.querySelector('[data-slot="narrative-text"]');
         if (textEl) {
+          this._prepareTypewriterSpans(textEl, bodyMarkup);
           if (this._syncMode === 'external') {
             this._isTyping = true;
             this._revealedCount = 0;
-            textEl.textContent = '';
           } else {
-            this._startTypewriter(textEl, bodyMarkup, text);
+            this._startTypewriter(textEl, bodyMarkup, text, 0);
           }
         }
         const skipZone = this.querySelector('[data-action="skip-typewriter"]');
