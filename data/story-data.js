@@ -199,6 +199,10 @@ window.BLINKY_STORY = (function () {
       speakerType: 'blinky',
       musicTrack: 'piano_melancolico',
       audioCue: 'Silencio absoluto; ausencia de respiración y ronroneo',
+      frames: [
+        { src: 'images/s9.png', delay: 0, transition: 'cut' },
+        { src: 'images/s9_2.png', delay: 2200, transition: 'fade' }
+      ],
       text: 'A pocos pasos, tus patitas chocan con un bulto peludo tendido en el asfalto. Te acercas emocionado frotando tu cabeza para buscar su calor protector… pero ese cuerpo no se mueve. No respira y está completamente frío. Mamá siempre era tibia y cariñosa; esto ya no es mamá.',
       choices: [
         { label: 'Apartarte despacio, sintiendo un vacío helado', next: 'S10' }
@@ -278,6 +282,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'GATO GUÍA',
       speakerType: 'gato_guia',
       audioCue: 'Maullido dulce y eco metálico sobre la reja alta',
+      frames: [
+        { src: 'images/s14.png', delay: 0, transition: 'cut' },
+        { src: 'images/s14_2.png', delay: 2600, transition: 'fade' }
+      ],
       text: 'Sin soltar su compás, notas que la lluvia deja de golpearte el lomo: acaban de entrar a un callejón techado. El gato se frena y apoya su cabeza con suavidad contra tu cuello en señal de despedida.\n— Miau —dice con dulzura antes de trepar por una reja alta y perderse en la noche.',
       html: 'Sin soltar su compás, notas que la lluvia deja de golpearte el lomo: acaban de entrar a un callejón techado. El gato se frena y apoya su cabeza con suavidad contra tu cuello en señal de despedida.<br><span class="block mt-1.5">— <em class="vn-sound-whisper font-semibold">Miau</em> —dice con dulzura antes de trepar por una reja alta y perderse en la noche.</span>',
       choices: [
@@ -372,6 +380,10 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       tension: 'impact',
       audioCue: '¡¡FROOOOSH!! Paso veloz de camión y sujeción protectora',
+      frames: [
+        { src: 'images/s20_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s20.png', delay: 1450, transition: 'cut', shake: true }
+      ],
       text: 'Intentas frenarte en seco, pero tus patitas resbalan sobre la piedra mojada. ¡¡FROOOOSH!! Un camión pasa volando a milímetros de tu nariz y su ráfaga casi te voltea hacia la calle. Justo antes de caer, unos dientes grandes y firmes te sujetan con cuidado por el pellejo del cuello y te levantan en el aire.',
       html: 'Intentas frenarte en seco, pero tus patitas resbalan sobre la piedra mojada. <span class="vn-onomatopoeia">¡¡FROOOOSH!!</span> Un camión pasa volando a milímetros de tu nariz y su ráfaga casi te voltea hacia la calle. Justo antes de caer, unos dientes grandes y firmes te sujetan con cuidado por el pellejo del cuello y te levantan en el aire.',
       choices: [
@@ -452,6 +464,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'PERRO SALVADOR',
       speakerType: 'perro_salvador',
       audioCue: 'Bufido cálido y pasos caninos alejándose bajo la lluvia',
+      frames: [
+        { src: 'images/s25.png', delay: 0, transition: 'cut' },
+        { src: 'images/s25_2.png', delay: 2600, transition: 'fade' }
+      ],
       text: 'Siguiendo su paso firme, llegas bajo un arco techado de piedra donde no cae ni una gota. El perro se frena, te da un empujón suave con su hocico húmedo hacia el centro y suelta un bufido tibio: «Hasta aquí llego yo, enano. Ahora te toca a ti». Da la vuelta y se marcha bajo la lluvia.',
       choices: [
         { label: 'Adentrarte solo en el cruce protegido', next: 'S26' }
@@ -493,6 +509,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       audioCue: 'Dos corrientes olfativas flotan en el aire nocturno',
+      frames: [
+        { src: 'images/s28_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s28.png', delay: 2200, transition: 'fade' }
+      ],
       text: 'Al concentrarte, separas dos rastros claros. Hacia un lado flota una cinta naranja brillante: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante.\nHacia el otro lado serpentea una cinta azul delgada y modesta: huele suavemente a atún en lata, justo como la comida sencilla que mamá siempre compartía contigo.',
       html: 'Al concentrarte, separas dos rastros claros. Hacia un lado flota una <strong>cinta naranja brillante</strong>: despide un olor fuertísimo, grasoso y muy llamativo a salmón crudo de restaurante.<br><span class="block mt-1.5">Hacia el otro lado serpentea una <strong>cinta azul delgada y modesta</strong>: huele suavemente a atún en lata, justo como la comida sencilla que mamá siempre compartía contigo.</span>',
       choices: [
@@ -545,6 +565,10 @@ window.BLINKY_STORY = (function () {
       speaker: 'BLINKY',
       speakerType: 'blinky',
       audioCue: 'Bufido felino y quejido triste del perro tras la reja',
+      frames: [
+        { src: 'images/s31_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s31.png', delay: 2000, transition: 'fade' }
+      ],
       text: 'El tamaño del perro te asusta demasiado. Pegas un brinco hacia atrás bufando con desconfianza y te metes a la fuerza entre los barrotes de una reja oxidada. Detrás de ti escuchas al perro quejarse con pena, pero se queda atrás.',
       choices: [
         { label: 'Arrastrarte por el lodo adentrándote en la oscuridad', next: 'S32' }
@@ -717,6 +741,14 @@ window.BLINKY_STORY = (function () {
       speakerType: 'mama_nina',
       musicTrack: 'final_bueno',
       audioCue: 'Voz llena de ternura y asombro',
+      frames: [
+        { src: 'images/s43.png', delay: 0, transition: 'cut' },
+        { src: 'images/s43_1.png', delay: 2400, transition: 'fade' },
+        { src: 'images/s43.png', delay: 3600, transition: 'cut' },
+        { src: 'images/s43_1.png', delay: 3950, transition: 'cut' },
+        { src: 'images/s43.png', delay: 5400, transition: 'cut' },
+        { src: 'images/s43_1.png', delay: 5750, transition: 'cut' }
+      ],
       text: 'Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa.\n— Hija… mira esto. Toca su carita con cuidado… Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz.',
       html: 'Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa.<br><span class="block mt-1.5">— «Hija… mira esto. Toca su carita con cuidado… Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz».</span>',
       choices: [
@@ -763,6 +795,10 @@ window.BLINKY_STORY = (function () {
       isEnding: 'F01',
       musicTrack: 'final_bueno',
       audioCue: '♫ Compases finales de «Hijo del corazón, deja ya de llorar»',
+      frames: [
+        { src: 'images/s46_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s46.png', delay: 2400, transition: 'fade' }
+      ],
       text: 'Tu ronroneo agradecido llena el silencio de la noche. Supiste confiar en quienes te ayudaron y tuviste paciencia para no dejarte tentar por comidas engañosas. Ahora Blinky duerme abrigado en una cama caliente, rodeado de amor de verdad.',
       choices: [
         { label: 'Ver créditos y volver a la portada', isEndingCredits: true }
@@ -823,6 +859,10 @@ window.BLINKY_STORY = (function () {
       tension: 'impact',
       musicTrack: 'final_triste',
       audioCue: '¡¡CLANC!! Choque seco contra fierro oxidado y zumbido eléctrico',
+      frames: [
+        { src: 'images/s50_1.png', delay: 0, transition: 'cut' },
+        { src: 'images/s50.png', delay: 1600, transition: 'cut', shake: true }
+      ],
       text: 'Te lanzas hacia adelante esperando hundirte en el pelaje suave de mamá… ¡¡CLANC!! Tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo: es un calefactor eléctrico dañado.',
       html: 'Te lanzas hacia adelante esperando hundirte en el pelaje suave de mamá… <span class="vn-onomatopoeia">¡¡CLANC!!</span> Tu cabeza choca con fuerza contra una reja de fierro duro y oxidado. Huele a cables quemados, polvo y aceite viejo. No es un ser vivo: es un calefactor eléctrico dañado.',
       choices: [
@@ -853,6 +893,10 @@ window.BLINKY_STORY = (function () {
       isEnding: 'F02',
       musicTrack: 'final_triste',
       audioCue: '♫ «500 Miles» (Peter, Paul and Mary) junto a lluvia apagada',
+      frames: [
+        { src: 'images/s52.png', delay: 0, transition: 'cut' },
+        { src: 'images/s52_2.png', delay: 2600, transition: 'fade' }
+      ],
       text: 'Te dejas caer vencido contra la rejilla tibia. Desconfiar de la ayuda y dejarte ganar por el hambre fácil te devolvió a un callejón sin salida. Sin fuerzas para volver a levantarte, te quedas dormido pegado al metal que vibra, conformándote con su falso calor mientras la lluvia cae en la noche.',
       choices: [
         { label: 'Ver créditos y volver a la portada', isEndingCredits: true }

@@ -221,6 +221,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s9.mp3",
     "duration": 27.014,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -229,7 +230,14 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 271
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 12.5,
+        "type": "frame",
+        "src": "images/s9_2.png",
+        "transition": "fade"
+      }
+    ]
   },
   "S10": {
     "audio": "audio/voice/voz_s10.mp3",
@@ -291,6 +299,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s14.mp3",
     "duration": 25.154,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -299,7 +308,14 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 279
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 20.2,
+        "type": "frame",
+        "src": "images/s14_2.png",
+        "transition": "fade"
+      }
+    ]
   },
   "S15": {
     "audio": "audio/voice/voz_s15.mp3",
@@ -335,7 +351,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 16.098,
         "charStart": 0,
         "charEnd": 232
@@ -375,6 +391,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s20.mp3",
     "duration": 20.032,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -383,7 +400,15 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 306
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 4.75,
+        "type": "frame",
+        "src": "images/s20.png",
+        "transition": "cut",
+        "shake": true
+      }
+    ]
   },
   "S21": {
     "audio": "audio/voice/voz_s21.mp3",
@@ -419,7 +444,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 20.188,
         "charStart": 0,
         "charEnd": 252
@@ -433,7 +458,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 18.749,
         "charStart": 0,
         "charEnd": 230
@@ -445,15 +470,23 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s25.mp3",
     "duration": 22.135,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 22.135,
         "charStart": 0,
         "charEnd": 284
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 19.2,
+        "type": "frame",
+        "src": "images/s25_2.png",
+        "transition": "fade"
+      }
+    ]
   },
   "S26": {
     "audio": "audio/voice/voz_s26.mp3",
@@ -487,6 +520,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s28.mp3",
     "duration": 28.146,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -495,7 +529,14 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 338
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 14.65,
+        "type": "frame",
+        "src": "images/s28.png",
+        "transition": "fade"
+      }
+    ]
   },
   "S29": {
     "audio": "audio/voice/voz_s29.mp3",
@@ -529,6 +570,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s31.mp3",
     "duration": 13.671,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -537,7 +579,14 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 227
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 9.4,
+        "type": "frame",
+        "src": "images/s31.png",
+        "transition": "fade"
+      }
+    ]
   },
   "S32": {
     "audio": "audio/voice/voz_s32.mp3",
@@ -655,7 +704,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 13.034,
         "charStart": 0,
         "charEnd": 188
@@ -669,7 +718,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 10.84,
         "charStart": 0,
         "charEnd": 135
@@ -709,7 +758,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 8.78,
         "charStart": 0,
         "charEnd": 105
@@ -727,9 +776,10 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s43.mp3",
     "duration": 33.683,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 10.4,
         "charStart": 0,
         "charEnd": 135
@@ -741,7 +791,38 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 331
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 25.6,
+        "type": "frame",
+        "src": "images/s43_1.png",
+        "transition": "fade"
+      },
+      {
+        "at": 27.8,
+        "type": "frame",
+        "src": "images/s43.png",
+        "transition": "cut"
+      },
+      {
+        "at": 28.15,
+        "type": "frame",
+        "src": "images/s43_1.png",
+        "transition": "cut"
+      },
+      {
+        "at": 30.5,
+        "type": "frame",
+        "src": "images/s43.png",
+        "transition": "cut"
+      },
+      {
+        "at": 30.85,
+        "type": "frame",
+        "src": "images/s43_1.png",
+        "transition": "cut"
+      }
+    ]
   },
   "S44": {
     "audio": "audio/voice/voz_s44.mp3",
@@ -787,6 +868,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s46.mp3",
     "duration": 19.362,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -795,7 +877,14 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 236
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 13.2,
+        "type": "frame",
+        "src": "images/s46.png",
+        "transition": "fade"
+      }
+    ]
   },
   "S47": {
     "audio": "audio/voice/voz_s47.mp3",
@@ -831,7 +920,7 @@ window.BLINKY_VOICE_SYNC = {
     "startDelayMs": 200,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 21.33,
         "charStart": 0,
         "charEnd": 263
@@ -843,15 +932,24 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s50.mp3",
     "duration": 22.877,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
-        "start": 0.0,
+        "start": 0,
         "end": 22.877,
         "charStart": 0,
         "charEnd": 251
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 5.85,
+        "type": "frame",
+        "src": "images/s50.png",
+        "transition": "cut",
+        "shake": true
+      }
+    ]
   },
   "S51": {
     "audio": "audio/voice/voz_s51.mp3",
@@ -871,6 +969,7 @@ window.BLINKY_VOICE_SYNC = {
     "audio": "audio/voice/voz_s52.mp3",
     "duration": 25.362,
     "startDelayMs": 200,
+    "deferFrames": true,
     "segments": [
       {
         "start": 0,
@@ -879,6 +978,13 @@ window.BLINKY_VOICE_SYNC = {
         "charEnd": 295
       }
     ],
-    "cues": []
+    "cues": [
+      {
+        "at": 17.85,
+        "type": "frame",
+        "src": "images/s52_2.png",
+        "transition": "fade"
+      }
+    ]
   }
 };
