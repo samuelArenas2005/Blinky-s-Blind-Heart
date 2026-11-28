@@ -623,7 +623,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
-      musicTrack: 'final_bueno',
       audioCue: 'Silencio apacible bajo techo; lluvia muy lejana',
       text: 'Sigues con calma el aroma sencillo a atún por un pasaje seco hasta que tu hocico tropieza con una latita apoyada en el suelo. Tiene comida fresca y alguien dobló con mucho cuidado sus bordes metálicos para que ningún animalito se corte la lengua.',
       choices: [
@@ -637,7 +636,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'BLINKY',
       speakerType: 'blinky',
-      musicTrack: 'final_bueno',
       audioCue: 'Respiración humana suave, pausada y cercana',
       text: 'Tras lamer hasta el último bocado, sientes la barriguita llena y reconfortada. Das un par de pasos buscando un rincón para descansar y tu frente choca suavemente contra algo justo al lado de la lata. Es blando, huele a ropa limpia y no se mueve con violencia.',
       choices: [
@@ -651,7 +649,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'LA NIÑA',
       speakerType: 'nina',
-      musicTrack: 'final_bueno',
       audioCue: 'Vocecita infantil suave y temblorosa',
       text: 'Tu roce provoca un pequeño sobresalto seguido de una vocecita temblorosa muy cerca de tus orejas.\n— ¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé? —pregunta una niña sentada en el suelo, perdida y esperando a que su familia la encuentre.',
       html: 'Tu roce provoca un pequeño sobresalto seguido de una vocecita temblorosa muy cerca de tus orejas.<br><span class="block mt-1.5">— «¿Hola?... ¿Quién está ahí? ¿Fuiste tú el que se comió la latita de atún que dejé?» —pregunta una niña sentada en el suelo, perdida y esperando a que su familia la encuentre.</span>',
@@ -666,7 +663,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'BLINKY',
       speakerType: 'blinky',
-      musicTrack: 'final_bueno',
       audioCue: 'Respiración tranquila y latido sereno',
       text: 'No entiendes lo que dice, pero su calor humano es el refugio más seguro que has sentido en toda la noche. Trepas con cuidado hasta su regazo de lana, das dos vueltas sobre ti mismo y te quedas profundamente dormido tras tantas horas de miedo.',
       choices: [
@@ -680,7 +676,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
-      musicTrack: 'final_bueno',
       audioCue: 'Chapoteos apresurados de botas en charcos cercanos',
       text: 'En medio de tu sueño tranquilo, el sonido de unas botas chapoteando a toda prisa en los charcos resuena hacia el callejón. Una presencia agitada se detiene de golpe justo frente a ustedes.',
       choices: [
@@ -694,7 +689,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'MAMÁ DE LA NIÑA',
       speakerType: 'mama_nina',
-      musicTrack: 'final_bueno',
       audioCue: 'Sollozos de alivio y abrazo materno',
       text: 'Apenas alzas las orejas, oyes a una mujer arrodillarse sobre el pavimento y abrazar con fuerza a la pequeña, llorando de pura alegría.\n— ¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada?',
       html: 'Apenas alzas las orejas, oyes a una mujer arrodillarse sobre el pavimento y abrazar con fuerza a la pequeña, llorando de pura alegría.<br><span class="block mt-1.5">— «¡Hija mía! ¡Dios mío, aquí estás! ¡Estaba desesperada buscándote por todas partes con esta lluvia! ¿Estás bien? ¿No te pasó nada?»</span>',
@@ -709,7 +703,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'LA NIÑA',
       speakerType: 'nina',
-      musicTrack: 'final_bueno',
       audioCue: 'Voz infantil dulce y suplicante',
       text: 'Envuelto en ese abrazo, notas que la niña no te suelta de su pecho. Con su manita acaricia tu lomo húmedo y le pide con mucha ilusión:\n— ¡Mamá, estoy bien! Mira… este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras!',
       html: 'Envuelto en ese abrazo, notas que la niña no te suelta de su pecho. Con su manita acaricia tu lomo húmedo y le pide con mucha ilusión:<br><span class="block mt-1.5">— «¡Mamá, estoy bien! Mira… este gatito vino a darme calor cuando tenía mucho miedo. ¡Por favor, no lo dejemos aquí en la calle! ¡Llevémoslo con nosotras!»</span>',
@@ -724,7 +717,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'MAMÁ DE LA NIÑA',
       speakerType: 'mama_nina',
-      musicTrack: 'final_bueno',
       audioCue: 'Suspiro suave y voz compasiva',
       text: 'Tras un breve silencio, la mujer acaricia la cabeza de su hija, algo indecisa mientras te mira empapado.\n— Cariño… ya sabes que un gatito de la calle necesita muchos cuidados. Pero… a ver, déjame verlo de cerca… pobrecito, ven acá.',
       html: 'Tras un breve silencio, la mujer acaricia la cabeza de su hija, algo indecisa mientras te mira empapado.<br><span class="block mt-1.5">— «Cariño… ya sabes que un gatito de la calle necesita muchos cuidados. Pero… a ver, déjame verlo de cerca… pobrecito, ven acá».</span>',
@@ -739,16 +731,7 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'MAMÁ DE LA NIÑA',
       speakerType: 'mama_nina',
-      musicTrack: 'final_bueno',
       audioCue: 'Voz llena de ternura y asombro',
-      frames: [
-        { src: 'images/s43.png', delay: 0, transition: 'cut' },
-        { src: 'images/s43_1.png', delay: 2400, transition: 'fade' },
-        { src: 'images/s43.png', delay: 3600, transition: 'cut' },
-        { src: 'images/s43_1.png', delay: 3950, transition: 'cut' },
-        { src: 'images/s43.png', delay: 5400, transition: 'cut' },
-        { src: 'images/s43_1.png', delay: 5750, transition: 'cut' }
-      ],
       text: 'Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa.\n— Hija… mira esto. Toca su carita con cuidado… Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz.',
       html: 'Sin resistirte, sientes cómo te levanta despacio a la altura de su rostro. Al mirarte de cerca, su voz se llena de ternura y sorpresa.<br><span class="block mt-1.5">— «Hija… mira esto. Toca su carita con cuidado… Este gatito es igual a ti: tampoco puede ver. Pero mira cómo parpadea sus ojitos a cada momento hacia todos lados, como si estuviera buscando la luz».</span>',
       choices: [
@@ -762,7 +745,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'LA NIÑA',
       speakerType: 'nina',
-      musicTrack: 'final_bueno',
       audioCue: 'Sonrisa conmovida y abrigo de manta tibia',
       text: 'La pequeña pasa sus deditos por tus ojos cerrados con muchísimo cariño y sonríe conmovida.\n— ¿Es ciego como yo, mami?... Entonces se viene a casa para siempre. Yo lo voy a cuidar, te lo prometo.',
       html: 'La pequeña pasa sus deditos por tus ojos cerrados con muchísimo cariño y sonríe conmovida.<br><span class="block mt-1.5">— «¿Es ciego como yo, mami?... Entonces se viene a casa para siempre. Yo lo voy a cuidar, te lo prometo».</span>',
@@ -777,8 +759,7 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4a',
       speaker: 'LA NIÑA',
       speakerType: 'nina',
-      musicTrack: 'final_bueno',
-      audioCue: '♫ «Hijo del corazón, deja ya de llorar» (melodía suave de cuna)',
+      audioCue: 'Balanceo tranquilo de pasos rumbo al hogar y susurro cálido de la niña',
       text: 'Te acurrucas envuelto en una manta tibia y sientes el balanceo tranquilo de sus pasos rumbo a tu nuevo hogar mientras la niña te susurra al oído:\n«No ves, pero tus ojos parpadean buscando la luz a cada instante… De ahora en adelante nunca más estarás solo. Te llamarás Blinky».',
       html: 'Te acurrucas envuelto en una manta tibia y sientes el balanceo tranquilo de sus pasos rumbo a tu nuevo hogar mientras la niña te susurra al oído:<br><span class="block mt-1.5 font-semibold text-amber-100">«No ves, pero tus ojos parpadean buscando la luz a cada instante… De ahora en adelante nunca más estarás solo. Te llamarás Blinky».</span>',
       choices: [
@@ -794,14 +775,14 @@ window.BLINKY_STORY = (function () {
       speakerType: 'narrador',
       isEnding: 'F01',
       musicTrack: 'final_bueno',
-      audioCue: '♫ Compases finales de «Hijo del corazón, deja ya de llorar»',
+      audioCue: '♫ «Hijo del corazón, deja ya de llorar»',
       frames: [
         { src: 'images/s46_1.png', delay: 0, transition: 'cut' },
         { src: 'images/s46.png', delay: 2400, transition: 'fade' }
       ],
       text: 'Tu ronroneo agradecido llena el silencio de la noche. Supiste confiar en quienes te ayudaron y tuviste paciencia para no dejarte tentar por comidas engañosas. Ahora Blinky duerme abrigado en una cama caliente, rodeado de amor de verdad.',
       choices: [
-        { label: 'Ver créditos y volver a la portada', isEndingCredits: true }
+        { label: 'Descansar', isEndingSurvey: true }
       ]
     },
 
@@ -813,7 +794,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4b',
       speaker: 'NARRADOR',
       speakerType: 'narrador',
-      musicTrack: 'final_triste',
       audioCue: 'Goteo pesado sobre contenedores metálicos',
       text: 'Al llegar al basurero detrás del restaurante de sushi, te lanzas hambriento sobre las bolsas rotas. Devoras con desesperación restos congelados de pieles de salmón y arroz duro tirados en el barro. Llenas la barriga rápido, pero la comida helada te deja un dolor pesado por dentro.',
       choices: [
@@ -827,7 +807,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4b',
       speaker: 'BLINKY',
       speakerType: 'blinky',
-      musicTrack: 'final_triste',
       audioCue: 'Viento helado de madrugada y temblor continuo',
       text: 'Cada paso te cuesta más. El viento de la madrugada empapa tus costados y el cansancio hace que tus patitas se doblen. La comida fría no te da energía; sientes que si no encuentras pronto el calor de un cuerpo vivo, te quedarás congelado en el barro.',
       choices: [
@@ -841,7 +820,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4b',
       speaker: 'BLINKY',
       speakerType: 'blinky',
-      musicTrack: 'final_triste',
       audioCue: 'Hmmmmmmmm... Zumbido constante y rígido a ras del suelo',
       text: 'Al detenerte y agudizar tus sentidos, lo sientes bajo tus almohadillas: Hmmmmmmmm... El piso tiembla con un ritmo constante y una ráfaga tibia te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra… tiene que ser el ronroneo de mamá esperándome!».',
       html: 'Al detenerte y agudizar tus sentidos, lo sientes bajo tus almohadillas: <em class="vn-sound-whisper font-semibold">Hmmmmmmmm...</em> El piso tiembla con un ritmo constante y una ráfaga tibia te roza la nariz. Te llenas de alegría pensando: «¡Ese ritmo que vibra… tiene que ser el ronroneo de mamá esperándome!».',
@@ -857,7 +835,6 @@ window.BLINKY_STORY = (function () {
       speaker: 'NARRADOR',
       speakerType: 'narrador',
       tension: 'impact',
-      musicTrack: 'final_triste',
       audioCue: '¡¡CLANC!! Choque seco contra fierro oxidado y zumbido eléctrico',
       frames: [
         { src: 'images/s50_1.png', delay: 0, transition: 'cut' },
@@ -876,7 +853,6 @@ window.BLINKY_STORY = (function () {
       act: 'acto-4b',
       speaker: 'BLINKY',
       speakerType: 'blinky',
-      musicTrack: 'final_triste',
       audioCue: 'Zumbido eléctrico monótono bajo la lluvia incesante',
       text: 'Al olfatear el barro bajo la máquina, reconoces el rastro de tus propias huellas: caminaste en círculos durante horas hasta terminar en el mismo callejón donde empezó todo. El aparato viejo vibra soltando apenas un poco de calor artificial entre las latas.',
       choices: [
@@ -899,7 +875,7 @@ window.BLINKY_STORY = (function () {
       ],
       text: 'Te dejas caer vencido contra la rejilla tibia. Desconfiar de la ayuda y dejarte ganar por el hambre fácil te devolvió a un callejón sin salida. Sin fuerzas para volver a levantarte, te quedas dormido pegado al metal que vibra, conformándote con su falso calor mientras la lluvia cae en la noche.',
       choices: [
-        { label: 'Ver créditos y volver a la portada', isEndingCredits: true }
+        { label: 'Descansar', isEndingSurvey: true }
       ]
     }
   ];

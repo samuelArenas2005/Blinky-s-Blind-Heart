@@ -410,18 +410,6 @@
                   <span aria-hidden="true">←</span>
                   <span>Volver a la escena anterior</span>
                 </button>
-
-                ${
-                  showSurveyAction
-                    ? `<button
-                        type="button"
-                        data-action="open-survey"
-                        class="vn-back-btn text-[11px] font-ui px-2.5 py-1 rounded-lg border border-white/15 bg-white/5 text-stone-200 hover:border-amber-300/45 hover:text-amber-200 transition-colors cursor-pointer"
-                      >
-                        Compartir impresiones
-                      </button>`
-                    : ''
-                }
               </div>
             </div>
           </div>
@@ -460,16 +448,6 @@
         backBtn.addEventListener('click', () => {
           this.dispatchEvent(
             new CustomEvent('blinky:back', { bubbles: true, composed: true })
-          );
-        });
-      }
-
-      // Encuesta opcional al final
-      const surveyBtn = this.querySelector('[data-action="open-survey"]');
-      if (surveyBtn) {
-        surveyBtn.addEventListener('click', () => {
-          this.dispatchEvent(
-            new CustomEvent('blinky:survey', { bubbles: true, composed: true })
           );
         });
       }

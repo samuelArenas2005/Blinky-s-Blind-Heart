@@ -774,55 +774,53 @@ window.BLINKY_VOICE_SYNC = {
   },
   "S43": {
     "audio": "audio/voice/voz_s43.mp3",
-    "duration": 33.683,
+    "duration": 27.985,
     "startDelayMs": 200,
-    "deferFrames": true,
     "segments": [
       {
         "start": 0,
-        "end": 10.4,
+        "end": 5.46,
         "charStart": 0,
+        "charEnd": 74
+      },
+      {
+        "start": 6.2,
+        "end": 11.02,
+        "charStart": 74,
         "charEnd": 135
       },
       {
-        "start": 10.4,
-        "end": 33.683,
+        "start": 12.1,
+        "end": 13.7,
         "charStart": 135,
+        "charEnd": 153
+      },
+      {
+        "start": 14.7,
+        "end": 16.3,
+        "charStart": 153,
+        "charEnd": 181
+      },
+      {
+        "start": 17.15,
+        "end": 20.68,
+        "charStart": 181,
+        "charEnd": 227
+      },
+      {
+        "start": 21.55,
+        "end": 25.72,
+        "charStart": 227,
+        "charEnd": 296
+      },
+      {
+        "start": 26.02,
+        "end": 27.985,
+        "charStart": 296,
         "charEnd": 331
       }
     ],
-    "cues": [
-      {
-        "at": 25.6,
-        "type": "frame",
-        "src": "images/s43_1.png",
-        "transition": "fade"
-      },
-      {
-        "at": 27.8,
-        "type": "frame",
-        "src": "images/s43.png",
-        "transition": "cut"
-      },
-      {
-        "at": 28.15,
-        "type": "frame",
-        "src": "images/s43_1.png",
-        "transition": "cut"
-      },
-      {
-        "at": 30.5,
-        "type": "frame",
-        "src": "images/s43.png",
-        "transition": "cut"
-      },
-      {
-        "at": 30.85,
-        "type": "frame",
-        "src": "images/s43_1.png",
-        "transition": "cut"
-      }
-    ]
+    "cues": []
   },
   "S44": {
     "audio": "audio/voice/voz_s44.mp3",
