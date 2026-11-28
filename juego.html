@@ -259,7 +259,7 @@
           <div class="credits-block">
             <p id="credits-ending-eyebrow"
               class="credits-eyebrow font-ui text-[clamp(0.7rem,1.35vh,0.84rem)] uppercase font-medium">
-              Final I · Un Nuevo Hogar
+              Final · Un Nuevo Hogar
             </p>
             <h1
               class="credits-heading font-act-cursive text-stone-100 text-[clamp(2.9rem,7.2vh,5.1rem)] leading-[1.22] mt-2">
@@ -353,7 +353,7 @@
                 «Hijo del corazón, deja ya de llorar»
               </p>
               <p id="credits-song-subtitle" class="credits-dept-sub !mt-0">
-                Tema del Final Óptimo · Un Nuevo Hogar
+                Tema del Final · Un Nuevo Hogar
               </p>
               <p class="font-ui text-[11px] uppercase tracking-[0.2em] text-slate-400/85 pt-2">
                 Piano de Portada y Atmósfera Nocturna · Paisaje Sonoro Original
@@ -428,7 +428,8 @@
     </section>
 
     <!-- ==================== PÁGINA OBLIGATORIA DE FORMULARIO DE IMPRESIONES (PREVIA A CRÉDITOS) ==================== -->
-    <section id="survey-page" data-ending="F01" class="survey-page fixed inset-0 z-50 overflow-y-auto vn-scroll"
+    <section id="survey-page" data-ending="F01"
+      class="survey-page fixed inset-0 z-50 overflow-hidden flex items-center justify-center p-4 sm:p-6"
       role="dialog" aria-modal="true" aria-labelledby="survey-page-title" aria-hidden="true">
 
       <!-- Fondo suavizado de la escena final mientras sigue sonando la canción -->
@@ -437,14 +438,14 @@
       </div>
       <div class="survey-mist-layer fixed inset-0 z-[1] pointer-events-none" aria-hidden="true"></div>
 
-      <div class="relative z-10 min-h-full w-full flex items-center justify-center px-4 py-8 sm:py-10">
-        <div class="vn-game-panel w-full max-w-lg overflow-hidden font-ui">
+      <div class="relative z-10 w-full max-w-2xl flex items-center justify-center">
+        <div class="vn-game-panel w-full max-h-[90vh] flex flex-col overflow-hidden font-ui">
           <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
           <span class="vn-panel-corner vn-panel-corner--tr" aria-hidden="true"></span>
           <span class="vn-panel-corner vn-panel-corner--bl" aria-hidden="true"></span>
           <span class="vn-panel-corner vn-panel-corner--br" aria-hidden="true"></span>
 
-          <div class="px-6 pt-5 pb-3.5 border-b border-white/[0.08]">
+          <div class="px-6 sm:px-7 pt-5 pb-3.5 border-b border-white/[0.08] shrink-0">
             <p class="text-[10px] uppercase tracking-[0.22em] text-amber-200/80 font-semibold">
               SISTEMA · EVALUACIÓN DE LA EXPERIENCIA
             </p>
@@ -453,21 +454,20 @@
             </h2>
           </div>
 
-          <div id="survey-body" class="p-5 sm:p-6 space-y-4 text-xs sm:text-sm">
+          <div id="survey-body" class="p-5 sm:p-6 overflow-y-auto vn-scroll flex-1 space-y-3.5 text-xs sm:text-sm">
             <p id="survey-intro-text" class="text-slate-300 leading-relaxed">
               Has llegado al final del recorrido. Comparte cómo viviste la historia: cuéntanos cómo te sentiste durante
-              la lectura, cómo crees que se sintió Blinky y qué final descubriste en esta partida.
+              la lectura, cómo crees que se sintió Blinky y cómo terminó su viaje en esta partida.
             </p>
 
-            <div id="survey-error"
-              class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-300/65 text-amber-200 text-xs font-medium leading-relaxed flex items-start gap-2"
+            <p id="survey-error"
+              class="hidden text-amber-300/95 text-xs font-medium leading-relaxed"
               role="alert">
-              <span class="font-bold shrink-0" aria-hidden="true">!</span>
-              <span>Error: Por favor, selecciona a qué final llegaste e ingresa tu alias o nombre para poder enviar tus
-                respuestas.</span>
-            </div>
+              Antes de continuar, cuéntanos tu nombre o alias y cómo terminó el viaje de Blinky para guardar tus
+              impresiones.
+            </p>
 
-            <form id="survey-form" class="space-y-4" novalidate>
+            <form id="survey-form" class="space-y-3.5" novalidate>
               <!-- Bloque 1: Identificación del lector -->
               <div>
                 <label for="survey-alias" class="block text-xs font-medium text-slate-200 mb-1.5">Tu nombre o alias</label>
@@ -476,43 +476,47 @@
               </div>
 
               <!-- Bloque 2: Selector de desenlace -->
-              <fieldset class="space-y-1.5">
-                <legend class="text-xs font-medium text-slate-200 mb-1.5">¿A qué final llegaste?</legend>
-                <label
-                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-                  <input type="radio" name="survey-ending" value="F01"
-                    class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs text-stone-200">Final Bueno (F01 - Adopción con la niña)</span>
-                </label>
-                <label
-                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-                  <input type="radio" name="survey-ending" value="F02"
-                    class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs text-stone-200">Final Triste (F02 - El calefactor metálico)</span>
-                </label>
+              <fieldset>
+                <legend class="text-xs font-medium text-slate-200 mb-1.5">¿Cómo terminó el viaje de Blinky?</legend>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <label
+                    class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                    <input type="radio" name="survey-ending" value="F01"
+                      class="text-amber-400 bg-[#161F2B] border-white/25 shrink-0" />
+                    <span class="text-xs text-stone-200 leading-snug">Un nuevo hogar (Adopción con la niña)</span>
+                  </label>
+                  <label
+                    class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                    <input type="radio" name="survey-ending" value="F02"
+                      class="text-amber-400 bg-[#161F2B] border-white/25 shrink-0" />
+                    <span class="text-xs text-stone-200 leading-snug">El falso calor (El calefactor metálico)</span>
+                  </label>
+                </div>
               </fieldset>
 
               <!-- Bloque 3: Selector emocional -->
-              <fieldset class="space-y-1.5">
+              <fieldset>
                 <legend class="text-xs font-medium text-slate-200 mb-1.5">¿Cómo te sentiste como lector?</legend>
-                <label
-                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-                  <input type="radio" name="survey-emotion" value="Tensión / Angustia"
-                    class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs text-stone-200">Tensión / Angustia</span>
-                </label>
-                <label
-                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-                  <input type="radio" name="survey-emotion" value="Conexión / Ternura"
-                    class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs text-stone-200">Conexión / Ternura</span>
-                </label>
-                <label
-                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-                  <input type="radio" name="survey-emotion" value="Frustración / Tristeza"
-                    class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs text-stone-200">Frustración / Tristeza</span>
-                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <label
+                    class="survey-radio-card flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                    <input type="radio" name="survey-emotion" value="Tensión / Angustia"
+                      class="text-amber-400 bg-[#161F2B] border-white/25 shrink-0" />
+                    <span class="text-xs text-stone-200 leading-snug">Tensión / Angustia</span>
+                  </label>
+                  <label
+                    class="survey-radio-card flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                    <input type="radio" name="survey-emotion" value="Conexión / Ternura"
+                      class="text-amber-400 bg-[#161F2B] border-white/25 shrink-0" />
+                    <span class="text-xs text-stone-200 leading-snug">Conexión / Ternura</span>
+                  </label>
+                  <label
+                    class="survey-radio-card flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                    <input type="radio" name="survey-emotion" value="Frustración / Tristeza"
+                      class="text-amber-400 bg-[#161F2B] border-white/25 shrink-0" />
+                    <span class="text-xs text-stone-200 leading-snug">Frustración / Tristeza</span>
+                  </label>
+                </div>
               </fieldset>
 
               <!-- Bloque 4: Área de texto abierto (Empatía hacia Blinky) -->
@@ -2041,19 +2045,19 @@
 
       const CREDITS_THEMES = {
         F01: {
-          eyebrow: 'Final I · Un Nuevo Hogar',
+          eyebrow: 'Final · Un Nuevo Hogar',
           epigraph: '«No ves, pero tus ojos parpadean buscando la luz a cada instante…»',
           songTitle: '«Hijo del corazón, deja ya de llorar»',
-          songSub: 'Tema del Final Óptimo · Un Nuevo Hogar',
+          songSub: 'Tema del Final · Un Nuevo Hogar',
           bg: 'images/s46.png',
           grad: ['#D97706', '#FDE68A', '#FFFBEB', '#E0F2FE'],
           sub: ['#BAE6FD', '#FEF3C7', '#F59E0B', '#F59E0B']
         },
         F02: {
-          eyebrow: 'Final II · El Falso Calor',
+          eyebrow: 'Final · El Falso Calor',
           epigraph: '«Incluso en la oscuridad más fría, el corazón sigue buscando un latido que lo guíe…»',
           songTitle: '«500 Miles» — Peter, Paul and Mary',
-          songSub: 'Tema del Final Triste · El Falso Calor',
+          songSub: 'Tema del Final · El Falso Calor',
           bg: 'images/s52.png',
           grad: ['#7C2D12', '#C2410C', '#94A3B8', '#CBD5E1'],
           sub: ['#64748B', '#FDBA74', '#9A3412', '#9A3412']
@@ -2978,13 +2982,13 @@
           sub: ['#475569', '#CBD5E1', '#64748B', '#64748B']
         },
         'acto-4a': {
-          eyebrow: 'Acto IV',
+          eyebrow: 'Final',
           title: 'Un Nuevo Hogar',
           grad: ['#D97706', '#FDE68A', '#FFFBEB', '#E0F2FE'],
           sub: ['#BAE6FD', '#FEF3C7', '#F59E0B', '#F59E0B']
         },
         'acto-4b': {
-          eyebrow: 'Acto IV',
+          eyebrow: 'Final',
           title: 'El Falso Calor',
           grad: ['#7C2D12', '#C2410C', '#94A3B8', '#CBD5E1'],
           sub: ['#64748B', '#FDBA74', '#9A3412', '#9A3412']

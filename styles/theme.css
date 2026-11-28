@@ -1436,19 +1436,25 @@ body.high-contrast .vn-consequence-text {
   color: #FFFFFF;
 }
 
-/* Scrollbar elegante para modales e historial */
+/* Scrollbar elegante para modales, encuesta e historial */
+.vn-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(251, 191, 36, 0.32) transparent;
+}
 .vn-scroll::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 .vn-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-.vn-scroll::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 9999px;
 }
+.vn-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.30);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+}
 .vn-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(251, 191, 36, 0.5);
+  background: rgba(251, 191, 36, 0.55);
 }
 
 /* ==========================================================================
