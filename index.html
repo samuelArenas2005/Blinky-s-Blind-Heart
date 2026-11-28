@@ -1,263 +1,255 @@
 <!DOCTYPE html>
 <html class="h-full w-full overflow-hidden select-none" lang="es">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blinky's Blind Heart — Novela Visual Sensorial</title>
+  <title>Blinky's Blind Heart</title>
   <!-- Tailwind CSS v3 CDN -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <!-- Google Fonts: Cormorant Garamond, Great Vibes (cursiva de actos), Merriweather & Inter -->
+  <!-- Google Fonts: Cormorant Garamond, Merriweather & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" crossorigin href="https://fonts.gstatic.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap"
-    rel="stylesheet" />
-  <!-- Estilos compartidos responsive -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/theme.css" />
+  <style>
+    /* Movimiento cinematográfico lento en el fondo ilustrado */
+    @keyframes coverBreathe {
+      0%, 100% {
+        transform: scale(1) translate3d(0, 0, 0);
+      }
+      50% {
+        transform: scale(1.045) translate3d(0, -0.8%, 0);
+      }
+    }
+
+    @keyframes auraPulse {
+      0%, 100% {
+        opacity: 0.24;
+        transform: scale(0.96);
+      }
+      50% {
+        opacity: 0.44;
+        transform: scale(1.07);
+      }
+    }
+
+    @keyframes moteFloat {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 18px, 0) scale(0.6);
+      }
+      22% {
+        opacity: 0.78;
+      }
+      78% {
+        opacity: 0.55;
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--drift-x, 16px), -95px, 0) scale(1.1);
+      }
+    }
+
+    @keyframes puddleRipple {
+      0% {
+        opacity: 0;
+        transform: scale(0.25);
+      }
+      18% {
+        opacity: 0.42;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(1.45);
+      }
+    }
+
+    .cover-ken-burns {
+      animation: coverBreathe 24s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .cover-aura {
+      animation: auraPulse 7.5s ease-in-out infinite;
+    }
+
+    .memory-mote {
+      position: absolute;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(253, 230, 138, 0.95) 0%, rgba(251, 191, 36, 0.2) 60%, transparent 100%);
+      pointer-events: none;
+      opacity: 0;
+      animation: moteFloat var(--dur, 9s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .puddle-ring {
+      position: absolute;
+      border-radius: 9999px;
+      border: 1px solid rgba(186, 230, 253, 0.35);
+      pointer-events: none;
+      opacity: 0;
+      animation: puddleRipple var(--dur, 5.5s) ease-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .title-hero {
+      font-size: clamp(2.5rem, 6.2vw, 4.9rem);
+      line-height: 1.06;
+      letter-spacing: 0.03em;
+      text-shadow: 0 8px 34px rgba(0, 0, 0, 0.88), 0 2px 12px rgba(251, 191, 36, 0.16);
+    }
+
+    /* Botón Jugar ultra minimalista: solo texto, sin bordes ni fondo de caja */
+    .play-text-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 1.4rem;
+      font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+      letter-spacing: 0.24em;
+      text-indent: 0.24em;
+      color: #F5F5F4;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+      transition:
+        color 0.25s ease,
+        letter-spacing 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        text-shadow 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .play-text-link::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0.1rem;
+      width: 0;
+      height: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, transparent, rgba(253, 230, 138, 0.9), transparent);
+      transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .play-text-link:hover {
+      color: #FDE68A;
+      letter-spacing: 0.34em;
+      text-indent: 0.34em;
+      transform: translateY(-1px);
+      text-shadow: 0 0 24px rgba(251, 191, 36, 0.5), 0 4px 18px rgba(0, 0, 0, 0.9);
+    }
+
+    .play-text-link:hover::after {
+      width: 78%;
+    }
+
+    .play-text-link:focus-visible {
+      outline: 2px solid #22D3EE;
+      outline-offset: 6px;
+      border-radius: 0.5rem;
+    }
+
+    /* Ícono minimalista de configuraciones en esquina inferior izquierda */
+    .corner-settings-btn {
+      transition: color 0.22s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+    }
+
+    .corner-settings-btn:hover {
+      color: #FDE68A;
+      transform: rotate(35deg) scale(1.08);
+    }
+
+    .corner-settings-btn:focus-visible {
+      outline: 2px solid #22D3EE;
+      outline-offset: 4px;
+    }
+  </style>
 </head>
+<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-100 antialiased relative scene-fallback-bg" style="background-color: #0D131A;">
 
-<body class="h-full w-full m-0 p-0 overflow-hidden text-stone-100 antialiased font-narrative relative scene-fallback-bg"
-  style="background-color: #0D131A;">
+  <!-- ==================== PORTADA PRINCIPAL ==================== -->
+  <main class="relative w-screen h-screen overflow-hidden flex flex-col items-center justify-center px-6">
 
-  <!-- ==================== LIENZO PRINCIPAL DEL JUEGO ==================== -->
-  <main id="game-screen" class="relative w-screen h-screen overflow-hidden flex flex-col justify-between"
-    data-purpose="game-screen">
-
-    <!-- ==================== CAPA 1: FONDO E ILUSTRACIÓN s(n).png (DOBLE CAPA PARA SECUENCIAS ONE-SHOT) ==================== -->
-    <div id="scene-bg-wrapper" class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden"
-      aria-hidden="true">
-      <!-- Capa base y capa superior para fundidos fluidos entre fotogramas sin parpadeos -->
-      <img id="scene-bg" src="" alt=""
-        class="scene-bg-image absolute inset-0 w-full h-full object-cover is-loading hidden" />
-      <img id="scene-bg-next" src="" alt=""
-        class="scene-bg-image absolute inset-0 w-full h-full object-cover opacity-0 hidden" />
+    <!-- Capa 1: Fondo ilustrado (queda completamente quieto durante el zoom en eje Z al título) -->
+    <div class="absolute inset-0 z-0 scene-fallback-bg pointer-events-none overflow-hidden" aria-hidden="true">
+      <img
+        id="cover-bg"
+        src="images/portada.png"
+        alt=""
+        class="cover-ken-burns w-full h-full object-cover opacity-0 transition-opacity duration-700"
+      />
     </div>
 
-    <!-- Resplandor ambiental suave -->
-    <div id="warm-light-overlay"
-      class="absolute right-[18%] bottom-[26%] w-[42vw] max-w-[520px] h-[36vh] max-h-[380px] rounded-full bg-amber-400/20 blur-3xl pointer-events-none mix-blend-screen z-[1] transition-opacity duration-500"
-      data-purpose="warm-light-overlay" aria-hidden="true"></div>
+    <!-- Capa 2: Animaciones ambientales suaves (aura dorada, motas de luz y ondas en los charcos) -->
+    <div class="absolute inset-0 z-[1] pointer-events-none overflow-hidden" aria-hidden="true">
+      <div class="cover-aura absolute inset-x-0 bottom-[16%] mx-auto w-[46vw] max-w-[580px] h-[36vh] rounded-full bg-amber-400/25 blur-3xl mix-blend-screen"></div>
 
-    <!-- Capa leve rojiza animada para escenas de impacto o tensión catártica -->
-    <div id="tension-overlay" class="tension-crimson-layer absolute inset-0 pointer-events-none z-[2]"
-      aria-hidden="true">
-      <div
-        class="tension-crimson-pulse absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,transparent_38%,rgba(185,28,28,0.18)_100%)]">
-      </div>
+      <span class="memory-mote w-1.5 h-1.5" style="left: 34%; bottom: 28%; --dur: 8.5s; --delay: 0s; --drift-x: 18px;"></span>
+      <span class="memory-mote w-2 h-2" style="left: 42%; bottom: 24%; --dur: 10.2s; --delay: 1.6s; --drift-x: -14px;"></span>
+      <span class="memory-mote w-1 h-1" style="left: 51%; bottom: 30%; --dur: 7.8s; --delay: 0.8s; --drift-x: 12px;"></span>
+      <span class="memory-mote w-1.5 h-1.5" style="left: 58%; bottom: 26%; --dur: 9.4s; --delay: 2.9s; --drift-x: 22px;"></span>
+      <span class="memory-mote w-2 h-2" style="left: 65%; bottom: 34%; --dur: 11s; --delay: 4.1s; --drift-x: -18px;"></span>
+      <span class="memory-mote w-1 h-1" style="left: 28%; bottom: 32%; --dur: 9.8s; --delay: 3.4s; --drift-x: 15px;"></span>
+      <span class="memory-mote w-1.5 h-1.5" style="left: 47%; bottom: 36%; --dur: 8.9s; --delay: 5.2s; --drift-x: -10px;"></span>
+      <span class="memory-mote w-1 h-1" style="left: 62%; bottom: 22%; --dur: 10.6s; --delay: 6.3s; --drift-x: 14px;"></span>
+
+      <span class="puddle-ring w-20 h-6" style="left: 31%; bottom: 8%; --dur: 5.4s; --delay: 0.4s;"></span>
+      <span class="puddle-ring w-24 h-7" style="left: 58%; bottom: 9%; --dur: 6.2s; --delay: 2.1s;"></span>
+      <span class="puddle-ring w-16 h-5" style="left: 44%; bottom: 5%; --dur: 4.9s; --delay: 3.6s;"></span>
+      <span class="puddle-ring w-14 h-4" style="left: 22%; bottom: 11%; --dur: 5.8s; --delay: 1.5s;"></span>
+      <span class="puddle-ring w-16 h-5" style="left: 72%; bottom: 10%; --dur: 6.5s; --delay: 4.4s;"></span>
     </div>
 
-    <!-- Viñeta cinematográfica -->
+    <!-- Capa 3: Viñeta suave para legibilidad -->
     <div
-      class="absolute inset-0 pointer-events-none z-[2] bg-[radial-gradient(ellipse_at_55%_50%,transparent_44%,rgba(20,27,38,0.68)_88%,rgba(11,16,24,0.9)_100%)]"
-      data-purpose="cinematic-vignette" aria-hidden="true"></div>
+      class="absolute inset-0 pointer-events-none z-[2] bg-[radial-gradient(ellipse_at_50%_46%,rgba(13,19,26,0.22)_18%,rgba(13,19,26,0.68)_78%,rgba(8,12,18,0.9)_100%)]"
+      aria-hidden="true"
+    ></div>
 
-    <!-- ==================== CAPA 2: BARRA SUPERIOR HUD (COMPACTA Y RESPONSIVE) ==================== -->
-    <header class="vn-hud-header relative z-10 w-full flex items-center justify-between gap-2 pointer-events-none"
-      data-purpose="system-hud">
-      <!-- Indicador de Capítulo / Acto -->
-      <div id="chapter-indicator"
-        class="vn-chapter-pill pointer-events-auto flex items-center bg-[#0D131A]/75 backdrop-blur-md border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.4)] max-w-[48vw] sm:max-w-none"
-        data-purpose="chapter-indicator">
-        <span id="chapter-title"
-          class="vn-chapter-title font-title font-semibold tracking-wide text-stone-200 leading-tight whitespace-nowrap truncate">
-          El Nido Roto
-        </span>
+    <!-- Capa 4: Escenario 3D en eje Z para el título + Botón Jugar -->
+    <div id="title-z-stage" class="relative z-10 w-full flex flex-col items-center justify-center text-center -translate-y-[clamp(2.5rem,10vh,6rem)] gap-[clamp(1.2rem,3vh,2.2rem)]">
+      <div id="hero-title-wrap">
+        <h1 class="title-hero font-title font-semibold text-stone-100">
+          Blinky's Blind Heart
+        </h1>
       </div>
 
-      <!-- Menú Hamburguesa Compacto con Despliegue Vertical Centrado de Íconos -->
-      <div id="hud-menu-wrapper" class="relative pointer-events-auto" data-purpose="quick-menu">
-        <button id="btn-hud-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"
-          aria-controls="hud-dropdown" title="Menú"
-          class="vn-hud-btn vn-menu-toggle relative flex items-center justify-center rounded-xl bg-[#0D131A]/80 backdrop-blur-md border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.45)] text-stone-200 cursor-pointer">
-          <!-- Ícono hamburguesa perfectamente centrado -->
-          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--bars" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="4" y1="7" x2="20" y2="7" />
-            <line x1="4" y1="12" x2="20" y2="12" />
-            <line x1="4" y1="17" x2="20" y2="17" />
-          </svg>
-          <!-- Ícono X perfectamente centrado -->
-          <svg class="vn-hud-icon vn-toggle-icon vn-toggle-icon--close" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <line x1="18" y1="6" x2="6" y2="18" />
-          </svg>
-        </button>
-
-        <nav
-          id="hud-dropdown"
-          aria-label="Menú del juego"
-          class="vn-hud-dropdown absolute top-full mt-2 flex flex-col items-center gap-1 p-1.5 rounded-xl text-stone-300"
-        >
-          <div class="vn-hud-item-wrap">
-            <button
-              id="btn-home"
-              type="button"
-              aria-label="Volver al inicio"
-              class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-lg cursor-pointer"
-            >
-              <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.85" />
-              </svg>
-            </button>
-            <span class="vn-hud-tooltip" aria-hidden="true">Inicio</span>
-          </div>
-
-          <span class="w-4 h-px bg-white/10" aria-hidden="true"></span>
-
-          <div class="vn-hud-item-wrap">
-            <button
-              id="btn-settings"
-              type="button"
-              aria-label="Ajustes de sonido y accesibilidad"
-              class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-lg cursor-pointer"
-            >
-              <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
-              </svg>
-            </button>
-            <span class="vn-hud-tooltip" aria-hidden="true">Ajustes</span>
-          </div>
-
-          <span class="w-4 h-px bg-white/10" aria-hidden="true"></span>
-
-          <div class="vn-hud-item-wrap">
-            <button
-              id="btn-history"
-              type="button"
-              aria-label="Historial y reinicio"
-              class="vn-hud-btn vn-hud-icon-btn flex items-center justify-center rounded-lg cursor-pointer"
-            >
-              <svg class="vn-hud-icon opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.85" />
-              </svg>
-            </button>
-            <span class="vn-hud-tooltip" aria-hidden="true">Historial</span>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <!-- ==================== CAPA 3: ÁREA DE DIÁLOGO ADV ==================== -->
-    <section id="dialogue-section" class="vn-dialogue-section relative z-10 w-full flex flex-col items-center transition-opacity duration-500" data-purpose="dialogue-container">
-      <blinky-dialogue-box id="dialogue-box" class="w-full flex justify-center"></blinky-dialogue-box>
-    </section>
-
-    <!-- ==================== TRANSICIÓN EN NEGRO + TÍTULO DE ACTO (TIPOGRAFÍA + PINCELADA POR ACTO) ==================== -->
-    <div id="act-intro-overlay"
-      data-act-theme="acto-1"
-      class="act-intro-overlay is-hidden fixed inset-0 z-50 flex flex-col items-center justify-center px-6 text-center cursor-pointer overflow-hidden"
-      role="status" aria-live="polite">
-      <script>
-        if (window.location.search.indexOf('play=1') !== -1) {
-          document.getElementById('act-intro-overlay').classList.remove('is-hidden');
-        }
-      </script>
-
-      <!-- Capa pictórica de bruma nocturna teñida con el tono propio de cada acto -->
-      <div class="act-intro-mist-layer absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-
-      <!-- Fase 1 (solo tras decisión ramificada): pantalla negra con patita de gato y aviso de consecuencias -->
-      <div
-        id="consequence-toast"
-        class="vn-consequence-toast"
-        aria-live="polite"
-        aria-atomic="true"
+      <a
+        id="btn-play"
+        href="juego.html?play=1"
+        aria-label="Jugar"
+        class="play-text-link font-title font-medium uppercase cursor-pointer"
       >
-        <span class="vn-consequence-paw-wrap" aria-hidden="true">
-          <span class="vn-consequence-ripple"></span>
-          <!-- Patita de gato dibujada a mano con trazo orgánico de tinta blanca -->
-          <svg class="vn-consequence-paw" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <path
-              class="vn-consequence-paw-stroke"
-              d="M15.4 31.8 C13.2 28.4 16.5 23.6 20.6 22.8 C22.5 22.4 25.5 22.4 27.4 22.8 C31.5 23.6 34.8 28.4 32.6 31.8 C30.8 34.6 27.6 34.4 24.0 33.4 C20.4 34.4 17.2 34.6 15.4 31.8 Z"
-              stroke-width="2.15"
-              fill="rgba(250, 248, 242, 0.16)"
-            />
-            <path
-              class="vn-consequence-paw-stroke"
-              d="M12.2 24.5 C10.0 23.2 9.4 19.6 11.4 17.6 C13.1 15.9 15.6 17.1 16.1 19.8 C16.5 22.1 14.5 25.4 12.2 24.5 Z"
-              stroke-width="2.0"
-              fill="rgba(250, 248, 242, 0.14)"
-            />
-            <path
-              class="vn-consequence-paw-stroke"
-              d="M19.2 18.8 C17.6 17.3 17.4 13.4 19.6 11.8 C21.6 10.4 23.6 12.2 23.7 15.0 C23.8 17.4 21.1 19.9 19.2 18.8 Z"
-              stroke-width="2.0"
-              fill="rgba(250, 248, 242, 0.14)"
-            />
-            <path
-              class="vn-consequence-paw-stroke"
-              d="M28.8 18.8 C26.9 19.9 24.2 17.4 24.3 15.0 C24.4 12.2 26.4 10.4 28.4 11.8 C30.6 13.4 30.4 17.3 28.8 18.8 Z"
-              stroke-width="2.0"
-              fill="rgba(250, 248, 242, 0.14)"
-            />
-            <path
-              class="vn-consequence-paw-stroke"
-              d="M35.8 24.5 C33.5 25.4 31.5 22.1 31.9 19.8 C32.4 17.1 34.9 15.9 36.6 17.6 C38.6 19.6 38.0 23.2 35.8 24.5 Z"
-              stroke-width="2.0"
-              fill="rgba(250, 248, 242, 0.14)"
-            />
-          </svg>
-        </span>
-        <span class="vn-consequence-text">Este acto tendrá consecuencias…</span>
-      </div>
-
-      <!-- Fase 2: Nombre mecanográfico del nuevo acto + pincelada -->
-      <div class="act-intro-content relative z-10 flex flex-col items-center max-w-[min(56rem,92vw)]">
-        <p id="act-intro-eyebrow"
-          class="act-intro-eyebrow is-entering font-ui text-[clamp(0.7rem,1.4vh,0.85rem)] uppercase mb-2.5">
-          Acto I
-        </p>
-
-        <h1 id="act-intro-title"
-          class="font-act-cursive text-stone-100 text-[clamp(2.35rem,6vw,4.7rem)] leading-[1.48] tracking-[0.02em] py-2 px-4"></h1>
-
-        <!-- Pincelada orgánica estilo acuarela/tinta con paleta dinámica según el acto -->
-        <div class="relative mt-2 w-[clamp(13rem,30vw,22rem)] h-8 flex items-center justify-center" aria-hidden="true">
-          <div
-            class="act-brush-glow absolute inset-x-4 top-1/2 -translate-y-1/2 h-3 rounded-full blur-md">
-          </div>
-          <svg class="w-full h-full overflow-visible" viewBox="0 0 340 34" fill="none">
-            <defs>
-              <linearGradient id="actBrushGrad" x1="0" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
-                <stop id="act-grad-stop-0" offset="0%" stop-color="#F59E0B" stop-opacity="0.1" />
-                <stop id="act-grad-stop-1" offset="22%" stop-color="#FBBF24" stop-opacity="0.92" />
-                <stop id="act-grad-stop-2" offset="76%" stop-color="#FDE68A" stop-opacity="0.95" />
-                <stop id="act-grad-stop-3" offset="100%" stop-color="#FDE68A" stop-opacity="0" />
-              </linearGradient>
-              <linearGradient id="actBrushSubGrad" x1="0" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
-                <stop id="act-sub-stop-0" offset="0%" stop-color="#94A3B8" stop-opacity="0" />
-                <stop id="act-sub-stop-1" offset="35%" stop-color="#FDE68A" stop-opacity="0.55" />
-                <stop id="act-sub-stop-2" offset="88%" stop-color="#F59E0B" stop-opacity="0.35" />
-                <stop id="act-sub-stop-3" offset="100%" stop-color="#F59E0B" stop-opacity="0" />
-              </linearGradient>
-            </defs>
-            <!-- Trazo principal de pincelada con ligera curvatura orgánica -->
-            <path class="act-brush-path" d="M 14 20 C 78 12, 162 11, 245 15 C 282 17, 310 15, 328 11"
-              stroke="url(#actBrushGrad)" stroke-width="3.6" stroke-linecap="round" />
-            <!-- Segunda cerda fina de pincel para efecto artístico artesanal -->
-            <path class="act-brush-accent" d="M 32 23 C 102 18, 188 18, 266 20 C 292 21, 308 19, 320 16"
-              stroke="url(#actBrushSubGrad)" stroke-width="1.35" stroke-linecap="round" />
-          </svg>
-        </div>
-      </div>
+        Jugar
+      </a>
     </div>
 
-    <!-- Cortina de salida suave hacia la pantalla de inicio -->
+    <!-- Esquina inferior izquierda: ícono de ajustes con etiqueta animada al pasar el cursor -->
+    <div class="vn-hud-item-wrap fixed bottom-[clamp(1rem,3vh,1.75rem)] left-[clamp(1rem,2.5vw,1.75rem)] z-20">
+      <button
+        id="btn-quick-settings"
+        type="button"
+        aria-label="Ajustes"
+        class="corner-settings-btn p-2 rounded-lg text-stone-300/80 cursor-pointer"
+      >
+        <svg class="w-[clamp(1.3rem,2.5vh,1.65rem)] h-[clamp(1.3rem,2.5vh,1.65rem)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path>
+        </svg>
+      </button>
+      <span class="vn-hud-tooltip vn-hud-tooltip--right" aria-hidden="true">Ajustes</span>
+    </div>
+
+    <!-- Cortina de transición suave hacia la oscuridad -->
     <div
       id="exit-curtain"
-      class="fixed inset-0 z-50 bg-[#070B10] opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out"
+      class="fixed inset-0 z-50 bg-[#070B10] opacity-0 pointer-events-none transition-opacity duration-1000 ease-in-out"
       aria-hidden="true"
     ></div>
 
   </main>
 
-  <!-- ==================== MODALES DE SISTEMA ESTILO VIDEOJUEGO ==================== -->
-
-  <!-- 1. Modal Unificado de Ajustes (Sonido + Accesibilidad con Tabs y Switches) -->
+  <!-- ==================== MODAL DE AJUSTES ESTILO VIDEOJUEGO (IDÉNTICO AL DEL JUEGO) ==================== -->
   <div id="modal-settings" class="vn-game-backdrop fixed inset-0 z-40 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-settings-title">
     <div class="vn-game-panel w-full max-w-md overflow-hidden font-ui">
       <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
@@ -270,7 +262,7 @@
           <p class="text-[10px] uppercase tracking-[0.22em] text-amber-200/70 font-medium">Sistema</p>
           <h2 id="modal-settings-title" class="font-title text-2xl font-semibold text-stone-100 leading-tight">Ajustes</h2>
         </div>
-        <button data-close-modal="modal-settings" type="button" class="vn-close-btn cursor-pointer" aria-label="Cerrar ajustes">
+        <button id="close-settings" type="button" class="vn-close-btn cursor-pointer" aria-label="Cerrar ajustes">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <line x1="6" y1="6" x2="18" y2="18" />
             <line x1="18" y1="6" x2="6" y2="18" />
@@ -321,16 +313,16 @@
             </svg>
             <div>
               <p class="text-xs sm:text-[13px] font-medium text-stone-100">Audio general</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Lluvia ambiental, efectos e interfaz.</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Piano en portada, lluvia y efectos.</p>
             </div>
           </div>
-          <button id="switch-audio" type="button" role="switch" aria-checked="true" aria-label="Audio general" class="vn-switch-control">
+          <button id="cfg-switch-audio" type="button" role="switch" aria-checked="true" aria-label="Audio general" class="vn-switch-control">
             <span class="vn-switch-state">Activo</span>
             <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
           </button>
         </div>
 
-        <div id="row-voice" class="vn-setting-row">
+        <div id="cfg-row-voice" class="vn-setting-row">
           <div class="flex items-start gap-3">
             <svg class="vn-setting-icon mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
@@ -341,13 +333,13 @@
               <p class="text-[11px] text-slate-400 mt-0.5">Voz sincronizada con cada diálogo.</p>
             </div>
           </div>
-          <button id="switch-voice" type="button" role="switch" aria-checked="true" aria-label="Narración con voz" class="vn-switch-control">
+          <button id="cfg-switch-voice" type="button" role="switch" aria-checked="true" aria-label="Narración con voz" class="vn-switch-control">
             <span class="vn-switch-state">Activo</span>
             <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
           </button>
         </div>
 
-        <div id="row-volume" class="vn-setting-row flex-col items-stretch gap-3">
+        <div id="cfg-row-volume" class="vn-setting-row flex-col items-stretch gap-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <svg class="vn-setting-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -356,17 +348,11 @@
                 <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
                 <line x1="1" y1="14" x2="7" y2="14" /><line x1="9" y1="8" x2="15" y2="8" /><line x1="17" y1="16" x2="23" y2="16" />
               </svg>
-              <label for="audio-volume" class="text-xs sm:text-[13px] font-medium text-stone-100">Volumen</label>
+              <label for="cfg-volume" class="text-xs sm:text-[13px] font-medium text-stone-100">Volumen</label>
             </div>
-            <span id="audio-volume-label" class="text-[11px] font-semibold tracking-wider text-amber-200 tabular-nums">60%</span>
+            <span id="cfg-volume-label" class="text-[11px] font-semibold tracking-wider text-amber-200 tabular-nums">60%</span>
           </div>
-          <input id="audio-volume" type="range" min="0" max="100" value="60" style="--range-pct: 60%;" class="vn-range" />
-        </div>
-
-        <div class="pt-3 mt-1 border-t border-white/[0.06] flex items-center gap-2 text-[11px] text-slate-400">
-          <span class="uppercase tracking-[0.16em] text-[10px] text-slate-500 shrink-0">Escena</span>
-          <span aria-hidden="true" class="text-slate-600">·</span>
-          <span id="audio-current-cue" class="text-slate-300 truncate">—</span>
+          <input id="cfg-volume" type="range" min="0" max="100" value="60" style="--range-pct: 60%;" class="vn-range" />
         </div>
       </div>
 
@@ -383,7 +369,7 @@
               <p class="text-[11px] text-slate-400 mt-0.5">Máxima nitidez en texto y contornos.</p>
             </div>
           </div>
-          <button id="switch-contrast" type="button" role="switch" aria-checked="false" aria-label="Alto contraste" class="vn-switch-control">
+          <button id="cfg-switch-contrast" type="button" role="switch" aria-checked="false" aria-label="Alto contraste" class="vn-switch-control">
             <span class="vn-switch-state">Inactivo</span>
             <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
           </button>
@@ -401,7 +387,7 @@
               <p class="text-[11px] text-slate-400 mt-0.5">Describe el ambiente sonoro en pantalla.</p>
             </div>
           </div>
-          <button id="switch-subtitles" type="button" role="switch" aria-checked="false" aria-label="Subtítulos de sonido" class="vn-switch-control">
+          <button id="cfg-switch-subtitles" type="button" role="switch" aria-checked="false" aria-label="Subtítulos de sonido" class="vn-switch-control">
             <span class="vn-switch-state">Inactivo</span>
             <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
           </button>
@@ -418,7 +404,7 @@
               <p class="text-[11px] text-slate-400 mt-0.5">Desactiva transiciones y animaciones.</p>
             </div>
           </div>
-          <button id="switch-motion" type="button" role="switch" aria-checked="false" aria-label="Reducir movimiento" class="vn-switch-control">
+          <button id="cfg-switch-motion" type="button" role="switch" aria-checked="false" aria-label="Reducir movimiento" class="vn-switch-control">
             <span class="vn-switch-state">Inactivo</span>
             <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
           </button>
@@ -437,7 +423,7 @@
               <p class="text-[11px] text-slate-400 mt-0.5">También disponible con la tecla F11.</p>
             </div>
           </div>
-          <button id="switch-fullscreen" type="button" role="switch" aria-checked="false" aria-label="Pantalla completa" class="vn-switch-control">
+          <button id="cfg-switch-fullscreen" type="button" role="switch" aria-checked="false" aria-label="Pantalla completa" class="vn-switch-control">
             <span class="vn-switch-state">Inactivo</span>
             <span class="vn-switch-track" aria-hidden="true"><span class="vn-switch-thumb"></span></span>
           </button>
@@ -446,156 +432,16 @@
         <div class="pt-3.5 pb-1">
           <p class="text-[11px] uppercase tracking-[0.16em] text-slate-400 mb-2">Tamaño de texto</p>
           <div class="vn-scale-bar" role="group" aria-label="Tamaño de texto">
-            <button data-font-scale="1" type="button" class="a11y-scale-btn vn-scale-option is-active">Normal</button>
-            <button data-font-scale="1.12" type="button" class="a11y-scale-btn vn-scale-option">Grande</button>
-            <button data-font-scale="1.24" type="button" class="a11y-scale-btn vn-scale-option">Extra</button>
+            <button data-font-scale="1" type="button" class="cfg-scale-btn vn-scale-option is-active">Normal</button>
+            <button data-font-scale="1.12" type="button" class="cfg-scale-btn vn-scale-option">Grande</button>
+            <button data-font-scale="1.24" type="button" class="cfg-scale-btn vn-scale-option">Extra</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 2. Modal Minimalista de Historial + Reiniciar Historia -->
-  <div id="modal-history" class="vn-game-backdrop fixed inset-0 z-40 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-history-title">
-    <div class="vn-game-panel w-full max-w-lg max-h-[80vh] flex flex-col overflow-hidden">
-      <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
-      <span class="vn-panel-corner vn-panel-corner--tr" aria-hidden="true"></span>
-      <span class="vn-panel-corner vn-panel-corner--bl" aria-hidden="true"></span>
-      <span class="vn-panel-corner vn-panel-corner--br" aria-hidden="true"></span>
-
-      <div class="px-6 pt-5 pb-3.5 border-b border-white/[0.08] flex items-center justify-between">
-        <div>
-          <p class="font-ui text-[10px] uppercase tracking-[0.22em] text-amber-200/70 font-medium">Recorrido</p>
-          <h2 id="modal-history-title" class="font-title text-2xl font-semibold text-stone-100 leading-tight">Historial</h2>
-        </div>
-        <button data-close-modal="modal-history" type="button" class="vn-close-btn cursor-pointer" aria-label="Cerrar historial">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <line x1="18" y1="6" x2="6" y2="18" />
-          </svg>
-        </button>
-      </div>
-
-      <div id="history-list" class="px-6 py-5 overflow-y-auto vn-scroll flex-1"></div>
-
-      <!-- Pie minimalista con Reiniciar Historia y confirmación en línea -->
-      <div class="px-6 py-3 border-t border-white/[0.08] bg-black/20 flex items-center justify-between gap-3">
-        <div id="history-restart-default" class="flex items-center">
-          <button id="history-restart-trigger" type="button" class="vn-ghost-action vn-ghost-action--danger">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8" />
-              <path d="M3 3v5h5" />
-            </svg>
-            <span>Reiniciar historia</span>
-          </button>
-        </div>
-
-        <div id="history-restart-confirm" class="hidden flex items-center gap-2 font-ui text-xs">
-          <span class="text-slate-300">¿Volver al comienzo?</span>
-          <button id="history-restart-yes" type="button" class="vn-ghost-action vn-ghost-action--danger text-amber-200">Confirmar</button>
-          <button id="history-restart-no" type="button" class="vn-ghost-action">Cancelar</button>
-        </div>
-
-        <span class="font-ui text-[10px] uppercase tracking-[0.14em] text-slate-500 hidden sm:inline">Tecla H</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. Modal de Encuesta de Experiencia (opcional desde el cierre de la historia) -->
-  <div id="modal-survey" class="vn-game-backdrop fixed inset-0 z-40 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-survey-title">
-    <div class="vn-game-panel w-full max-w-md max-h-[88vh] flex flex-col overflow-hidden font-ui">
-      <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
-      <span class="vn-panel-corner vn-panel-corner--tr" aria-hidden="true"></span>
-      <span class="vn-panel-corner vn-panel-corner--bl" aria-hidden="true"></span>
-      <span class="vn-panel-corner vn-panel-corner--br" aria-hidden="true"></span>
-
-      <div class="px-6 pt-5 pb-3.5 border-b border-white/[0.08] flex items-center justify-between">
-        <h2 id="modal-survey-title" class="font-title text-xl font-semibold text-stone-100">Comparte tus impresiones</h2>
-        <button data-close-modal="modal-survey" type="button" class="vn-close-btn cursor-pointer" aria-label="Cerrar encuesta">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <line x1="6" y1="6" x2="18" y2="18" />
-            <line x1="18" y1="6" x2="6" y2="18" />
-          </svg>
-        </button>
-      </div>
-
-      <div id="survey-body" class="p-5 overflow-y-auto vn-scroll space-y-4 text-xs sm:text-sm">
-        <p class="text-slate-300 leading-relaxed">
-          Has llegado al final del recorrido. Cuéntanos cómo te sentiste durante la lectura y cómo crees que se sintió
-          Blinky.
-        </p>
-
-        <div id="survey-error"
-          class="hidden p-3 rounded-xl bg-white/5 border border-amber-300/50 text-amber-200 text-xs font-medium"
-          role="alert">
-          Por favor, selecciona a qué final llegaste e ingresa tu alias o nombre para poder enviar tus respuestas.
-        </div>
-
-        <form id="survey-form" class="space-y-3.5" novalidate>
-          <div>
-            <label for="survey-alias" class="block text-xs font-medium text-slate-200 mb-1">Tu nombre o alias</label>
-            <input id="survey-alias" type="text" placeholder="Ej. Sofía"
-              class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300" />
-          </div>
-
-          <fieldset class="space-y-1.5">
-            <legend class="text-xs font-medium text-slate-200 mb-1">¿A qué final llegaste?</legend>
-            <label class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-              <input type="radio" name="survey-ending" value="F01"
-                class="text-amber-400 bg-[#161F2B] border-white/25" />
-              <span class="text-xs text-stone-200">Un nuevo hogar (Adopción con la niña)</span>
-            </label>
-            <label class="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
-              <input type="radio" name="survey-ending" value="F02"
-                class="text-amber-400 bg-[#161F2B] border-white/25" />
-              <span class="text-xs text-stone-200">El falso calor (El calefactor metálico)</span>
-            </label>
-          </fieldset>
-
-          <div>
-            <label for="survey-reflection" class="block text-xs font-medium text-slate-200 mb-1">¿Cómo crees que se
-              sintió Blinky a lo largo del viaje? (Opcional)</label>
-            <textarea id="survey-reflection" rows="3" placeholder="Escribe tus impresiones..."
-              class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3 py-2 focus:border-amber-300 focus:ring-amber-300"></textarea>
-          </div>
-
-          <button type="submit"
-            class="vn-btn w-full rounded-xl font-ui font-semibold text-center justify-center flex cursor-pointer">
-            Enviar mis impresiones
-          </button>
-        </form>
-
-        <div id="survey-confirm" class="hidden space-y-3 p-4 rounded-xl bg-white/[0.04] border border-white/15">
-          <p class="text-stone-100 text-xs sm:text-sm leading-relaxed">
-            ¿Deseas enviar tus impresiones sobre la experiencia de Blinky con estos datos?
-          </p>
-          <div class="flex gap-2">
-            <button id="survey-confirm-yes" type="button"
-              class="vn-btn flex-1 rounded-xl font-ui text-xs font-semibold justify-center flex cursor-pointer">
-              Confirmar y enviar
-            </button>
-            <button id="survey-confirm-no" type="button"
-              class="flex-1 py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-medium text-slate-200 cursor-pointer">
-              Volver y corregir
-            </button>
-          </div>
-        </div>
-
-        <div id="survey-success" class="hidden space-y-3 text-center py-3">
-          <p class="font-title text-2xl font-semibold text-amber-200">¡Muchas gracias por tus respuestas!</p>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Tus reflexiones nos ayudan a mejorar la experiencia sensorial e inclusiva de Blinky.
-          </p>
-          <button id="survey-restart-btn" type="button"
-            class="vn-btn w-full rounded-xl font-ui text-xs sm:text-sm font-semibold justify-center flex cursor-pointer">
-            Volver a la portada principal
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. Modal Flotante Inicial (cuando se abre index.html directamente, desbloquea audio al primer clic) -->
+  <!-- ==================== MODAL FLOTANTE INICIAL (EXPERIENCIA Y DESBLOQUEO DE AUDIO) ==================== -->
   <div id="modal-welcome" class="vn-game-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modal-welcome-title">
     <div class="vn-game-panel w-full max-w-sm overflow-hidden font-ui text-center px-7 py-6">
       <span class="vn-panel-corner vn-panel-corner--tl" aria-hidden="true"></span>
@@ -637,1152 +483,108 @@
     </div>
   </div>
 
-  <!-- ==================== SCRIPTS: DATOS + COMPONENTES + ORQUESTADOR ==================== -->
-  <script src="data/story-data.js"></script>
-  <script src="data/voice-sync.js"></script>
   <script src="components/ui-sfx.js"></script>
-  <script src="components/action-buttons.js"></script>
-  <script src="components/dialogue-box.js"></script>
-
   <script>
     (function () {
-      const STORY = window.BLINKY_STORY;
+      // Carga inteligente de portada.png con respaldo s1.png
+      const coverBg = document.getElementById('cover-bg');
+      coverBg.addEventListener('load', () => {
+        coverBg.classList.remove('opacity-0');
+        coverBg.classList.add('opacity-100');
+      });
+      coverBg.addEventListener('error', () => {
+        if (!coverBg.dataset.triedFallback) {
+          coverBg.dataset.triedFallback = '1';
+          coverBg.src = 'images/s1.png';
+        }
+      });
+      if (coverBg.complete && coverBg.naturalWidth > 0) {
+        coverBg.classList.remove('opacity-0');
+        coverBg.classList.add('opacity-100');
+      }
 
-      // -------------------- Estado Global de la Novela --------------------
-      const appState = {
-        currentId: STORY.START_ID,
-        history: [],
-        memory: {
-          reaccion: null,
-          guia: null,
-          rastro_alimento: null,
-          destino: null
-        },
-        // Control de tutorial: muestra las pistas de teclado solo las primeras veces
-        tutorial: {
-          actionStepsShown: 0,    // Muestra "Enter" en las 2 primeras pantallas lineales
-          decisionShownId: null,  // Muestra "Tecla 1 / Tecla 2" solo en la primera decisión que ve el usuario
-          decisionCompleted: false
-        },
-        prefs: {
-          highContrast: false,
-          subtitles: false,
-          reduceMotion: false,
-          fontScale: 1
-        },
-        audioEnabled: true,
+      // Preferencias compartidas con juego.html
+      const prefs = {
+        highContrast: false,
+        subtitles: false,
+        reduceMotion: false,
+        fontScale: 1
+      };
+      const audioPrefs = {
+        enabled: true,
         voiceEnabled: true,
         volume: 0.6
       };
 
-      // -------------------- Referencias DOM --------------------
-      const sceneBgWrapperEl = document.getElementById('scene-bg-wrapper');
-      const sceneBgEl = document.getElementById('scene-bg');
-      const sceneBgNextEl = document.getElementById('scene-bg-next');
-      const warmLightEl = document.getElementById('warm-light-overlay');
-      const tensionOverlayEl = document.getElementById('tension-overlay');
-      const chapterTitleEl = document.getElementById('chapter-title');
-      const dialogueSectionEl = document.getElementById('dialogue-section');
-      const dialogueBoxEl = document.getElementById('dialogue-box');
+      try {
+        const savedPrefs = JSON.parse(localStorage.getItem('blinky_prefs') || 'null');
+        if (savedPrefs) Object.assign(prefs, savedPrefs);
+        const savedAudio = JSON.parse(localStorage.getItem('blinky_audio') || 'null');
+        if (savedAudio) Object.assign(audioPrefs, savedAudio);
+      } catch (e) {}
 
-      function triggerImpactShake(screen) {
-        if (appState.prefs.reduceMotion) return;
-        sceneBgWrapperEl.classList.remove('scene-impact-shake', 'scene-uneasy-drift');
-        void sceneBgWrapperEl.offsetWidth;
-        sceneBgWrapperEl.classList.add('scene-impact-shake');
-        setTimeout(() => {
-          if (appState.currentId === screen.id && !appState.prefs.reduceMotion) {
-            sceneBgWrapperEl.classList.remove('scene-impact-shake');
-            sceneBgWrapperEl.classList.add('scene-uneasy-drift');
-          }
-        }, 500);
-      }
+      // Canción larga de piano en bucle continuo (audio/portada_piano.wav)
+      const pianoAudio = new Audio('audio/portada_piano.wav');
+      pianoAudio.loop = true;
+      let pianoUnlocked = false;
 
-      function applyTensionAtmosphere(screen) {
-        const mode = screen.tension || null;
-        sceneBgWrapperEl.classList.remove('scene-impact-shake', 'scene-uneasy-drift');
-
-        // Si la pantalla tiene fotogramas con shake sincronizado (ej. S06 al 1.48s), el temblor se dispara en ese fotograma exacto
-        const hasTimedShake = Array.isArray(screen.frames) && screen.frames.some((f) => f.shake);
-
-        if (mode && !appState.prefs.reduceMotion) {
-          tensionOverlayEl.classList.add('is-active');
-          warmLightEl.style.opacity = '0.35';
-          if (mode === 'impact' && !hasTimedShake) {
-            triggerImpactShake(screen);
-          } else {
-            sceneBgWrapperEl.classList.add('scene-uneasy-drift');
-          }
-        } else if (mode) {
-          tensionOverlayEl.classList.add('is-active');
-          warmLightEl.style.opacity = '0.35';
-        } else {
-          tensionOverlayEl.classList.remove('is-active');
-          warmLightEl.style.opacity = '1';
-        }
-      }
-
-      // -------------------- Motor de Audio (WAV/MP3 + Voces Gemini TTS Sincronizadas) --------------------
-      const VOICE_SYNC = window.BLINKY_VOICE_SYNC || {};
-      let activeSceneToken = 0;
-
-      // Calcula pesos de cadencia hablada por carácter (pausas naturales en comas, puntos y guiones)
-      function buildSpeechWeights(chars, startIdx, endIdx) {
-        const weights = [];
-        let total = 0;
-        for (let i = startIdx; i < endIdx; i++) {
-          const ch = chars[i];
-          let w = 1.0;
-          if (ch === '.' || ch === '!' || ch === '?' || ch === '…') w = 7.2;
-          else if (ch === ',' || ch === ';' || ch === ':' || ch === '—') w = 4.4;
-          else if (ch === '\n') w = 5.0;
-          else if (ch === ' ') w = 0.45;
-          total += w;
-          weights.push(total);
-        }
-        return { weights, total: total || 1 };
-      }
-
-      function computeSyncedCharCount(chars, segTables, currentTime) {
-        if (!segTables.length) return chars.length;
-        let revealed = 0;
-        for (let i = 0; i < segTables.length; i++) {
-          const seg = segTables[i];
-          if (currentTime < seg.start) {
-            break;
-          }
-          if (currentTime >= seg.end) {
-            revealed = Math.max(revealed, seg.charEnd);
-            continue;
-          }
-          const span = Math.max(0.05, seg.end - seg.start);
-          const p = Math.min(1, Math.max(0, (currentTime - seg.start) / span));
-          const targetWeight = p * seg.totalWeight;
-          let lo = 0;
-          let hi = seg.weights.length - 1;
-          while (lo < hi) {
-            const mid = (lo + hi) >> 1;
-            if (seg.weights[mid] < targetWeight) lo = mid + 1;
-            else hi = mid;
-          }
-          revealed = Math.max(revealed, seg.charStart + lo + 1);
-          break;
-        }
-        return Math.min(chars.length, revealed);
-      }
-
-      const audioEngine = (function () {
-        let ctx = null;
-        let rainAudio = null;
-        let sceneAudio = null;
-        let voiceAudio = null;
-        let musicAudio = null;
-        let musicFadeTimer = null;
-        let currentTrackKey = null;
-        let pendingUnlock = false;
-        let isVoiceSpeaking = false;
-        let voiceDelayTimer = null;
-        let voiceRafId = null;
-        let activeCueAudios = [];
-        let sfxBoostTimer = null;
-        let sceneAudioBoosted = false;
-
-        function ensureContext() {
-          if (!ctx) {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (!AudioCtx) return null;
-            ctx = new AudioCtx();
-          }
-          if (ctx.state === 'suspended') {
-            ctx.resume().catch(() => { });
-          }
-          return ctx;
-        }
-
-        function persistAudioPrefs() {
-          try {
-            localStorage.setItem('blinky_audio', JSON.stringify({
-              enabled: appState.audioEnabled,
-              voiceEnabled: appState.voiceEnabled,
-              volume: appState.volume
-            }));
-          } catch (e) { }
-        }
-
-        function updateAmbientMix() {
-          if (rainAudio) {
-            const factor = isVoiceSpeaking ? 0.22 : 0.46;
-            rainAudio.volume = appState.volume * factor;
-          }
-          if (sceneAudio && !sceneAudioBoosted) {
-            const factor = isVoiceSpeaking ? 0.36 : 0.64;
-            sceneAudio.volume = appState.volume * factor;
-          }
-          if (musicAudio && !musicFadeTimer) {
-            const factor = isVoiceSpeaking ? 0.38 : 0.65;
-            musicAudio.volume = appState.volume * factor;
-          }
-        }
-
-        function startAmbientRain() {
-          if (!appState.audioEnabled) return;
-          if (!rainAudio) {
-            rainAudio = new Audio('audio/lluvia.wav');
-            rainAudio.loop = true;
-          }
-          updateAmbientMix();
-          rainAudio.play().catch(() => {
-            pendingUnlock = true;
-          });
-        }
-
-        function stopAmbientRain() {
-          if (rainAudio) {
-            rainAudio.pause();
-          }
-        }
-
-        function clearCueAudios() {
-          if (sfxBoostTimer) {
-            clearTimeout(sfxBoostTimer);
-            sfxBoostTimer = null;
-          }
-          sceneAudioBoosted = false;
-          activeCueAudios.forEach((a) => {
-            try {
-              a.pause();
-              a.currentTime = 0;
-            } catch (e) {}
-          });
-          activeCueAudios = [];
-        }
-
-        function stopVoiceNarration() {
-          if (voiceDelayTimer) {
-            clearTimeout(voiceDelayTimer);
-            voiceDelayTimer = null;
-          }
-          if (voiceRafId) {
-            cancelAnimationFrame(voiceRafId);
-            voiceRafId = null;
-          }
-          clearCueAudios();
-          if (voiceAudio) {
-            try {
-              voiceAudio.pause();
-              voiceAudio.currentTime = 0;
-            } catch (e) {}
-            voiceAudio = null;
-          }
-          isVoiceSpeaking = false;
-          updateAmbientMix();
-        }
-
-        function hasSyncedVoice(screen) {
-          return Boolean(
-            screen &&
-            appState.audioEnabled &&
-            appState.voiceEnabled &&
-            VOICE_SYNC[screen.id]
-          );
-        }
-
-        function playOneShotSfx(src, relVol = 0.72) {
-          if (!appState.audioEnabled) return;
-          const sfx = new Audio(src);
-          sfx.volume = Math.min(1, appState.volume * relVol);
-          sfx.addEventListener('ended', () => {
-            activeCueAudios = activeCueAudios.filter((a) => a !== sfx);
-          });
-          activeCueAudios.push(sfx);
-          sfx.play().catch(() => {});
-        }
-
-        function boostSceneAudio(relVol = 0.85, durationMs = 1400) {
-          if (!sceneAudio || !appState.audioEnabled) return;
-          sceneAudioBoosted = true;
-          sceneAudio.volume = Math.min(1, appState.volume * relVol);
-          if (sfxBoostTimer) clearTimeout(sfxBoostTimer);
-          sfxBoostTimer = setTimeout(() => {
-            sceneAudioBoosted = false;
-            updateAmbientMix();
-          }, durationMs);
-        }
-
-        /**
-         * Reproduce la voz de Gemini TTS sincronizando palabra por palabra con el
-         * recuadro de diálogo, fotogramas clave y efectos de sonido puntuales.
-         */
-        function playVoiceNarration(screen, sceneToken, options = {}) {
-          stopVoiceNarration();
-          if (!appState.audioEnabled || !appState.voiceEnabled || !screen) return;
-
-          const sync = VOICE_SYNC[screen.id];
-          if (!sync) return;
-
-          const chars = Array.from(screen.text || '');
-          const segTables = (sync.segments || []).map((seg) => {
-            const { weights, total } = buildSpeechWeights(chars, seg.charStart, seg.charEnd);
-            return {
-              start: seg.start,
-              end: seg.end,
-              charStart: seg.charStart,
-              charEnd: seg.charEnd,
-              weights,
-              totalWeight: total
-            };
-          });
-
-          const firedCues = new Set();
-          const cues = Array.isArray(sync.cues) ? sync.cues : [];
-
-          function runCue(cue) {
-            if (sceneToken !== activeSceneToken) return;
-            if (cue.type === 'sfx' && cue.src) {
-              playOneShotSfx(cue.src, cue.volume || 0.75);
-            } else if (cue.type === 'frame' && cue.src && !appState.prefs.reduceMotion) {
-              showImageFrame(cue.src, cue.transition || 'fade', activeImageToken);
-              if (cue.shake) {
-                triggerImpactShake(screen);
-              }
-            } else if (cue.type === 'sfxBoost') {
-              boostSceneAudio(cue.volume || 0.85, cue.durationMs || 1400);
-            }
-          }
-
-          function fallbackIfBlockedOrFailed() {
-            if (sceneToken !== activeSceneToken) return;
-            if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
-              dialogueBoxEl.startAutoTypewriter();
-            }
-            if (sync.deferFrames && !appState.prefs.reduceMotion) {
-              runClassicFrames(screen, activeImageToken);
-            }
-            if (sync.deferSceneSfx) {
-              playSceneSound(screen, true);
-            }
-          }
-
-          const delayMs = options.immediate ? 0 : Math.max(0, Number(sync.startDelayMs) || 180);
-
-          voiceDelayTimer = setTimeout(() => {
-            voiceDelayTimer = null;
-            if (sceneToken !== activeSceneToken) return;
-
-            const audio = new Audio(sync.audio);
-            audio.preload = 'auto';
-            audio.volume = Math.min(1, appState.volume * 1.15);
-            voiceAudio = audio;
-
-            let syncLoopStarted = false;
-
-            const tickSync = () => {
-              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
-              const t = audio.currentTime || 0;
-
-              // Disparar cues de SFX/fotogramas exactamente en el segundo medido
-              cues.forEach((cue, idx) => {
-                if (!firedCues.has(idx) && t >= cue.at) {
-                  firedCues.add(idx);
-                  runCue(cue);
-                }
-              });
-
-              // Actualizar progreso del diálogo estrictamente ligado al reloj del audio
-              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping() && !audio.paused) {
-                const count = computeSyncedCharCount(chars, segTables, t);
-                dialogueBoxEl.setRevealProgress(count);
-              }
-
-              if (!audio.ended && !audio.paused) {
-                voiceRafId = requestAnimationFrame(tickSync);
-              }
-            };
-
-            audio.addEventListener('playing', () => {
-              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
-              isVoiceSpeaking = true;
-              updateAmbientMix();
-              if (!syncLoopStarted) {
-                syncLoopStarted = true;
-                voiceRafId = requestAnimationFrame(tickSync);
-              }
-            });
-
-            audio.addEventListener('ended', () => {
-              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
-              // Aseguramos cualquier cue final pendiente y completamos el texto al 100%
-              cues.forEach((cue, idx) => {
-                if (!firedCues.has(idx) && cue.type === 'frame') {
-                  firedCues.add(idx);
-                  runCue(cue);
-                }
-              });
-              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
-                dialogueBoxEl.setRevealProgress(chars.length);
-              }
-              isVoiceSpeaking = false;
-              updateAmbientMix();
-            });
-
-            audio.addEventListener('error', () => {
-              if (voiceAudio !== audio || sceneToken !== activeSceneToken) return;
-              isVoiceSpeaking = false;
-              voiceAudio = null;
-              updateAmbientMix();
-              fallbackIfBlockedOrFailed();
-            });
-
-            audio.play().catch(() => {
-              pendingUnlock = true;
-              fallbackIfBlockedOrFailed();
-            });
-          }, delayMs);
-        }
-
-        function playSceneSound(screen, forceImmediate = false) {
-          if (sceneAudio) {
-            sceneAudio.pause();
-            sceneAudio = null;
-          }
-          if (!appState.audioEnabled || !screen) return;
-
-          // Si la escena coordina su SFX puntual con la voz narrada (ej. S02, S05, S06), no lo dispares al t=0
-          const sync = VOICE_SYNC[screen.id];
-          if (!forceImmediate && appState.voiceEnabled && sync && sync.deferSceneSfx) {
-            return;
-          }
-
-          const base = `audio/s${screen.number}`;
-          const audio = new Audio(`${base}.wav`);
-          audio.volume = appState.volume * 0.68;
-          // Escenas atmosféricas de bucle suave (S01, S03, S04, S07, S13)
-          audio.loop = [1, 3, 4, 7, 13].includes(screen.number);
-          audio.addEventListener('error', () => {
-            if (!audio.dataset.triedMp3) {
-              audio.dataset.triedMp3 = '1';
-              audio.src = `${base}.mp3`;
-              audio.play().catch(() => { });
-            }
-          });
-          audio.play().catch(() => {
-            pendingUnlock = true;
-          });
-          sceneAudio = audio;
-        }
-
-        // Buffer reutilizable y registro de nodos activos para cancelar el teclado al instante al cambiar de escena
-        let typewriterBuffer = null;
-        const activeTypeNodes = new Set();
-
-        function stopTypewriterAudio() {
-          activeTypeNodes.forEach((node) => {
-            try { node.stop(0); } catch (e) {}
-            try { node.disconnect(); } catch (e) {}
-          });
-          activeTypeNodes.clear();
-        }
-
-        function getTypewriterBuffer(ac) {
-          if (typewriterBuffer) return typewriterBuffer;
-          const len = Math.floor(ac.sampleRate * 0.032);
-          const buf = ac.createBuffer(1, len, ac.sampleRate);
-          const data = buf.getChannelData(0);
-          for (let i = 0; i < len; i++) {
-            const t = i / ac.sampleRate;
-            const click = (Math.random() * 2 - 1) * Math.exp(-t * 280);
-            const body = Math.sin(2 * Math.PI * 1250 * t) * Math.exp(-t * 210) * 0.45;
-            const thud = Math.sin(2 * Math.PI * 240 * t) * Math.exp(-t * 160) * 0.35;
-            data[i] = (click * 0.72 + body + thud) * 0.85;
-          }
-          typewriterBuffer = buf;
-          return buf;
-        }
-
-        function playTypewriterKey(strong = false) {
-          if (!appState.audioEnabled) return;
-          // Silenciamos los clics de diálogo mientras una voz humana está narrando para máxima limpieza
-          if (!strong && isVoiceSpeaking) return;
-          const ac = ensureContext();
-          if (!ac) return;
-          const src = ac.createBufferSource();
-          src.buffer = getTypewriterBuffer(ac);
-          src.playbackRate.value = strong
-            ? (0.78 + Math.random() * 0.16)
-            : (0.88 + Math.random() * 0.26);
-
-          const filter = ac.createBiquadFilter();
-          filter.type = 'bandpass';
-          filter.frequency.value = strong
-            ? (1450 + Math.random() * 350)
-            : (1850 + Math.random() * 550);
-          filter.Q.value = strong ? 0.85 : 1.1;
-
-          const gain = ac.createGain();
-          gain.gain.value = strong
-            ? (0.34 + Math.random() * 0.08) * appState.volume
-            : (0.09 + Math.random() * 0.035) * appState.volume;
-
-          src.connect(filter);
-          filter.connect(gain);
-          gain.connect(ac.destination);
-          activeTypeNodes.add(src);
-          src.onended = () => {
-            activeTypeNodes.delete(src);
-            try { src.disconnect(); filter.disconnect(); gain.disconnect(); } catch (e) {}
-          };
-          src.start();
-
-          if (strong) {
-            const osc = ac.createOscillator();
-            const thudGain = ac.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(195 + Math.random() * 35, ac.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(62, ac.currentTime + 0.045);
-            thudGain.gain.setValueAtTime(0.16 * appState.volume, ac.currentTime);
-            thudGain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.055);
-            osc.connect(thudGain);
-            thudGain.connect(ac.destination);
-            activeTypeNodes.add(osc);
-            osc.onended = () => {
-              activeTypeNodes.delete(osc);
-              try { osc.disconnect(); thudGain.disconnect(); } catch (e) {}
-            };
-            osc.start();
-            osc.stop(ac.currentTime + 0.06);
-          }
-        }
-
-        function playHoverTick() {
-          if (window.BlinkyUiSfx) window.BlinkyUiSfx.playHover();
-        }
-
-        function playClickChime() {
-          if (window.BlinkyUiSfx) window.BlinkyUiSfx.playClick();
-        }
-
-        const MUSIC_TRACKS = {
-          piano_melancolico: 'audio/piano_melancolico.mp3',
-          final_bueno: 'audio/good ending.mp3',
-          final_triste: 'audio/bad ending.mp3'
-        };
-
-        function clearMusicFade() {
-          if (musicFadeTimer) {
-            clearInterval(musicFadeTimer);
-            musicFadeTimer = null;
-          }
-        }
-
-        function tryPlayTrack(trackKey) {
-          if (!appState.audioEnabled || !trackKey) {
-            clearMusicFade();
-            if (musicAudio) {
-              musicAudio.pause();
-              musicAudio = null;
-              currentTrackKey = null;
-            }
-            return;
-          }
-          const targetVol = appState.volume * (isVoiceSpeaking ? 0.38 : 0.65);
-          if (currentTrackKey === trackKey && musicAudio) {
-            if (!musicFadeTimer) {
-              musicAudio.volume = targetVol;
-            }
-            if (musicAudio.paused) {
-              musicAudio.play().catch(() => { pendingUnlock = true; });
-            }
-            return;
-          }
-          clearMusicFade();
-          if (musicAudio) {
-            musicAudio.pause();
-            musicAudio = null;
-          }
-          const rawPath = MUSIC_TRACKS[trackKey] || `audio/${trackKey}.mp3`;
-          const audio = new Audio(encodeURI(rawPath));
-          audio.loop = true;
-          const useFadeIn = trackKey === 'final_bueno' || trackKey === 'final_triste';
-          audio.volume = useFadeIn ? 0 : targetVol;
-          musicAudio = audio;
-          currentTrackKey = trackKey;
-
-          audio.play().then(() => {
-            if (musicAudio !== audio || !useFadeIn) return;
-            let step = 0;
-            const totalSteps = 20;
-            musicFadeTimer = setInterval(() => {
-              if (musicAudio !== audio || !appState.audioEnabled) {
-                clearMusicFade();
-                return;
-              }
-              step += 1;
-              const endVol = appState.volume * (isVoiceSpeaking ? 0.38 : 0.65);
-              audio.volume = Math.min(endVol, endVol * (step / totalSteps));
-              if (step >= totalSteps) {
-                clearMusicFade();
-              }
-            }, 60);
+      function syncPiano() {
+        pianoAudio.volume = Math.max(0, Math.min(1, audioPrefs.volume * 0.72));
+        if (audioPrefs.enabled) {
+          pianoAudio.play().then(() => {
+            pianoUnlocked = true;
           }).catch(() => {
-            pendingUnlock = true;
+            pianoUnlocked = false;
           });
-        }
-
-        // Si el navegador bloquea el autoplay inicial, reanuda en el primer gesto
-        function unlockOnGesture() {
-          if (!pendingUnlock || !appState.audioEnabled) return;
-          pendingUnlock = false;
-          const screen = STORY.SCREENS[appState.currentId];
-          if (screen && screen.isEnding === 'F01') {
-            stopAmbientRain();
-          } else {
-            startAmbientRain();
-          }
-          if (sceneAudio) sceneAudio.play().catch(() => { });
-          else if (screen) playSceneSound(screen);
-          if (screen && screen.musicTrack) {
-            tryPlayTrack(screen.musicTrack);
-          }
-          if (appState.voiceEnabled && screen && VOICE_SYNC[screen.id]) {
-            if (voiceAudio && voiceAudio.paused && voiceAudio.currentTime === 0) {
-              voiceAudio.play().catch(() => {});
-            } else if (!voiceAudio) {
-              playVoiceNarration(screen, activeSceneToken, { immediate: true });
-            }
-          }
-        }
-        window.addEventListener('pointerdown', unlockOnGesture, { passive: true });
-        window.addEventListener('keydown', unlockOnGesture, { passive: true });
-
-        return {
-          hasSyncedVoice,
-          startAmbientOnly(screen) {
-            if (!appState.audioEnabled) return;
-            if (screen && screen.isEnding === 'F01') {
-              stopAmbientRain();
-            } else {
-              startAmbientRain();
-            }
-            if (screen) playSceneSound(screen);
-          },
-          stopForActTransition() {
-            stopTypewriterAudio();
-            stopVoiceNarration();
-            if (sceneAudio) {
-              sceneAudio.pause();
-              sceneAudio = null;
-            }
-            tryPlayTrack(null);
-            stopAmbientRain();
-          },
-          setEnabled(enabled) {
-            appState.audioEnabled = enabled;
-            persistAudioPrefs();
-            const screen = STORY.SCREENS[appState.currentId];
-            if (enabled) {
-              if (screen && screen.isEnding === 'F01') {
-                stopAmbientRain();
-              } else {
-                startAmbientRain();
-              }
-              playSceneSound(screen);
-              if (screen && hasSyncedVoice(screen)) {
-                renderScreen(screen.id);
-              }
-              if (screen && screen.musicTrack) tryPlayTrack(screen.musicTrack);
-            } else {
-              stopTypewriterAudio();
-              stopAmbientRain();
-              stopVoiceNarration();
-              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
-                dialogueBoxEl.stopTypewriter(true);
-              }
-              if (sceneAudio) {
-                sceneAudio.pause();
-                sceneAudio = null;
-              }
-              tryPlayTrack(null);
-            }
-            updateAudioUI();
-          },
-          setVoiceEnabled(enabled) {
-            appState.voiceEnabled = enabled;
-            persistAudioPrefs();
-            const screen = STORY.SCREENS[appState.currentId];
-            if (enabled && appState.audioEnabled && screen && VOICE_SYNC[screen.id]) {
-              renderScreen(screen.id);
-            } else {
-              stopVoiceNarration();
-              if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
-                dialogueBoxEl.stopTypewriter(true);
-              }
-            }
-            updateAudioUI();
-          },
-          setVolume(vol) {
-            appState.volume = vol;
-            persistAudioPrefs();
-            updateAmbientMix();
-            if (voiceAudio) voiceAudio.volume = Math.min(1, vol * 1.15);
-            if (musicAudio) musicAudio.volume = vol * 0.65;
-            activeCueAudios.forEach((a) => { a.volume = Math.min(1, vol * 0.75); });
-          },
-          onScreenChange(screen, sceneToken, options = {}) {
-            stopTypewriterAudio();
-            stopVoiceNarration();
-            if (!appState.audioEnabled) {
-              return;
-            }
-            if (screen.isEnding === 'F01') {
-              stopAmbientRain();
-            } else {
-              startAmbientRain();
-            }
-            playSceneSound(screen);
-            if (hasSyncedVoice(screen)) {
-              playVoiceNarration(screen, sceneToken, options);
-            }
-            if (screen.musicTrack) {
-              tryPlayTrack(screen.musicTrack);
-            } else if (currentTrackKey) {
-              tryPlayTrack(null);
-            }
-          },
-          stopTypewriterAudio,
-          playTypewriterKey,
-          playHoverTick,
-          playClickChime
-        };
-      })();
-
-      // -------------------- Carga Rápida de Imágenes + Secuencias One-Shot (Sin Bucle) --------------------
-      let activeImageToken = 0;
-      let frameTimers = [];
-
-      function clearFrameTimers() {
-        frameTimers.forEach((id) => clearTimeout(id));
-        frameTimers = [];
-      }
-
-      function showImageFrame(imagePath, transitionMode = 'cut', token) {
-        const probe = new Image();
-        probe.onload = function () {
-          if (token !== activeImageToken) return;
-          if (transitionMode === 'fade' && !sceneBgEl.classList.contains('hidden')) {
-            sceneBgNextEl.src = imagePath;
-            sceneBgNextEl.style.transition = 'opacity 0.55s ease';
-            sceneBgNextEl.style.opacity = '0';
-            sceneBgNextEl.classList.remove('hidden');
-            requestAnimationFrame(() => {
-              if (token !== activeImageToken) return;
-              sceneBgNextEl.style.opacity = '1';
-            });
-            const commitTimer = setTimeout(() => {
-              if (token !== activeImageToken) return;
-              sceneBgEl.src = imagePath;
-              sceneBgEl.classList.remove('hidden', 'is-loading');
-              sceneBgEl.classList.add('is-loaded');
-              sceneBgNextEl.classList.add('hidden');
-              sceneBgNextEl.style.opacity = '0';
-            }, 580);
-            frameTimers.push(commitTimer);
-          } else {
-            sceneBgNextEl.classList.add('hidden');
-            sceneBgNextEl.style.opacity = '0';
-            sceneBgEl.src = imagePath;
-            sceneBgEl.classList.remove('hidden', 'is-loading');
-            sceneBgEl.classList.add('is-loaded');
-          }
-        };
-        probe.onerror = function () {
-          if (token !== activeImageToken) return;
-          if (transitionMode === 'cut') {
-            sceneBgEl.classList.add('hidden', 'is-loading');
-            sceneBgEl.classList.remove('is-loaded');
-            sceneBgEl.removeAttribute('src');
-          }
-        };
-        probe.src = imagePath;
-      }
-
-      function loadSceneBackground(screenOrPath) {
-        clearFrameTimers();
-        const token = ++activeImageToken;
-        sceneBgNextEl.classList.add('hidden');
-        sceneBgNextEl.style.opacity = '0';
-
-        if (typeof screenOrPath === 'string') {
-          showImageFrame(screenOrPath, 'cut', token);
-          return;
-        }
-
-        const screen = screenOrPath;
-        const frames = screen.frames;
-        const sync = VOICE_SYNC[screen.id];
-        const voiceDrivesFrames = Boolean(
-          audioEngine.hasSyncedVoice(screen) && sync && sync.deferFrames
-        );
-
-        // Si tiene secuencia one-shot y Reducir movimiento está desactivado, precargamos todos los fotogramas
-        if (Array.isArray(frames) && frames.length > 0 && !appState.prefs.reduceMotion) {
-          frames.forEach((f) => { const pre = new Image(); pre.src = f.src; });
-
-          if (voiceDrivesFrames) {
-            // Mostramos solo el fotograma inicial; los siguientes saltan al ritmo exacto de la voz
-            showImageFrame(frames[0].src, 'cut', token);
-          } else {
-            runClassicFrames(screen, token);
-          }
         } else {
-          showImageFrame(screen.image, 'cut', token);
+          pianoAudio.pause();
         }
       }
 
-      function runClassicFrames(screen, token) {
-        const frames = screen.frames || [];
-        frames.forEach((frame) => {
-          const delay = Math.max(0, Number(frame.delay) || 0);
-          const run = () => {
-            if (token !== activeImageToken) return;
-            showImageFrame(frame.src, frame.transition || 'cut', token);
-            if (frame.shake) {
-              triggerImpactShake(screen);
-            }
-          };
-          if (delay === 0) {
-            run();
-          } else {
-            frameTimers.push(setTimeout(run, delay));
-          }
-        });
+      // El aviso inicial de audífonos se muestra solo la primera vez y guarda su estado en localStorage
+      const WELCOME_SEEN_KEY = 'blinky_welcome_seen';
+      let welcomeAlreadySeen = false;
+      try {
+        welcomeAlreadySeen = localStorage.getItem(WELCOME_SEEN_KEY) === '1';
+      } catch (e) {}
+
+      let welcomeDismissed = welcomeAlreadySeen;
+      function unlockPianoOnGesture() {
+        if (!welcomeDismissed || pianoUnlocked || !audioPrefs.enabled) return;
+        syncPiano();
       }
+      window.addEventListener('pointerdown', unlockPianoOnGesture, { passive: true });
+      window.addEventListener('keydown', unlockPianoOnGesture, { passive: true });
 
-      // -------------------- Lógica de Tutorial (solo primeras veces) --------------------
-      function shouldShowTutorialHints(screen) {
-        if (screen.choices.length > 1) {
-          if (appState.tutorial.decisionCompleted) return false;
-          if (!appState.tutorial.decisionShownId) {
-            appState.tutorial.decisionShownId = screen.id;
-          }
-          return appState.tutorial.decisionShownId === screen.id;
-        }
-        return appState.tutorial.actionStepsShown < 2;
-      }
-
-      // -------------------- Renderizador Principal de Pantalla --------------------
-      function renderScreen(screenId, options = {}) {
-        const screen = STORY.SCREENS[screenId];
-        if (!screen) return;
-
-        const sceneToken = ++activeSceneToken;
-        appState.currentId = screen.id;
-
-        const act = STORY.ACTS[screen.act];
-        chapterTitleEl.textContent = act ? act.shortTitle : 'El Nido Roto';
-        document.title = `Blinky's Blind Heart — ${screen.title}`;
-
-        loadSceneBackground(screen);
-        applyTensionAtmosphere(screen);
-
-        const hasVoiceSync = audioEngine.hasSyncedVoice(screen);
-        const useTypewriter =
-          !options.skipTypewriter &&
-          !appState.prefs.reduceMotion;
-
-        // Renderizamos primero la caja de diálogo antes de disparar la voz para sincronización 1:1
-        dialogueBoxEl.render({
-          speaker: screen.speaker,
-          speakerType: screen.speakerType,
-          text: screen.text,
-          html: screen.html || '',
-          audioCue: screen.audioCue || '',
-          showSubtitles: appState.prefs.subtitles,
-          choices: screen.choices,
-          showTutorialHints: shouldShowTutorialHints(screen),
-          canGoBack: appState.history.length > 0,
-          showSurveyAction: Boolean(screen.isEnding),
-          typewriter: useTypewriter,
-          syncMode: hasVoiceSync ? 'external' : 'auto'
-        });
-
-        // Iniciamos el audio (y el reloj sincronizado voz -> texto -> SFX/frames) una vez montado el diálogo
-        audioEngine.onScreenChange(screen, sceneToken, {
-          immediate: Boolean(options.immediateVoice)
-        });
-
-        document.getElementById('audio-current-cue').textContent = screen.audioCue || 'Ambiente silencioso';
-      }
-
-      const consequenceToastEl = document.getElementById('consequence-toast');
-      let consequenceTimer = null;
-      let pendingActDelayTimer = null;
-      let pendingActTargetId = null;
-
-      function hideConsequenceToast() {
-        if (consequenceTimer) {
-          clearTimeout(consequenceTimer);
-          consequenceTimer = null;
-        }
-        if (consequenceToastEl) {
-          consequenceToastEl.classList.remove('is-showing');
-        }
-        if (actIntroOverlay) {
-          actIntroOverlay.classList.remove('is-consequence-phase');
-        }
-      }
-
-      function cancelPendingActSequence() {
-        if (pendingActDelayTimer) {
-          clearTimeout(pendingActDelayTimer);
-          pendingActDelayTimer = null;
-        }
-        pendingActTargetId = null;
-        dialogueSectionEl.classList.remove('is-choice-locked');
-      }
-
-      function showConsequenceToast() {
-        if (!consequenceToastEl) return;
-        if (consequenceTimer) {
-          clearTimeout(consequenceTimer);
-          consequenceTimer = null;
-        }
-        consequenceToastEl.classList.remove('is-showing');
-        void consequenceToastEl.offsetWidth;
-        consequenceToastEl.classList.add('is-showing');
-        consequenceTimer = setTimeout(() => {
-          consequenceToastEl.classList.remove('is-showing');
-          consequenceTimer = null;
-        }, 3250);
-      }
-
-      function restartStory() {
-        cancelPendingActSequence();
-        hideConsequenceToast();
-        if (dialogueBoxEl.stopTypewriter) dialogueBoxEl.stopTypewriter(false);
-        audioEngine.stopTypewriterAudio();
-        if (typeof clearActIntroTimers === 'function') clearActIntroTimers();
-        if (actIntroOverlay) actIntroOverlay.classList.add('is-hidden');
-        dialogueSectionEl.classList.remove('opacity-0', 'pointer-events-none');
-        appState.history = [];
-        appState.memory = { reaccion: null, guia: null, rastro_alimento: null, destino: null };
-        renderScreen(STORY.START_ID);
-      }
-
-      // -------------------- Eventos del Componente de Diálogo y Botones --------------------
-      dialogueBoxEl.addEventListener('blinky:type-tick', () => {
-        audioEngine.playTypewriterKey();
-      });
-
-      dialogueBoxEl.addEventListener('blinky:reveal-complete', (e) => {
-        if (e.detail && e.detail.skipped) {
-          const screen = STORY.SCREENS[appState.currentId];
-          const sync = screen && VOICE_SYNC[screen.id];
-          if (sync && sync.deferFrames && Array.isArray(screen.frames) && screen.frames.length > 0) {
-            const lastFrame = screen.frames[screen.frames.length - 1];
-            showImageFrame(lastFrame.src, 'fade', activeImageToken);
-          }
-        }
-      });
-
-      dialogueBoxEl.addEventListener('blinky:choose', (e) => {
-        if (pendingActDelayTimer) return;
-        // Cancelar de inmediato la máquina de escribir y su sonido de la escena anterior
-        if (dialogueBoxEl.stopTypewriter) dialogueBoxEl.stopTypewriter(false);
-        audioEngine.stopTypewriterAudio();
-        const choice = e.detail;
-        const currentScreen = STORY.SCREENS[appState.currentId];
-        const nextScreen = choice && choice.next ? STORY.SCREENS[choice.next] : null;
-        const isBranchingDecision = Boolean(
-          currentScreen && (currentScreen.decisionCode || (currentScreen.choices && currentScreen.choices.length > 1))
-        );
-        const isActChange = Boolean(
-          !choice.isRestart && currentScreen && nextScreen && nextScreen.act !== currentScreen.act
-        );
-
-        if (choice.isRestart) {
-          if (currentScreen && currentScreen.isEnding === 'F01') {
-            window.location.href = 'inicio.html';
-            return;
-          }
-          restartStory();
-          return;
-        }
-
-        // Registrar progreso de tutorial
-        if (currentScreen && currentScreen.choices.length > 1) {
-          appState.tutorial.decisionCompleted = true;
-        } else if (appState.tutorial.actionStepsShown < 2) {
-          appState.tutorial.actionStepsShown += 1;
-        }
-
-        appState.history.push({
-          id: appState.currentId,
-          chosenLabel: choice.label,
-          memorySnapshot: { ...appState.memory }
-        });
-
-        if (choice.state) {
-          Object.assign(appState.memory, choice.state);
-        }
-
-        if (!nextScreen) return;
-
-        // Tras elegir una decisión o cambiar de acto:
-        // 1º pantalla completa en negro con "Este acto tendrá consecuencias…" (si es decisión),
-        // 2º nombre mecanográfico del nuevo acto (si cambia de acto),
-        // 3º entra la escena siguiente totalmente limpia sin ningún mensaje encima.
-        if ((isActChange || isBranchingDecision) && !appState.prefs.reduceMotion) {
-          if (nextScreen.image) {
-            const pre = new Image();
-            pre.src = nextScreen.image;
-          }
-          transitionToActScreen(nextScreen.id, {
-            showConsequenceFirst: isBranchingDecision,
-            showActTitle: isActChange
-          });
-          return;
-        }
-
-        renderScreen(nextScreen.id);
-      });
-
-      dialogueBoxEl.addEventListener('blinky:back', () => {
-        if (appState.history.length === 0) return;
-        cancelPendingActSequence();
-        hideConsequenceToast();
-        if (dialogueBoxEl.stopTypewriter) dialogueBoxEl.stopTypewriter(false);
-        audioEngine.stopTypewriterAudio();
-        const previous = appState.history.pop();
-        if (previous.memorySnapshot) {
-          appState.memory = { ...previous.memorySnapshot };
-        }
-        renderScreen(previous.id);
-      });
-
-      dialogueBoxEl.addEventListener('blinky:survey', () => {
-        openSurveyModal();
-      });
-
-      // -------------------- Gestión de Modales HUD (Animación Estilo Videojuego) --------------------
-      const MODAL_IDS = ['modal-settings', 'modal-history', 'modal-survey'];
       const UI_SFX = window.BlinkyUiSfx;
-      const exitCurtainEl = document.getElementById('exit-curtain');
-
-      function openModal(id) {
-        let opened = false;
-        MODAL_IDS.forEach((mid) => {
-          const el = document.getElementById(mid);
-          if (!el) return;
-          if (mid === id) {
-            if (!el.classList.contains('is-open')) opened = true;
-            el.classList.add('is-open');
-          } else {
-            el.classList.remove('is-open');
-          }
-        });
-        if (opened && UI_SFX) UI_SFX.playMenu(true);
+      const modalWelcome = document.getElementById('modal-welcome');
+      if (modalWelcome && !welcomeAlreadySeen) {
+        modalWelcome.classList.add('is-open');
+      } else if (audioPrefs.enabled) {
+        syncPiano();
       }
-
-      function closeAllModals(silent = false) {
-        let closedAny = false;
-        MODAL_IDS.forEach((mid) => {
-          const el = document.getElementById(mid);
-          if (!el) return;
-          if (el.classList.contains('is-open')) {
-            el.classList.remove('is-open');
-            closedAny = true;
-          }
-        });
-        resetHistoryRestartConfirm();
-        if (closedAny && !silent && UI_SFX) UI_SFX.playMenu(false);
-      }
-
-      function isAnyModalOpen() {
-        return MODAL_IDS.some((mid) => {
-          const el = document.getElementById(mid);
-          return el && el.classList.contains('is-open');
-        });
-      }
-
-      document.querySelectorAll('[data-close-modal]').forEach((btn) => {
-        btn.addEventListener('click', () => closeAllModals(false));
-      });
-
-      MODAL_IDS.forEach((mid) => {
-        const backdrop = document.getElementById(mid);
-        if (!backdrop) return;
-        backdrop.addEventListener('click', (e) => {
-          if (e.target === backdrop) closeAllModals(false);
-        });
-      });
-
-      // -------------------- Menú Lateral Vertical Minimalista --------------------
-      const hudMenuWrapper = document.getElementById('hud-menu-wrapper');
-      const hudToggleBtn = document.getElementById('btn-hud-toggle');
-      const hudDropdown = document.getElementById('hud-dropdown');
-
-      function setHudMenuOpen(open, withSound = false) {
-        const wasOpen = hudDropdown.classList.contains('is-open');
-        hudDropdown.classList.toggle('is-open', open);
-        hudToggleBtn.setAttribute('aria-expanded', String(open));
-        if (withSound && wasOpen !== open && UI_SFX) {
-          UI_SFX.playMenu(open);
-        }
-      }
-
-      hudToggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = hudDropdown.classList.contains('is-open');
-        setHudMenuOpen(!isOpen, true);
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!hudMenuWrapper.contains(e.target)) {
-          setHudMenuOpen(false, false);
-        }
-      });
-
-      // Botón Inicio -> lleva directamente a la portada (inicio.html) con transición suave
-      document.getElementById('btn-home').addEventListener('click', () => {
-        setHudMenuOpen(false, false);
-        if (UI_SFX) UI_SFX.playClick();
-        if (appState.prefs.reduceMotion || !exitCurtainEl) {
-          window.location.href = 'inicio.html';
-          return;
-        }
-        exitCurtainEl.classList.remove('pointer-events-none', 'opacity-0');
-        exitCurtainEl.classList.add('opacity-100');
-        setTimeout(() => {
-          window.location.href = 'inicio.html';
-        }, 420);
-      });
-
-      // Botón Ajustes -> abre modal unificado con tabs (Sonido | Accesibilidad)
-      document.getElementById('btn-settings').addEventListener('click', () => {
-        setHudMenuOpen(false, false);
-        updateAudioUI();
-        applyAccessibilityPrefs({ skipRender: true });
-        openModal('modal-settings');
-      });
-
-      // Botón Historial -> abre crónica minimalista con Reiniciar Historia integrado
-      document.getElementById('btn-history').addEventListener('click', () => {
-        setHudMenuOpen(false, false);
-        renderHistoryModal();
-        openModal('modal-history');
-      });
-
-      // -------------------- Pestañas (Tabs) de Ajustes --------------------
+      const modal = document.getElementById('modal-settings');
+      const cfgVolume = document.getElementById('cfg-volume');
+      const cfgVolumeLabel = document.getElementById('cfg-volume-label');
+      const cfgRowVoice = document.getElementById('cfg-row-voice');
+      const cfgRowVolume = document.getElementById('cfg-row-volume');
       const tabButtons = document.querySelectorAll('[data-settings-tab]');
       const tabIndicator = document.getElementById('settings-tab-indicator');
       const tabPanelSound = document.getElementById('tab-panel-sound');
       const tabPanelA11y = document.getElementById('tab-panel-a11y');
 
+      function syncSwitchEl(id, isOn) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.setAttribute('aria-checked', String(Boolean(isOn)));
+        const stateLabel = el.querySelector('.vn-switch-state');
+        if (stateLabel) stateLabel.textContent = isOn ? 'Activo' : 'Inactivo';
+      }
+
       function setSettingsTab(tabKey, withSound = false) {
         const isSound = tabKey === 'sound';
         tabButtons.forEach((btn) => {
-          const active = btn.dataset.settingsTab === tabKey;
-          btn.setAttribute('aria-selected', String(active));
+          btn.setAttribute('aria-selected', String(btn.dataset.settingsTab === tabKey));
         });
         if (tabIndicator) {
           tabIndicator.style.transform = isSound ? 'translateX(0%)' : 'translateX(100%)';
@@ -1799,206 +601,115 @@
         });
       });
 
-      // -------------------- Historial Minimalista + Reinicio en Línea --------------------
-      const restartDefaultEl = document.getElementById('history-restart-default');
-      const restartConfirmEl = document.getElementById('history-restart-confirm');
+      function syncUI() {
+        document.body.classList.toggle('high-contrast', prefs.highContrast);
+        document.body.classList.toggle('reduce-motion', prefs.reduceMotion);
 
-      function resetHistoryRestartConfirm() {
-        if (restartDefaultEl) restartDefaultEl.classList.remove('hidden');
-        if (restartConfirmEl) restartConfirmEl.classList.add('hidden');
-      }
+        syncSwitchEl('cfg-switch-audio', audioPrefs.enabled);
+        syncSwitchEl('cfg-switch-voice', audioPrefs.voiceEnabled);
+        syncSwitchEl('cfg-switch-contrast', prefs.highContrast);
+        syncSwitchEl('cfg-switch-subtitles', prefs.subtitles);
+        syncSwitchEl('cfg-switch-motion', prefs.reduceMotion);
+        syncSwitchEl('cfg-switch-fullscreen', Boolean(document.fullscreenElement));
 
-      document.getElementById('history-restart-trigger').addEventListener('click', () => {
-        if (UI_SFX) UI_SFX.playClick();
-        restartDefaultEl.classList.add('hidden');
-        restartConfirmEl.classList.remove('hidden');
-      });
+        if (cfgRowVoice) cfgRowVoice.classList.toggle('is-dimmed', !audioPrefs.enabled);
+        if (cfgRowVolume) cfgRowVolume.classList.toggle('is-dimmed', !audioPrefs.enabled);
 
-      document.getElementById('history-restart-no').addEventListener('click', () => {
-        if (UI_SFX) UI_SFX.playClick();
-        resetHistoryRestartConfirm();
-      });
+        const pct = Math.round(audioPrefs.volume * 100);
+        cfgVolume.value = String(pct);
+        cfgVolume.style.setProperty('--range-pct', `${pct}%`);
+        cfgVolumeLabel.textContent = `${pct}%`;
 
-      document.getElementById('history-restart-yes').addEventListener('click', () => {
-        if (UI_SFX) UI_SFX.playClick();
-        resetHistoryRestartConfirm();
-        closeAllModals(true);
-        restartStory();
-      });
-
-      function renderHistoryModal() {
-        resetHistoryRestartConfirm();
-        const list = document.getElementById('history-list');
-        list.innerHTML = '';
-
-        const entries = [
-          ...appState.history.map((h, idx) => ({
-            screen: STORY.SCREENS[h.id],
-            chosenLabel: h.chosenLabel,
-            historyIndex: idx
-          })),
-          {
-            screen: STORY.SCREENS[appState.currentId],
-            chosenLabel: null,
-            isCurrent: true
-          }
-        ];
-
-        entries.forEach((entry) => {
-          if (!entry.screen) return;
-          const item = document.createElement('article');
-          item.className = `vn-chronicle-entry ${entry.isCurrent ? 'is-current' : ''}`;
-
-          item.innerHTML = `
-            <span class="vn-chronicle-dot" aria-hidden="true"></span>
-            <div class="flex items-center justify-between gap-2 mb-1">
-              <span class="font-ui text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                entry.isCurrent ? 'text-amber-200' : 'text-slate-400'
-              }">
-                ${entry.screen.speaker}
-              </span>
-              ${
-                entry.isCurrent
-                  ? '<span class="font-ui text-[10px] uppercase tracking-[0.14em] text-amber-200/80">Actual</span>'
-                  : `<button type="button" class="vn-ghost-action py-0.5 px-1.5 text-[11px]" data-jump-idx="${entry.historyIndex}">Volver</button>`
-              }
-            </div>
-            <p class="font-narrative text-xs sm:text-[13px] ${
-              entry.isCurrent ? 'text-stone-100' : 'text-stone-300/90'
-            } leading-relaxed">${entry.screen.text.replace(/\n/g, '<br>')}</p>
-            ${
-              entry.chosenLabel
-                ? `<p class="font-ui text-[11px] italic text-slate-400/90 mt-1.5">↳ ${entry.chosenLabel}</p>`
-                : ''
-            }
-          `;
-
-          const jumpBtn = item.querySelector('[data-jump-idx]');
-          if (jumpBtn) {
-            jumpBtn.addEventListener('click', () => {
-              cancelPendingActSequence();
-              hideConsequenceToast();
-              if (dialogueBoxEl.stopTypewriter) dialogueBoxEl.stopTypewriter(false);
-              audioEngine.stopTypewriterAudio();
-              if (UI_SFX) UI_SFX.playClick();
-              const targetIdx = Number(jumpBtn.getAttribute('data-jump-idx'));
-              const target = appState.history[targetIdx];
-              appState.history = appState.history.slice(0, targetIdx);
-              if (target.memorySnapshot) appState.memory = { ...target.memorySnapshot };
-              renderScreen(target.id);
-              closeAllModals(true);
-            });
-          }
-
-          list.appendChild(item);
-        });
-
-        list.scrollTop = list.scrollHeight;
-      }
-
-      // -------------------- Helpers de Switches Claros (Activo / Inactivo) --------------------
-      function syncSwitchEl(id, isOn) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.setAttribute('aria-checked', String(Boolean(isOn)));
-        const stateLabel = el.querySelector('.vn-switch-state');
-        if (stateLabel) stateLabel.textContent = isOn ? 'Activo' : 'Inactivo';
-      }
-
-      // -------------------- Controles de Audio --------------------
-      const volInput = document.getElementById('audio-volume');
-
-      function updateAudioUI() {
-        syncSwitchEl('switch-audio', appState.audioEnabled);
-        syncSwitchEl('switch-voice', appState.voiceEnabled);
-
-        const rowVoice = document.getElementById('row-voice');
-        const rowVolume = document.getElementById('row-volume');
-        if (rowVoice) rowVoice.classList.toggle('is-dimmed', !appState.audioEnabled);
-        if (rowVolume) rowVolume.classList.toggle('is-dimmed', !appState.audioEnabled);
-
-        const pct = Math.round(appState.volume * 100);
-        if (volInput) {
-          volInput.value = String(pct);
-          volInput.style.setProperty('--range-pct', `${pct}%`);
-        }
-        const volLabel = document.getElementById('audio-volume-label');
-        if (volLabel) volLabel.textContent = `${pct}%`;
-
-        if (UI_SFX) {
-          UI_SFX.configure({ enabled: appState.audioEnabled, volume: appState.volume });
-        }
-      }
-
-      document.getElementById('switch-audio').addEventListener('click', () => {
-        const next = !appState.audioEnabled;
-        if (next && UI_SFX) {
-          UI_SFX.configure({ enabled: true, volume: appState.volume });
-          UI_SFX.playToggle(true);
-        } else if (!next && UI_SFX) {
-          UI_SFX.playToggle(false);
-        }
-        audioEngine.setEnabled(next);
-      });
-
-      document.getElementById('switch-voice').addEventListener('click', () => {
-        const next = !appState.voiceEnabled;
-        if (UI_SFX) UI_SFX.playToggle(next);
-        audioEngine.setVoiceEnabled(next);
-      });
-
-      volInput.addEventListener('input', () => {
-        const val = Number(volInput.value);
-        volInput.style.setProperty('--range-pct', `${val}%`);
-        document.getElementById('audio-volume-label').textContent = `${val}%`;
-        audioEngine.setVolume(val / 100);
-        if (UI_SFX) UI_SFX.configure({ enabled: appState.audioEnabled, volume: val / 100 });
-      });
-
-      // -------------------- Controles de Accesibilidad --------------------
-      function applyAccessibilityPrefs(renderOptions = {}) {
-        document.body.classList.toggle('high-contrast', appState.prefs.highContrast);
-        document.body.classList.toggle('reduce-motion', appState.prefs.reduceMotion);
-        document.documentElement.style.setProperty('--narrative-scale', String(appState.prefs.fontScale));
-
-        syncSwitchEl('switch-contrast', appState.prefs.highContrast);
-        syncSwitchEl('switch-subtitles', appState.prefs.subtitles);
-        syncSwitchEl('switch-motion', appState.prefs.reduceMotion);
-        syncSwitchEl('switch-fullscreen', Boolean(document.fullscreenElement));
-
-        document.querySelectorAll('.a11y-scale-btn').forEach((btn) => {
-          const active = Number(btn.dataset.fontScale) === appState.prefs.fontScale;
+        document.querySelectorAll('.cfg-scale-btn').forEach((btn) => {
+          const active = Number(btn.dataset.fontScale) === prefs.fontScale;
           btn.classList.toggle('is-active', active);
         });
 
-        try {
-          localStorage.setItem('blinky_prefs', JSON.stringify(appState.prefs));
-        } catch (e) {}
-
-        if (!renderOptions.skipRender) {
-          renderScreen(appState.currentId, renderOptions);
+        if (UI_SFX) {
+          UI_SFX.configure({ enabled: audioPrefs.enabled, volume: audioPrefs.volume });
         }
       }
 
-      document.getElementById('switch-contrast').addEventListener('click', () => {
-        appState.prefs.highContrast = !appState.prefs.highContrast;
-        if (UI_SFX) UI_SFX.playToggle(appState.prefs.highContrast);
-        applyAccessibilityPrefs({ skipRender: true });
+      function persist() {
+        try {
+          localStorage.setItem('blinky_prefs', JSON.stringify(prefs));
+          localStorage.setItem('blinky_audio', JSON.stringify(audioPrefs));
+        } catch (e) {}
+      }
+
+      function openModal() {
+        syncUI();
+        modal.classList.add('is-open');
+        if (UI_SFX) UI_SFX.playMenu(true);
+      }
+
+      function closeModal() {
+        if (!modal.classList.contains('is-open')) return;
+        modal.classList.remove('is-open');
+        if (UI_SFX) UI_SFX.playMenu(false);
+      }
+
+      document.getElementById('btn-quick-settings').addEventListener('click', openModal);
+      document.getElementById('close-settings').addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
       });
 
-      document.getElementById('switch-subtitles').addEventListener('click', () => {
-        appState.prefs.subtitles = !appState.prefs.subtitles;
-        if (UI_SFX) UI_SFX.playToggle(appState.prefs.subtitles);
-        applyAccessibilityPrefs({ skipTypewriter: true });
+      document.getElementById('cfg-switch-audio').addEventListener('click', () => {
+        audioPrefs.enabled = !audioPrefs.enabled;
+        if (audioPrefs.enabled && UI_SFX) {
+          UI_SFX.configure({ enabled: true, volume: audioPrefs.volume });
+          UI_SFX.playToggle(true);
+        } else if (!audioPrefs.enabled && UI_SFX) {
+          UI_SFX.playToggle(false);
+        }
+        persist();
+        syncUI();
+        syncPiano();
       });
 
-      document.getElementById('switch-motion').addEventListener('click', () => {
-        appState.prefs.reduceMotion = !appState.prefs.reduceMotion;
-        if (UI_SFX) UI_SFX.playToggle(appState.prefs.reduceMotion);
-        applyAccessibilityPrefs({ skipRender: true });
+      document.getElementById('cfg-switch-voice').addEventListener('click', () => {
+        audioPrefs.voiceEnabled = !audioPrefs.voiceEnabled;
+        if (UI_SFX) UI_SFX.playToggle(audioPrefs.voiceEnabled);
+        persist();
+        syncUI();
       });
 
-      document.getElementById('switch-fullscreen').addEventListener('click', () => {
+      cfgVolume.addEventListener('input', () => {
+        const val = Number(cfgVolume.value);
+        audioPrefs.volume = val / 100;
+        cfgVolume.style.setProperty('--range-pct', `${val}%`);
+        cfgVolumeLabel.textContent = `${val}%`;
+        persist();
+        syncPiano();
+        if (UI_SFX) UI_SFX.configure({ enabled: audioPrefs.enabled, volume: audioPrefs.volume });
+      });
+
+      document.getElementById('cfg-switch-contrast').addEventListener('click', () => {
+        prefs.highContrast = !prefs.highContrast;
+        if (UI_SFX) UI_SFX.playToggle(prefs.highContrast);
+        persist();
+        syncUI();
+      });
+
+      document.getElementById('cfg-switch-subtitles').addEventListener('click', () => {
+        prefs.subtitles = !prefs.subtitles;
+        if (UI_SFX) UI_SFX.playToggle(prefs.subtitles);
+        persist();
+        syncUI();
+      });
+
+      document.getElementById('cfg-switch-motion').addEventListener('click', () => {
+        prefs.reduceMotion = !prefs.reduceMotion;
+        if (UI_SFX) UI_SFX.playToggle(prefs.reduceMotion);
+        persist();
+        syncUI();
+      });
+
+      document.getElementById('cfg-switch-fullscreen').addEventListener('click', () => {
         const entering = !document.fullscreenElement;
         if (UI_SFX) UI_SFX.playToggle(entering);
         if (entering) {
@@ -2009,455 +720,87 @@
       });
 
       document.addEventListener('fullscreenchange', () => {
-        syncSwitchEl('switch-fullscreen', Boolean(document.fullscreenElement));
+        syncSwitchEl('cfg-switch-fullscreen', Boolean(document.fullscreenElement));
       });
 
-      document.querySelectorAll('.a11y-scale-btn').forEach((btn) => {
+      function dismissWelcome() {
+        if (welcomeDismissed) return;
+        welcomeDismissed = true;
+        try { localStorage.setItem(WELCOME_SEEN_KEY, '1'); } catch (e) {}
+        if (modalWelcome) modalWelcome.classList.remove('is-open');
+        if (UI_SFX) {
+          UI_SFX.configure({ enabled: audioPrefs.enabled, volume: audioPrefs.volume });
+          UI_SFX.unlock();
+          UI_SFX.playClick();
+        }
+        if (audioPrefs.enabled) {
+          syncPiano();
+        }
+      }
+
+      document.getElementById('btn-welcome-start').addEventListener('click', dismissWelcome);
+      document.addEventListener('keydown', (e) => {
+        if (!welcomeDismissed && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          dismissWelcome();
+        }
+      });
+
+      document.querySelectorAll('.cfg-scale-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
-          appState.prefs.fontScale = Number(btn.dataset.fontScale);
+          prefs.fontScale = Number(btn.dataset.fontScale);
           if (UI_SFX) UI_SFX.playClick();
-          applyAccessibilityPrefs({ skipRender: true });
+          persist();
+          syncUI();
         });
       });
 
-      // Delegamos sonidos sutiles de hover en toda la interfaz
       if (UI_SFX) {
         UI_SFX.attachHoverDelegation();
       }
 
-      // -------------------- Encuesta de Experiencia --------------------
-      function openSurveyModal() {
-        const screen = STORY.SCREENS[appState.currentId];
-        document.getElementById('survey-error').classList.add('hidden');
-        document.getElementById('survey-form').classList.remove('hidden');
-        document.getElementById('survey-confirm').classList.add('hidden');
-        document.getElementById('survey-success').classList.add('hidden');
+      let isTransitioning = false;
+      const exitCurtain = document.getElementById('exit-curtain');
 
-        if (screen && screen.isEnding) {
-          const radio = document.querySelector(`input[name="survey-ending"][value="${screen.isEnding}"]`);
-          if (radio) radio.checked = true;
-        }
-        openModal('modal-survey');
-      }
-
-      document.getElementById('survey-form').addEventListener('submit', (e) => {
+      document.getElementById('btn-play').addEventListener('click', (e) => {
         e.preventDefault();
-        const aliasInput = document.getElementById('survey-alias');
-        const endingRadio = document.querySelector('input[name="survey-ending"]:checked');
-        const errorBox = document.getElementById('survey-error');
+        if (isTransitioning) return;
+        isTransitioning = true;
+        if (UI_SFX) UI_SFX.playStartChord();
+        persist();
 
-        const aliasVal = aliasInput.value.trim();
-        if (!aliasVal || !endingRadio) {
-          errorBox.classList.remove('hidden');
-          if (!aliasVal) {
-            aliasInput.focus();
-          } else {
-            const firstRadio = document.querySelector('input[name="survey-ending"]');
-            if (firstRadio) firstRadio.focus();
-          }
+        const targetUrl = e.currentTarget.getAttribute('href') || 'juego.html?play=1';
+
+        // Fundido suave del piano y de la portada hacia la oscuridad antes de entrar al Acto I
+        if (prefs.reduceMotion) {
+          pianoAudio.pause();
+          window.location.href = targetUrl;
           return;
         }
 
-        errorBox.classList.add('hidden');
-        document.getElementById('survey-form').classList.add('hidden');
-        document.getElementById('survey-confirm').classList.remove('hidden');
+        // Fundido limpio a oscuridad y atenuación suave del piano
+        exitCurtain.classList.remove('pointer-events-none', 'opacity-0');
+        exitCurtain.classList.add('opacity-100');
+
+        const startVol = pianoAudio.volume;
+        const fadeSteps = 20;
+        let step = 0;
+        const fadeTimer = setInterval(() => {
+          step += 1;
+          pianoAudio.volume = Math.max(0, startVol * (1 - step / fadeSteps));
+          if (step >= fadeSteps) {
+            clearInterval(fadeTimer);
+            pianoAudio.pause();
+          }
+        }, 48);
+
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 1150);
       });
 
-      document.getElementById('survey-confirm-no').addEventListener('click', () => {
-        document.getElementById('survey-confirm').classList.add('hidden');
-        document.getElementById('survey-form').classList.remove('hidden');
-      });
-
-      document.getElementById('survey-confirm-yes').addEventListener('click', () => {
-        document.getElementById('survey-confirm').classList.add('hidden');
-        document.getElementById('survey-success').classList.remove('hidden');
-      });
-
-      document.getElementById('survey-restart-btn').addEventListener('click', () => {
-        document.getElementById('survey-form').reset();
-        closeAllModals();
-        restartStory();
-      });
-
-      // -------------------- Atajos de Teclado Accesibles --------------------
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          if (hudDropdown.classList.contains('is-open')) {
-            setHudMenuOpen(false);
-            return;
-          }
-          if (isAnyModalOpen()) {
-            closeAllModals();
-            return;
-          }
-        }
-        if (isAnyModalOpen()) return;
-        if (actIntroOverlay && !actIntroOverlay.classList.contains('is-hidden')) {
-          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
-            e.preventDefault();
-            hideActIntro(true);
-          }
-          return;
-        }
-        if (pendingActDelayTimer) return;
-        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-
-        const screen = STORY.SCREENS[appState.currentId];
-        if (!screen) return;
-
-        if ((e.key === 'Enter' || e.key === ' ') && screen.choices.length === 1) {
-          if (dialogueBoxEl.isTyping && dialogueBoxEl.isTyping()) {
-            e.preventDefault();
-            dialogueBoxEl.stopTypewriter(true);
-            return;
-          }
-          if (document.activeElement.tagName !== 'BUTTON') {
-            e.preventDefault();
-            const btn = dialogueBoxEl.querySelector('blinky-action-button button');
-            if (btn) btn.click();
-          }
-        } else if (e.key === '1' && screen.choices[0]) {
-          const btns = dialogueBoxEl.querySelectorAll('blinky-action-button button');
-          if (btns[0]) btns[0].click();
-        } else if (e.key === '2' && screen.choices[1]) {
-          const btns = dialogueBoxEl.querySelectorAll('blinky-action-button button');
-          if (btns[1]) btns[1].click();
-        } else if (e.key === 'Backspace' && appState.history.length > 0) {
-          e.preventDefault();
-          const backBtn = dialogueBoxEl.querySelector('[data-action="go-back"]');
-          if (backBtn) backBtn.click();
-        } else if (e.key.toLowerCase() === 'h') {
-          renderHistoryModal();
-          openModal('modal-history');
-        }
-      });
-
-      // -------------------- Inicialización --------------------
-      try {
-        const saved = JSON.parse(localStorage.getItem('blinky_prefs') || 'null');
-        if (saved && typeof saved === 'object') {
-          Object.assign(appState.prefs, saved);
-        }
-        const savedAudio = JSON.parse(localStorage.getItem('blinky_audio') || 'null');
-        if (savedAudio && typeof savedAudio === 'object') {
-          if (typeof savedAudio.volume === 'number') {
-            appState.volume = savedAudio.volume;
-            volInput.value = String(Math.round(savedAudio.volume * 100));
-            document.getElementById('audio-volume-label').textContent = `${volInput.value}%`;
-          }
-          if (typeof savedAudio.enabled === 'boolean') {
-            appState.audioEnabled = savedAudio.enabled;
-          }
-          if (typeof savedAudio.voiceEnabled === 'boolean') {
-            appState.voiceEnabled = savedAudio.voiceEnabled;
-          }
-        }
-      } catch (e) { }
-
-      // -------------------- Transiciones Cinematográficas de Todos los Actos --------------------
-      const ACT_INTRO_THEMES = {
-        'acto-1': {
-          eyebrow: 'Acto I',
-          title: 'El Nido Roto',
-          grad: ['#F59E0B', '#FBBF24', '#FDE68A', '#FDE68A'],
-          sub: ['#94A3B8', '#FDE68A', '#F59E0B', '#F59E0B']
-        },
-        'acto-2a': {
-          eyebrow: 'Acto II',
-          title: 'La Búsqueda',
-          grad: ['#4F46E5', '#818CF8', '#CBD5E1', '#E0E7FF'],
-          sub: ['#64748B', '#BFDBFE', '#6366F1', '#6366F1']
-        },
-        'rama-gato': {
-          eyebrow: 'Acto II · Senda',
-          title: 'El Callejón Protegido',
-          grad: ['#6D28D9', '#A78BFA', '#DDD6FE', '#E0F2FE'],
-          sub: ['#94A3B8', '#DDD6FE', '#8B5CF6', '#8B5CF6']
-        },
-        'acto-2b': {
-          eyebrow: 'Acto II',
-          title: 'La Noche del Gigante',
-          grad: ['#991B1B', '#D97706', '#FDBA74', '#FDE68A'],
-          sub: ['#94A3B8', '#FDBA74', '#B45309', '#B45309']
-        },
-        'rama-perro': {
-          eyebrow: 'Acto II · Senda',
-          title: 'La Escolta',
-          grad: ['#92400E', '#D97706', '#FCD34D', '#FDE68A'],
-          sub: ['#A8A29E', '#FDE68A', '#B45309', '#B45309']
-        },
-        'acto-3': {
-          eyebrow: 'Acto III',
-          title: 'La Encrucijada Olfativa',
-          grad: ['#0284C7', '#7DD3FC', '#FBBF24', '#FDE68A'],
-          sub: ['#38BDF8', '#BAE6FD', '#F59E0B', '#F59E0B']
-        },
-        'rama-extravio': {
-          eyebrow: 'Acto II · Senda',
-          title: 'El Extravío',
-          grad: ['#334155', '#64748B', '#CBD5E1', '#E2E8F0'],
-          sub: ['#475569', '#CBD5E1', '#64748B', '#64748B']
-        },
-        'acto-4a': {
-          eyebrow: 'Acto IV',
-          title: 'Un Nuevo Hogar',
-          grad: ['#D97706', '#FDE68A', '#FFFBEB', '#E0F2FE'],
-          sub: ['#BAE6FD', '#FEF3C7', '#F59E0B', '#F59E0B']
-        },
-        'acto-4b': {
-          eyebrow: 'Acto IV',
-          title: 'El Falso Calor',
-          grad: ['#7C2D12', '#C2410C', '#94A3B8', '#CBD5E1'],
-          sub: ['#64748B', '#FDBA74', '#9A3412', '#9A3412']
-        }
-      };
-
-      const actIntroOverlay = document.getElementById('act-intro-overlay');
-      const actIntroEyebrow = document.getElementById('act-intro-eyebrow');
-      const actIntroTitle = document.getElementById('act-intro-title');
-      let actIntroTimers = [];
-
-      function applyActIntroTheme(actId) {
-        const theme = ACT_INTRO_THEMES[actId] || ACT_INTRO_THEMES['acto-1'];
-        actIntroOverlay.setAttribute('data-act-theme', ACT_INTRO_THEMES[actId] ? actId : 'acto-1');
-        theme.grad.forEach((col, i) => {
-          const st = document.getElementById(`act-grad-stop-${i}`);
-          if (st) st.setAttribute('stop-color', col);
-        });
-        theme.sub.forEach((col, i) => {
-          const st = document.getElementById(`act-sub-stop-${i}`);
-          if (st) st.setAttribute('stop-color', col);
-        });
-        return theme;
-      }
-
-      function clearActIntroTimers() {
-        actIntroTimers.forEach((id) => clearTimeout(id));
-        actIntroTimers = [];
-      }
-
-      function hideActIntro(skippedByUser = false) {
-        const wasVisible = !actIntroOverlay.classList.contains('is-hidden');
-        const targetId = pendingActTargetId || appState.currentId || STORY.START_ID;
-        pendingActTargetId = null;
-        clearActIntroTimers();
-        audioEngine.stopTypewriterAudio();
-        hideConsequenceToast();
-        actIntroOverlay.classList.add('is-hidden');
-
-        // Al levantarse la cortina del acto, entra la escena siguiente limpia sin ningún mensaje encima.
-        if (wasVisible && STORY.SCREENS[targetId]) {
-          const targetScreen = STORY.SCREENS[targetId];
-          if (appState.audioEnabled) {
-            audioEngine.startAmbientOnly(targetScreen);
-          }
-          const revealDelay = appState.prefs.reduceMotion ? 0 : (skippedByUser ? 260 : 980);
-          actIntroTimers.push(
-            setTimeout(() => {
-              dialogueSectionEl.classList.remove('opacity-0', 'pointer-events-none');
-              renderScreen(targetId, { immediateVoice: false });
-            }, revealDelay)
-          );
-        }
-      }
-
-      function playActIntro(actId, targetScreenId, options = {}) {
-        const theme = applyActIntroTheme(actId);
-        pendingActTargetId = targetScreenId || STORY.START_ID;
-
-        if (appState.prefs.reduceMotion) {
-          hideActIntro(true);
-          return;
-        }
-
-        clearActIntroTimers();
-        actIntroEyebrow.textContent = options.eyebrow || theme.eyebrow;
-        actIntroEyebrow.classList.remove('is-entering');
-        void actIntroEyebrow.offsetWidth;
-        actIntroEyebrow.classList.add('is-entering');
-
-        actIntroTitle.innerHTML = '';
-
-        // Preparar la pincelada en estado inicial (se dispara justo al terminar de escribir)
-        const brushEls = actIntroOverlay.querySelectorAll('.act-brush-path, .act-brush-accent, .act-brush-glow');
-        brushEls.forEach((el) => {
-          el.classList.remove('is-sweeping');
-          void el.offsetWidth;
-        });
-
-        actIntroOverlay.classList.remove('is-hidden');
-
-        // Pre-maquetamos palabras completas indivisibles con letras inline (preserva kerning cursivo
-        // de Great Vibes sin letras sobrepuestas y evita saltos de línea de una sola letra)
-        const titleText = options.title || theme.title;
-        const words = titleText.trim().split(/\s+/).filter(Boolean);
-        let tCursor = typeof options.startDelay === 'number' ? options.startDelay : 820;
-
-        words.forEach((word, wIdx) => {
-          const wordEl = document.createElement('span');
-          wordEl.className = 'act-intro-word';
-
-          Array.from(word).forEach((ch) => {
-            const chEl = document.createElement('span');
-            chEl.className = 'act-intro-char';
-            chEl.textContent = ch;
-            wordEl.appendChild(chEl);
-
-            const revealAt = tCursor;
-            const timerId = setTimeout(() => {
-              chEl.classList.add('is-visible');
-              audioEngine.playTypewriterKey(true);
-            }, revealAt);
-            actIntroTimers.push(timerId);
-            tCursor += 165;
-          });
-
-          actIntroTitle.appendChild(wordEl);
-          if (wIdx < words.length - 1) {
-            actIntroTitle.appendChild(document.createTextNode(' '));
-            tCursor += 195;
-          }
-        });
-
-        // Justo al terminar la última letra: trazado lento de pincelada + sonido de transición
-        const brushStart = tCursor + 200;
-        actIntroTimers.push(
-          setTimeout(() => {
-            brushEls.forEach((el) => el.classList.add('is-sweeping'));
-            if (appState.audioEnabled) {
-              const transAudio = new Audio('audio/transicion_acto.wav');
-              transAudio.volume = Math.max(0.14, Math.min(1, appState.volume * 0.82));
-              transAudio.play().catch(() => { });
-            }
-          }, brushStart)
-        );
-
-        // Pausa contemplativa antes de disolver suavemente hacia la primera escena del acto
-        actIntroTimers.push(
-          setTimeout(() => {
-            hideActIntro(false);
-          }, brushStart + 2450)
-        );
-      }
-
-      function transitionToActScreen(targetScreenId, options = {}) {
-        const targetScreen = STORY.SCREENS[targetScreenId];
-        if (!targetScreen) return;
-
-        const showConsequenceFirst = Boolean(options.showConsequenceFirst);
-        const showActTitle = options.showActTitle !== false;
-
-        audioEngine.stopForActTransition();
-        clearActIntroTimers();
-        audioEngine.stopTypewriterAudio();
-        hideConsequenceToast();
-        pendingActTargetId = targetScreen.id;
-        applyActIntroTheme(targetScreen.act);
-
-        // Precargamos la escena siguiente oculta detrás del telón una vez cubierto
-        const preloadBehindCurtain = () => {
-          dialogueSectionEl.classList.add('opacity-0', 'pointer-events-none');
-          loadSceneBackground(targetScreen);
-          applyTensionAtmosphere(targetScreen);
-          const actObj = STORY.ACTS[targetScreen.act];
-          if (actObj) chapterTitleEl.textContent = actObj.shortTitle;
-        };
-
-        if (showConsequenceFirst) {
-          // 1. Toda la pantalla se funde a negro puro
-          actIntroTitle.innerHTML = '';
-          actIntroEyebrow.classList.remove('is-entering');
-          actIntroOverlay.classList.add('is-consequence-phase');
-          actIntroOverlay.classList.remove('is-hidden');
-
-          actIntroTimers.push(setTimeout(preloadBehindCurtain, 540));
-
-          // 2. Ya en negro, aparece centrado "Este acto tendrá consecuencias…"
-          actIntroTimers.push(
-            setTimeout(() => {
-              showConsequenceToast();
-            }, 680)
-          );
-
-          // 3. Al desvanecerse el mensaje en negro, entra el nombre del acto (o la escena limpia)
-          actIntroTimers.push(
-            setTimeout(() => {
-              hideConsequenceToast();
-              if (showActTitle) {
-                playActIntro(targetScreen.act, targetScreen.id, { startDelay: 460 });
-              } else {
-                hideActIntro(false);
-              }
-            }, 3980)
-          );
-        } else {
-          // Cambio de acto lineal sin decisión previa: directo al nombre mecanográfico del acto
-          playActIntro(targetScreen.act, targetScreen.id, { startDelay: 1050 });
-          actIntroTimers.push(setTimeout(preloadBehindCurtain, 560));
-        }
-      }
-
-      actIntroOverlay.addEventListener('click', () => hideActIntro(true));
-
-      // Si viene desde inicio.html (?play=1), reproduce primero el título del Acto I en silencio limpio.
-      // Si se abre index.html directamente, solo muestra el aviso inicial si aún no fue aceptado en caché del navegador.
-      const WELCOME_SEEN_KEY = 'blinky_welcome_seen';
-      let welcomeAlreadySeen = false;
-      try {
-        welcomeAlreadySeen = localStorage.getItem(WELCOME_SEEN_KEY) === '1';
-      } catch (e) {}
-
-      const params = new URLSearchParams(window.location.search);
-      const fromStartScreen = params.get('play') === '1';
-      const modalWelcomeEl = document.getElementById('modal-welcome');
-      let directWelcomePending = false;
-
-      function startDirectAfterWelcome() {
-        if (!directWelcomePending) return;
-        directWelcomePending = false;
-        try { localStorage.setItem(WELCOME_SEEN_KEY, '1'); } catch (e) {}
-        if (modalWelcomeEl) modalWelcomeEl.classList.remove('is-open');
-        if (UI_SFX) {
-          UI_SFX.configure({ enabled: appState.audioEnabled, volume: appState.volume });
-          UI_SFX.unlock();
-          UI_SFX.playClick();
-        }
-        dialogueSectionEl.classList.remove('opacity-0', 'pointer-events-none');
-        applyAccessibilityPrefs();
-      }
-
-      document.getElementById('btn-welcome-start').addEventListener('click', startDirectAfterWelcome);
-      document.addEventListener('keydown', (e) => {
-        if (directWelcomePending && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          startDirectAfterWelcome();
-        }
-      });
-
-      updateAudioUI();
-
-      if (fromStartScreen && !appState.prefs.reduceMotion) {
-        // Ocultamos la caja de diálogo detrás de la cortina hasta que termine la presentación del Acto I
-        dialogueSectionEl.classList.add('opacity-0', 'pointer-events-none');
-        applyAccessibilityPrefs({ skipRender: true });
-        // Precargamos la imagen de S01 en segundo plano sin iniciar su diálogo, voz ni lluvia aún
-        loadSceneBackground(STORY.SCREENS['S01']);
-        playActIntro('acto-1', 'S01', { startDelay: 820 });
-      } else if (!fromStartScreen && !welcomeAlreadySeen) {
-        // Primera apertura directa de index.html: mostramos el modal inicial y guardamos el estado al aceptar
-        directWelcomePending = true;
-        dialogueSectionEl.classList.add('opacity-0', 'pointer-events-none');
-        applyAccessibilityPrefs({ skipRender: true });
-        loadSceneBackground(STORY.SCREENS['S01']);
-        if (modalWelcomeEl) modalWelcomeEl.classList.add('is-open');
-      } else {
-        if (fromStartScreen && appState.audioEnabled) {
-          audioEngine.setEnabled(true);
-        }
-        applyAccessibilityPrefs();
-      }
+      syncUI();
     })();
   </script>
 </body>
-
 </html>

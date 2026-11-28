@@ -1,0 +1,8 @@
+# Archivos de documentación, bocetos y scripts que no son necesarios en producción
+*.pdf
+*.tex
+scripts/
+.sfx_cache/
+code.html
+code_2.html
+twine_boceto_original.html
