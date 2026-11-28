@@ -444,61 +444,83 @@
           <span class="vn-panel-corner vn-panel-corner--bl" aria-hidden="true"></span>
           <span class="vn-panel-corner vn-panel-corner--br" aria-hidden="true"></span>
 
-          <div class="px-6 sm:px-7 pt-6 pb-4 border-b border-white/[0.08] text-center">
-            <p id="survey-ending-badge"
-              class="text-[10px] uppercase tracking-[0.26em] text-amber-200/80 font-medium">
-              Final I · Un Nuevo Hogar
+          <div class="px-6 pt-5 pb-3.5 border-b border-white/[0.08]">
+            <p class="text-[10px] uppercase tracking-[0.22em] text-amber-200/80 font-semibold">
+              SISTEMA · EVALUACIÓN DE LA EXPERIENCIA
             </p>
-            <h2 id="survey-page-title"
-              class="font-title text-2xl sm:text-[1.75rem] font-semibold text-stone-100 leading-tight mt-1">
-              Antes de terminar, comparte tus impresiones
+            <h2 id="survey-page-title" class="font-title text-2xl font-semibold text-stone-100 leading-tight mt-0.5">
+              Encuesta de Experiencia
             </h2>
-            <p class="text-[11px] sm:text-xs text-slate-300/90 mt-1.5 leading-relaxed">
-              Completa este breve formulario obligatorio para desbloquear los créditos finales del viaje de Blinky.
-            </p>
           </div>
 
-          <div id="survey-body" class="p-6 sm:p-7 space-y-4 text-xs sm:text-sm">
+          <div id="survey-body" class="p-5 sm:p-6 space-y-4 text-xs sm:text-sm">
+            <p id="survey-intro-text" class="text-slate-300 leading-relaxed">
+              Has llegado al final del recorrido. Comparte cómo viviste la historia: cuéntanos cómo te sentiste durante
+              la lectura, cómo crees que se sintió Blinky y qué final descubriste en esta partida.
+            </p>
+
             <div id="survey-error"
-              class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-300/50 text-amber-200 text-xs font-medium leading-relaxed"
+              class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-300/65 text-amber-200 text-xs font-medium leading-relaxed flex items-start gap-2"
               role="alert">
-              Por favor completa tu nombre o alias, confirma el final al que llegaste y escribe una breve reflexión sobre cómo se sintió Blinky para continuar.
+              <span class="font-bold shrink-0" aria-hidden="true">!</span>
+              <span>Error: Por favor, selecciona a qué final llegaste e ingresa tu alias o nombre para poder enviar tus
+                respuestas.</span>
             </div>
 
             <form id="survey-form" class="space-y-4" novalidate>
+              <!-- Bloque 1: Identificación del lector -->
               <div>
-                <label for="survey-alias" class="block text-xs font-medium text-slate-200 mb-1.5">
-                  Tu nombre o alias <span class="text-amber-300">*</span>
-                </label>
-                <input id="survey-alias" type="text" required placeholder="Ej. Sofía"
-                  class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3.5 py-2.5 focus:border-amber-300 focus:ring-amber-300" />
+                <label for="survey-alias" class="block text-xs font-medium text-slate-200 mb-1.5">Tu nombre o alias</label>
+                <input id="survey-alias" type="text" placeholder="Ej. Sofía"
+                  class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3.5 py-2 focus:border-amber-300 focus:ring-amber-300" />
               </div>
 
-              <fieldset class="space-y-2">
-                <legend class="text-xs font-medium text-slate-200 mb-1.5">
-                  ¿A qué final llegaste? <span class="text-amber-300">*</span>
-                </legend>
+              <!-- Bloque 2: Selector de desenlace -->
+              <fieldset class="space-y-1.5">
+                <legend class="text-xs font-medium text-slate-200 mb-1.5">¿A qué final llegaste?</legend>
                 <label
                   class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
                   <input type="radio" name="survey-ending" value="F01"
                     class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs sm:text-[13px] text-stone-200">Un nuevo hogar (Adopción con la niña)</span>
+                  <span class="text-xs text-stone-200">Final Bueno (F01 - Adopción con la niña)</span>
                 </label>
                 <label
                   class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
                   <input type="radio" name="survey-ending" value="F02"
                     class="text-amber-400 bg-[#161F2B] border-white/25" />
-                  <span class="text-xs sm:text-[13px] text-stone-200">El falso calor (El calefactor metálico)</span>
+                  <span class="text-xs text-stone-200">Final Triste (F02 - El calefactor metálico)</span>
                 </label>
               </fieldset>
 
-              <div>
-                <label for="survey-reflection" class="block text-xs font-medium text-slate-200 mb-1.5">
-                  ¿Cómo te sentiste y cómo crees que se sintió Blinky a lo largo del viaje? <span class="text-amber-300">*</span>
+              <!-- Bloque 3: Selector emocional -->
+              <fieldset class="space-y-1.5">
+                <legend class="text-xs font-medium text-slate-200 mb-1.5">¿Cómo te sentiste como lector?</legend>
+                <label
+                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                  <input type="radio" name="survey-emotion" value="Tensión / Angustia"
+                    class="text-amber-400 bg-[#161F2B] border-white/25" />
+                  <span class="text-xs text-stone-200">Tensión / Angustia</span>
                 </label>
-                <textarea id="survey-reflection" rows="3" required
-                  placeholder="Cuéntanos qué sentiste durante la historia..."
-                  class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3.5 py-2.5 focus:border-amber-300 focus:ring-amber-300"></textarea>
+                <label
+                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                  <input type="radio" name="survey-emotion" value="Conexión / Ternura"
+                    class="text-amber-400 bg-[#161F2B] border-white/25" />
+                  <span class="text-xs text-stone-200">Conexión / Ternura</span>
+                </label>
+                <label
+                  class="survey-radio-card flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.03] border border-white/10 cursor-pointer">
+                  <input type="radio" name="survey-emotion" value="Frustración / Tristeza"
+                    class="text-amber-400 bg-[#161F2B] border-white/25" />
+                  <span class="text-xs text-stone-200">Frustración / Tristeza</span>
+                </label>
+              </fieldset>
+
+              <!-- Bloque 4: Área de texto abierto (Empatía hacia Blinky) -->
+              <div>
+                <label for="survey-reflection" class="block text-xs font-medium text-slate-200 mb-1.5">¿Cómo crees que se
+                  sintió Blinky a lo largo del viaje? <span class="text-slate-400 font-normal">(Opcional)</span></label>
+                <textarea id="survey-reflection" rows="3" placeholder="Escribe tus impresiones..."
+                  class="w-full rounded-xl bg-[#161F2B] border border-white/15 text-stone-100 text-xs sm:text-sm px-3.5 py-2 focus:border-amber-300 focus:ring-amber-300"></textarea>
               </div>
 
               <button type="submit"
@@ -507,11 +529,13 @@
               </button>
             </form>
 
-            <div id="survey-confirm" class="hidden space-y-4 p-4 rounded-xl bg-white/[0.04] border border-white/15">
-              <p class="text-stone-100 text-xs sm:text-sm leading-relaxed text-center">
-                ¿Deseas enviar tus impresiones sobre la experiencia de Blinky y pasar a los créditos finales?
+            <!-- Paso previo: Confirmación -->
+            <div id="survey-confirm" class="hidden space-y-3.5 p-4 rounded-xl bg-white/[0.04] border border-white/15">
+              <p class="text-stone-100 text-xs sm:text-sm leading-relaxed">
+                ¿Deseas enviar tus impresiones sobre la experiencia de Blinky con estos datos? Podrás reiniciar la
+                historia para explorar otras rutas.
               </p>
-              <div class="flex gap-2.5">
+              <div class="flex gap-2">
                 <button id="survey-confirm-yes" type="button"
                   class="vn-btn flex-1 rounded-xl font-ui text-xs font-semibold justify-center flex cursor-pointer">
                   Confirmar y enviar
@@ -523,12 +547,11 @@
               </div>
             </div>
 
-            <div id="survey-success" class="hidden space-y-4 text-center py-3">
-              <p class="font-title text-2xl sm:text-3xl font-semibold text-amber-200">
-                ¡Muchas gracias por tus respuestas!
-              </p>
+            <!-- Pantalla de éxito y cierre -->
+            <div id="survey-success" class="hidden space-y-3.5 text-center py-3">
+              <p class="font-title text-2xl font-semibold text-amber-200">¡Muchas gracias por tus respuestas!</p>
               <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Tus reflexiones nos ayudan a enriquecer la experiencia sensorial e inclusiva de Blinky.
+                Tus reflexiones nos ayudan a mejorar la experiencia sensorial e inclusiva de Blinky.
               </p>
               <button id="survey-to-credits-btn" type="button"
                 class="vn-btn w-full rounded-xl font-ui text-xs sm:text-sm font-semibold justify-center flex cursor-pointer">
@@ -2768,20 +2791,16 @@
         e.preventDefault();
         const aliasInput = document.getElementById('survey-alias');
         const endingRadio = document.querySelector('input[name="survey-ending"]:checked');
-        const reflectionInput = document.getElementById('survey-reflection');
         const errorBox = document.getElementById('survey-error');
 
         const aliasVal = aliasInput.value.trim();
-        const reflectionVal = reflectionInput.value.trim();
-        if (!aliasVal || !endingRadio || !reflectionVal) {
+        if (!aliasVal || !endingRadio) {
           errorBox.classList.remove('hidden');
           if (!aliasVal) {
             aliasInput.focus();
-          } else if (!endingRadio) {
+          } else {
             const firstRadio = document.querySelector('input[name="survey-ending"]');
             if (firstRadio) firstRadio.focus();
-          } else {
-            reflectionInput.focus();
           }
           return;
         }
@@ -2800,15 +2819,17 @@
 
       document.getElementById('survey-confirm-yes').addEventListener('click', () => {
         if (UI_SFX) UI_SFX.playClick();
-        // Guardamos las respuestas en almacenamiento local para consulta posterior
+        // Guardamos las respuestas de S53 (alias, desenlace, emoción, reflexión y ruta) en almacenamiento local
         try {
           const aliasVal = document.getElementById('survey-alias').value.trim();
           const endingRadio = document.querySelector('input[name="survey-ending"]:checked');
+          const emotionRadio = document.querySelector('input[name="survey-emotion"]:checked');
           const reflectionVal = document.getElementById('survey-reflection').value.trim();
           const prev = JSON.parse(localStorage.getItem('blinky_survey_responses') || '[]');
           prev.push({
             alias: aliasVal,
             ending: endingRadio ? endingRadio.value : activeEndingCode,
+            emotion: emotionRadio ? emotionRadio.value : null,
             reflection: reflectionVal,
             route: [...appState.history.map((h) => h.id), appState.currentId],
             timestamp: new Date().toISOString()
